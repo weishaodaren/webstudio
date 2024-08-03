@@ -25,6 +25,7 @@ import {
   $registeredComponentMetas,
   $dragAndDropState,
   $selectedPage,
+  $messges,
 } from "~/shared/nano-states";
 import { NavigatorTree } from "~/builder/shared/navigator-tree";
 import type { Settings } from "~/builder/shared/client-settings";
@@ -72,12 +73,24 @@ const contentStyle = {
 const $isDragging = computed([$dragAndDropState], (state) => state.isDragging);
 
 export const Inspector = ({ navigatorLayout }: InspectorProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($messges);
   const selectedInstance = useStore($selectedInstance);
-  const tabsRef = useRef<HTMLDivElement>(null);
-  const [tab, setTab] = useState("style");
   const isDragging = useStore($isDragging);
   const metas = useStore($registeredComponentMetas);
   const selectedPage = useStore($selectedPage);
+
+  /**
+   * Ref
+   */
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * State
+   */
+  const [tab, setTab] = useState("style");
 
   if (navigatorLayout === "docked" && isDragging) {
     return <NavigatorTree />;
@@ -132,10 +145,7 @@ export const Inspector = ({ navigatorLayout }: InspectorProps) => {
                     </div>
                   </Tooltip>
                 )}
-                <Tooltip
-                  variant="wrapped"
-                  content="The Settings panel allows for customizing component properties and HTML attributes."
-                >
+                <Tooltip variant="wrapped" content={t.settingPanel}>
                   <div>
                     <PanelTabsTrigger value="settings">
                       Settings

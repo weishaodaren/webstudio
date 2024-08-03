@@ -160,6 +160,12 @@ importers:
       '@lezer/highlight':
         specifier: ^1.2.0
         version: 1.2.0
+      '@nanostores/i18n':
+        specifier: ^0.12.1
+        version: 0.12.1(nanostores@0.9.3)
+      '@nanostores/persistent':
+        specifier: ^0.10.1
+        version: 0.10.1(nanostores@0.9.3)
       '@nanostores/react':
         specifier: ^0.7.1
         version: 0.7.1(nanostores@0.9.3)(react@18.3.0-canary-14898b6a9-20240318)
@@ -4078,6 +4084,18 @@ packages:
     peerDependencies:
       '@types/react': ^18.2.70
       react: 18.3.0-canary-14898b6a9-20240318
+
+  '@nanostores/i18n@0.12.1':
+    resolution: {integrity: sha512-YbGFNET56LamY6eNYfUIEyP3cf07mnS43Gu6po1Tsqigl0DOQpl/T23v1a0joTau0c35akqd1lFu7mDBoT6R4g==, tarball: https://registry.npmjs.org/@nanostores/i18n/-/i18n-0.12.1.tgz}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      nanostores: ^0.9.0 || ^0.10.0
+
+  '@nanostores/persistent@0.10.1':
+    resolution: {integrity: sha512-BMYj47ONmkrPkHfomimtBAwtDNNjO57lw0uk7jB35GHVwixmqWtlK6DVAAbioqwJn9WEaWSB/9Ss5ukBG0NHlQ==, tarball: https://registry.npmjs.org/@nanostores/persistent/-/persistent-0.10.1.tgz}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      nanostores: ^0.9.0 || ^0.10.0
 
   '@nanostores/react@0.7.1':
     resolution: {integrity: sha512-EXQg9N4MdI4eJQz/AZLIx3hxQ6BuBmV4Q55bCd5YCSgEOAW7tGTsIZxpRXxvxLXzflNvHTBvfrDNY38TlSVBkQ==, tarball: https://registry.npmjs.org/@nanostores/react/-/react-0.7.1.tgz}
@@ -12075,6 +12093,14 @@ snapshots:
       '@types/mdx': 2.0.5
       '@types/react': 18.2.79
       react: 18.3.0-canary-14898b6a9-20240318
+
+  '@nanostores/i18n@0.12.1(nanostores@0.9.3)':
+    dependencies:
+      nanostores: 0.9.3
+
+  '@nanostores/persistent@0.10.1(nanostores@0.9.3)':
+    dependencies:
+      nanostores: 0.9.3
 
   '@nanostores/react@0.7.1(nanostores@0.9.3)(react@18.3.0-canary-14898b6a9-20240318)':
     dependencies:
