@@ -18,6 +18,7 @@ import { $selectedInstanceRenderState } from "~/shared/nano-states";
 import {
   $selectedInstanceIntanceToTag,
   $selectedInstanceSelector,
+  $tStylePanle,
 } from "~/shared/nano-states";
 import { sections } from "./sections";
 import { useParentStyle } from "./parent-style";
@@ -53,12 +54,19 @@ type StylePanelProps = {
 };
 
 export const StylePanel = ({ selectedInstance }: StylePanelProps) => {
+  /**
+   * Hook
+   */
   const { currentStyle, setProperty, deleteProperty, createBatchUpdate } =
     useStyleData(selectedInstance);
+  const parentStyle = useParentStyle();
 
+  /**
+   * Store
+   */
+  const t = useStore($tStylePanle);
   const selectedInstanceRenderState = useStore($selectedInstanceRenderState);
   const selectedInstanceTag = useStore($selectedInstanceTag);
-  const parentStyle = useParentStyle();
 
   // If selected instance is not rendered on the canvas,
   // style panel will not work, because it needs the element in DOM in order to work.
@@ -93,7 +101,7 @@ export const StylePanel = ({ selectedInstance }: StylePanelProps) => {
     <>
       <Box css={{ px: theme.spacing[9], pb: theme.spacing[9] }}>
         <Text css={{ py: theme.spacing[7] }} variant="titles">
-          Style Sources
+          {t.styleSources}
         </Text>
         <StyleSourcesSection />
       </Box>

@@ -36,8 +36,16 @@ export const i18n = createI18n(locale, {
 /**
  * @default `en``
  * 国际化配置信息
+ * $translate xxx
  */
-export const $messges = i18n("inspector", {
-  settingPanel:
+export const $tInspector = i18n("inspector", {
+  style: "Style",
+  settings: "Settings",
+  settingPanelTooltip:
     "The Settings panel allows for customizing component properties and HTML attributes.",
+  stylePanelTooltip: "The Style panel allows manipulation of CSS visually.",
+});
+
+export const $tStylePanle = i18n("stylePanle", {
+  styleSources: "Style Sources",
 });

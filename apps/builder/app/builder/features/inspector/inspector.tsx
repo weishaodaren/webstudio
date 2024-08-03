@@ -25,7 +25,7 @@ import {
   $registeredComponentMetas,
   $dragAndDropState,
   $selectedPage,
-  $messges,
+  $tInspector,
 } from "~/shared/nano-states";
 import { NavigatorTree } from "~/builder/shared/navigator-tree";
 import type { Settings } from "~/builder/shared/client-settings";
@@ -76,7 +76,7 @@ export const Inspector = ({ navigatorLayout }: InspectorProps) => {
   /**
    * Store
    */
-  const t = useStore($messges);
+  const t = useStore($tInspector);
   const selectedInstance = useStore($selectedInstance);
   const isDragging = useStore($isDragging);
   const metas = useStore($registeredComponentMetas);
@@ -136,19 +136,18 @@ export const Inspector = ({ navigatorLayout }: InspectorProps) => {
             <Flex direction="column">
               <PanelTabsList>
                 {isStyleTabVisible && (
-                  <Tooltip
-                    variant="wrapped"
-                    content="The Style panel allows manipulation of CSS visually."
-                  >
+                  <Tooltip variant="wrapped" content={t.stylePanelTooltip}>
                     <div>
-                      <PanelTabsTrigger value="style">Style</PanelTabsTrigger>
+                      <PanelTabsTrigger value="style">
+                        {t.style}
+                      </PanelTabsTrigger>
                     </div>
                   </Tooltip>
                 )}
-                <Tooltip variant="wrapped" content={t.settingPanel}>
+                <Tooltip variant="wrapped" content={t.settingPanelTooltip}>
                   <div>
                     <PanelTabsTrigger value="settings">
-                      Settings
+                      {t.settings}
                     </PanelTabsTrigger>
                   </div>
                 </Tooltip>
