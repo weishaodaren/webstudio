@@ -48,4 +48,11 @@ export const $tInspector = i18n("inspector", {
 
 export const $tStylePanle = i18n("stylePanle", {
   styleSources: "Style Sources",
+  convertToToken: "Convert to token",
+  edit: "Edit Name",
+  duplicate: "Duplicate",
+  clear: "Clear Style",
+  remove: "Remove",
+  delete: "Delete",
+  local: "Local",
 });

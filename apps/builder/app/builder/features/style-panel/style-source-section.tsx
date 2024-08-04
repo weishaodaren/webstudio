@@ -36,6 +36,7 @@ import {
   $styleSourceSelections,
   $styleSources,
   $styles,
+  $tStylePanle,
 } from "~/shared/nano-states";
 import { removeByMutable } from "~/shared/array-utils";
 import { cloneStyles } from "~/shared/tree-utils";
@@ -402,11 +403,12 @@ type StyleSourceInputItem = {
 
 const convertToInputItem = (
   styleSource: StyleSource,
-  states: string[]
+  states: string[],
+  localText: string
 ): StyleSourceInputItem => {
   return {
     id: styleSource.id,
-    label: styleSource.type === "local" ? "Local" : styleSource.name,
+    label: styleSource.type === "local" ? localText : styleSource.name,
     disabled: false,
     source: styleSource.type,
     states,
@@ -445,7 +447,9 @@ const $availableStyleSources = computed(
       if (styleSource.type === "local") {
         continue;
       }
-      availableStylesSources.push(convertToInputItem(styleSource, []));
+      availableStylesSources.push(
+        convertToInputItem(styleSource, [], "@@weishaodare@@")
+      );
     }
     for (const styleSource of presetTokens) {
       // skip if already present in global tokens
@@ -464,7 +468,15 @@ const $availableStyleSources = computed(
   }
 );
 
+/**
+ * Component
+ * @returns {JSX.Element}
+ */
 export const StyleSourcesSection = () => {
+  /**
+   * Store
+   */
+  const t = useStore($tStylePanle);
   const componentStates = useStore($componentStates);
   const availableStyleSources = useStore($availableStyleSources);
   const selectedInstanceStyleSources = useStore($selectedInstanceStyleSources);
@@ -474,13 +486,17 @@ export const StyleSourcesSection = () => {
   const value = selectedInstanceStyleSources.map((styleSource) =>
     convertToInputItem(
       styleSource,
-      selectedInstanceStatesByStyleSourceId.get(styleSource.id) ?? []
+      selectedInstanceStatesByStyleSourceId.get(styleSource.id) ?? [],
+      t.local
     )
   );
   const selectedOrLastStyleSourceSelector = useStore(
     $selectedOrLastStyleSourceSelector
   );
 
+  /**
+   * State
+   */
   const [editingItemId, setEditingItemId] = useState<
     undefined | StyleSource["id"]
   >(undefined);
@@ -490,6 +506,12 @@ export const StyleSourcesSection = () => {
   return (
     <>
       <StyleSourceInput
+        editText={t.edit}
+        duplicateText={t.duplicate}
+        convertText={t.convertToToken}
+        clearText={t.clear}
+        removeText={t.remove}
+        deleteText={t.delete}
         items={availableStyleSources}
         value={value}
         selectedItemSelector={selectedOrLastStyleSourceSelector}
@@ -570,7 +592,7 @@ const DeleteConfirmationDialog = ({
   return (
     <Dialog
       open={token !== undefined}
-      onOpenChange={(isOpen) => {
+      onOpenChange={(isOpen: boolean) => {
         if (isOpen === false) {
           onClose();
         }

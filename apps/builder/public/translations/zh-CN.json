@@ -6,6 +6,13 @@
     "stylePanelTooltip": "样式面板允许在视觉上操作CSS。"
   },
   "stylePanle": {
-    "styleSources": "样式资源"
+    "styleSources": "样式资源",
+    "convertToToken": "转换为令牌",
+    "edit": "编辑名称",
+    "duplicate": "复制",
+    "clear": "清空样式",
+    "remove": "移除",
+    "delete": "删除",
+    "local": "本地的"
   }
 }
