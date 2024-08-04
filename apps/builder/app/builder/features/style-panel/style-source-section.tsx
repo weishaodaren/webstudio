@@ -512,6 +512,12 @@ export const StyleSourcesSection = () => {
         clearText={t.clear}
         removeText={t.remove}
         deleteText={t.delete}
+        tokenStyleHint={t.tokenStyleHint}
+        localStyleHint={t.localStyleHint}
+        newTokenText={t.newToken}
+        createTokenText={t.create}
+        globalTokenText={t.globalTokens}
+        componentTokenText={t.componentTokens}
         items={availableStyleSources}
         value={value}
         selectedItemSelector={selectedOrLastStyleSourceSelector}

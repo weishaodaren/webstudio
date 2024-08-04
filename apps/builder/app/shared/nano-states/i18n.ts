@@ -55,4 +55,11 @@ export const $tStylePanle = i18n("stylePanle", {
   remove: "Remove",
   delete: "Delete",
   local: "Local",
+  localStyleHint:
+    "Style instances without creating a token or override a token locally.",
+  tokenStyleHint: "Reuse styles across multiple instances by creating a token.",
+  newToken: "New Token",
+  create: "Create",
+  globalTokens: "Global Tokens",
+  componentTokens: "Component Tokens",
 });

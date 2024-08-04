@@ -13,6 +13,12 @@
     "clear": "清空样式",
     "remove": "移除",
     "delete": "删除",
-    "local": "本地的"
+    "local": "本地的",
+    "localStyleHint": "在不创建令牌或在本地覆盖令牌的情况下设置样式实例。",
+    "tokenStyleHint": "通过创建一个令牌来在多个实例之间重复使用样式。",
+    "newToken": "新令牌",
+    "create": "创建",
+    "globalTokens": "全局令牌",
+    "componentTokens": "组件令牌"
   }
 }
