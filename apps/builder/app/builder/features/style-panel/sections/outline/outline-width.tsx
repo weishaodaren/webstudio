@@ -8,10 +8,19 @@ import { getStyleSource } from "../../shared/style-info";
 
 const property: StyleProperty = "outlineWidth";
 
+/**
+ * Compoennt
+ */
 export const OutlineWidth = (
-  props: Pick<SectionProps, "currentStyle" | "setProperty" | "deleteProperty">
+  props: Pick<
+    SectionProps,
+    "currentStyle" | "setProperty" | "deleteProperty"
+  > & { label: string }
 ) => {
-  const { deleteProperty, setProperty, currentStyle } = props;
+  /**
+   * Props
+   */
+  const { deleteProperty, setProperty, currentStyle, label } = props;
   const outlineWidthValue = currentStyle[property]?.value;
   const outlineStyleConfig = styleConfigByName(property);
   const outlineStyleWidthKeywords = outlineStyleConfig.items.map((item) => ({
@@ -29,7 +38,7 @@ export const OutlineWidth = (
       <PropertyName
         properties={[property]}
         style={props.currentStyle}
-        label={"Width"}
+        label={label}
         onReset={() => deleteProperty(property)}
       />
 

@@ -19,7 +19,8 @@
     "newToken": "新令牌",
     "create": "创建",
     "globalTokens": "全局令牌",
-    "componentTokens": "组件令牌"
+    "componentTokens": "组件令牌",
+    "resetValue": "重新设置"
   },
   "stylePanel/layout": {
     "layout": "布局"
@@ -67,7 +68,11 @@
     "transforms": "转换"
   },
   "stylePanel/outline": {
-    "outline": "轮廓"
+    "outline": "轮廓",
+    "color": "颜色",
+    "width": "宽度",
+    "offset": "位移",
+    "style": "风格"
   },
   "stylePanel/advanced": {
     "advanced": "高级"

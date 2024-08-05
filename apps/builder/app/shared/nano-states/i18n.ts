@@ -62,6 +62,7 @@ export const $tStylePanel = i18n("stylePanel", {
   create: "Create",
   globalTokens: "Global Tokens",
   componentTokens: "Component Tokens",
+  resetValue: "Reset value",
 });
 
 export const $tLayout = i18n("stylePanel/layout", {
@@ -127,6 +128,10 @@ export const $tTransforms = i18n("stylePanel/transforms", {
 
 export const $tOutline = i18n("stylePanel/outline", {
   outline: "Outline",
+  color: "Color",
+  width: "Width",
+  offset: "Offset",
+  style: "Style",
 });
 
 export const $tAdvanced = i18n("stylePanel/advanced", {

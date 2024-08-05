@@ -34,6 +34,7 @@ import {
   $selectedInstance,
   $selectedStyleSource,
   $styleSources,
+  $tStylePanel,
 } from "~/shared/nano-states";
 import {
   type StyleInfo,
@@ -132,6 +133,9 @@ const getDescription = (properties: StyleProperty[]) => {
   return propertyDescriptions[property as keyof typeof propertyDescriptions];
 };
 
+/**
+ * Component
+ */
 export const TooltipContent = ({
   title,
   description,
@@ -147,6 +151,10 @@ export const TooltipContent = ({
   style: StyleInfo;
   onReset?: undefined | (() => void);
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tStylePanel);
   const breakpoints = useStore($breakpoints);
   const selectedBreakpoint = useStore($selectedBreakpoint);
   const instances = useStore($instances);
@@ -285,7 +293,7 @@ export const TooltipContent = ({
             css={{ gridTemplateColumns: "2fr 3fr 1fr" }}
             onClick={onReset}
           >
-            Reset value
+            {t.resetValue}
           </Button>
         )}
     </Flex>
@@ -395,6 +403,7 @@ export const PropertyName = ({
         currentStyle: style,
       })
     : "default";
+
   return (
     <Flex align="center">
       <PropertyTooltip

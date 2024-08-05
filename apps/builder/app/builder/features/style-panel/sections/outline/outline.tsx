@@ -45,6 +45,7 @@ export const Section = (props: SectionProps) => {
     >
       <Flex direction="column" gap={2}>
         <OutlineStyle
+          label={t.style}
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
@@ -60,7 +61,7 @@ export const Section = (props: SectionProps) => {
               <PropertyName
                 style={currentStyle}
                 properties={[property]}
-                label={"Color"}
+                label={t.color}
                 onReset={() => deleteProperty(property)}
               />
 
@@ -79,12 +80,14 @@ export const Section = (props: SectionProps) => {
             </Grid>
 
             <OutlineWidth
+              label={t.width}
               currentStyle={currentStyle}
               setProperty={setProperty}
               deleteProperty={deleteProperty}
             />
 
             <OutlineOffset
+              label={t.offset}
               currentStyle={currentStyle}
               setProperty={setProperty}
               deleteProperty={deleteProperty}

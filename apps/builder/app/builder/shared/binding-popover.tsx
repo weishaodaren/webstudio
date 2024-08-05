@@ -46,7 +46,7 @@ import {
   type EditorApi,
 } from "./expression-editor";
 import { useSideOffset } from "./floating-panel";
-import { $dataSourceVariables } from "~/shared/nano-states";
+import { $dataSourceVariables, $tStylePanel } from "~/shared/nano-states";
 
 export const evaluateExpressionWithinScope = (
   expression: string,
@@ -65,6 +65,9 @@ export const evaluateExpressionWithinScope = (
   }
 };
 
+/**
+ * Component
+ */
 const BindingPanel = ({
   scope,
   aliases,
@@ -259,7 +262,8 @@ const BindingButton = forwardRef<
             }
           }}
         >
-          Reset value
+          {/* Reset value */}
+          {$tStylePanel.get().resetValue}
         </Button>
       </Flex>
     ) : undefined;

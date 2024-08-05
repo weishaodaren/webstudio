@@ -44,10 +44,19 @@ const items = [
   },
 ];
 
+/**
+ * Component
+ */
 export const OutlineStyle = (
-  props: Pick<SectionProps, "currentStyle" | "setProperty" | "deleteProperty">
+  props: Pick<
+    SectionProps,
+    "currentStyle" | "setProperty" | "deleteProperty"
+  > & { label: string }
 ) => {
-  const { deleteProperty } = props;
+  /**
+   * Props
+   */
+  const { deleteProperty, label } = props;
 
   return (
     <Grid
@@ -59,11 +68,11 @@ export const OutlineStyle = (
       <PropertyName
         properties={[property]}
         style={props.currentStyle}
-        label={"Style"}
+        label={label}
         onReset={() => deleteProperty(property)}
       />
       <Box css={{ gridColumn: `span 2`, justifySelf: "end" }}>
-        <ToggleGroupControl {...props} items={items} property={property} />{" "}
+        <ToggleGroupControl {...props} items={items} property={property} />
       </Box>
     </Grid>
   );

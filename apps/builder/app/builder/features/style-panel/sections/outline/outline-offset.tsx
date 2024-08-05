@@ -13,10 +13,19 @@ const defaultOutlineOffsetValue: UnitValue = {
   unit: "number",
 };
 
+/**
+ * Component
+ */
 export const OutlineOffset = (
-  props: Pick<SectionProps, "currentStyle" | "setProperty" | "deleteProperty">
+  props: Pick<
+    SectionProps,
+    "currentStyle" | "setProperty" | "deleteProperty"
+  > & { label: string }
 ) => {
-  const { deleteProperty, setProperty, currentStyle } = props;
+  /**
+   * Props
+   */
+  const { deleteProperty, setProperty, currentStyle, label } = props;
   const outlineOffsetValue =
     currentStyle[property]?.value ?? defaultOutlineOffsetValue;
   const outlineOffsetStyleConfig = styleConfigByName(property);
@@ -37,7 +46,7 @@ export const OutlineOffset = (
       <PropertyName
         properties={[property]}
         style={props.currentStyle}
-        label={"Offset"}
+        label={label}
         onReset={() => deleteProperty(property)}
       />
 
