@@ -1,0 +1,8 @@
+{
+  "inspector": {
+    "style": "样式",
+    "settings": "设置",
+    "settingPanelTooltip": "设置面板允许自定义组件属性和HTML属性。",
+    "stylePanelTooltip": "样式面板允许在视觉上操作CSS。"
+  }
+}

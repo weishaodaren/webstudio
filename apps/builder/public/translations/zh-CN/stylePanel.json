@@ -1,10 +1,4 @@
 {
-  "inspector": {
-    "style": "样式",
-    "settings": "设置",
-    "settingPanelTooltip": "设置面板允许自定义组件属性和HTML属性。",
-    "stylePanelTooltip": "样式面板允许在视觉上操作CSS。"
-  },
   "stylePanel": {
     "styleSources": "样式资源",
     "convertToToken": "转换为令牌",
@@ -42,7 +36,15 @@
     "description": "向实例添加一个或多个背景，例如颜色、图像或渐变。"
   },
   "stylePanel/borders": {
-    "borders": "边框"
+    "borders": "边框",
+    "colorDescription": "设置边框颜色",
+    "widthDescription": "设置边框宽度",
+    "radius": "半径",
+    "radiusDescription": "设置边框半径",
+    "borderStyleNone": "无",
+    "borderStyleSolid": "实线",
+    "borderStyleDashed": "虚线",
+    "borderStyleDotted": "点线"
   },
   "stylePanel/boxShadows": {
     "boxShadows": "盒子阴影",

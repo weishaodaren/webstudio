@@ -32,11 +32,14 @@ const borderPropertyOptions = {
   },
 } as const satisfies Partial<{ [property in StyleProperty]: unknown }>;
 
+/**
+ * Component
+ */
 export const BorderWidth = (
   props: Pick<
     SectionProps,
     "currentStyle" | "setProperty" | "deleteProperty" | "createBatchUpdate"
-  >
+  > & { label: string; description: string }
 ) => {
   return (
     <BorderProperty
@@ -44,8 +47,8 @@ export const BorderWidth = (
       setProperty={props.setProperty}
       deleteProperty={props.deleteProperty}
       createBatchUpdate={props.createBatchUpdate}
-      label="Width"
-      description="Sets the width of the border"
+      label={props.label}
+      description={props.description}
       borderPropertyOptions={borderPropertyOptions}
       individualModeIcon={<BorderWidthIndividualIcon />}
     />

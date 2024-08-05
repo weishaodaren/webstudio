@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { $tBorder } from "~/shared/nano-states";
+import { $tBorder, $tOutline, $tDeclarations } from "~/shared/nano-states";
 import { Flex } from "@webstudio-is/design-system";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import type { SectionProps } from "../shared/section";
@@ -28,11 +28,17 @@ export const properties = [
   ...borderWidthProperties,
 ] satisfies Array<StyleProperty>;
 
+/**
+ * Component
+ */
 export const Section = (props: SectionProps) => {
   /**
    * Store
    */
   const t = useStore($tBorder);
+  const tOutline = useStore($tOutline);
+  const tDeclarations = useStore($tDeclarations);
+
   return (
     <CollapsibleSection
       label={t.borders}
@@ -40,10 +46,37 @@ export const Section = (props: SectionProps) => {
       properties={properties}
     >
       <Flex direction="column" gap={2}>
-        <BorderStyle {...props} />
-        <BorderColor {...props} />
-        <BorderWidth {...props} />
-        <BorderRadius {...props} />
+        <BorderStyle
+          {...props}
+          label={tOutline.style}
+          itemLabels={{
+            noneStyleLabel: t.borderStyleNone,
+            solidStyleLabel: t.borderStyleSolid,
+            dashedStyleLabel: t.borderStyleDashed,
+            dottedStyleLabel: t.borderStyleDotted,
+          }}
+          itemDescriptions={{
+            borderBlockStyleNone: tDeclarations["borderBlockStyle:none"],
+            borderBlockStyleSolid: tDeclarations["borderBlockStyle:solid"],
+            borderBlockStyleDashed: tDeclarations["borderBlockStyle:dashed"],
+            borderBlockStyleDotted: tDeclarations["borderBlockStyle:dotted"],
+          }}
+        />
+        <BorderColor
+          {...props}
+          label={tOutline.color}
+          description={t.colorDescription}
+        />
+        <BorderWidth
+          {...props}
+          label={tOutline.width}
+          description={t.widthDescription}
+        />
+        <BorderRadius
+          {...props}
+          label={t.radius}
+          description={t.radiusDescription}
+        />
       </Flex>
     </CollapsibleSection>
   );
