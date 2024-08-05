@@ -1,4 +1,6 @@
 import { type ComponentProps, useState, useRef } from "react";
+import { useStore } from "@nanostores/react";
+import { $tSpace } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
 import { SpaceLayout } from "./layout";
 import { ValueText } from "../shared/value-text";
@@ -88,6 +90,14 @@ export const Section = ({
   createBatchUpdate,
   currentStyle,
 }: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tSpace);
+
+  /**
+   * State
+   */
   const [hoverTarget, setHoverTarget] = useState<HoverTarget>();
 
   const scrubStatus = useScrub({
@@ -138,7 +148,7 @@ export const Section = ({
 
   return (
     <CollapsibleSection
-      label="Space"
+      label={t.space}
       currentStyle={currentStyle}
       properties={spaceProperties}
     >

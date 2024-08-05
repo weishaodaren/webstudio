@@ -2,6 +2,8 @@ import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
 import type { SectionProps } from "../shared/section";
 import type { LayersValue, StyleProperty } from "@webstudio-is/css-engine";
 import { useState } from "react";
+import { useStore } from "@nanostores/react";
+import { $tStylePanel } from "~/shared/nano-states";
 import {
   SectionTitle,
   SectionTitleButton,
@@ -21,10 +23,14 @@ import { ShadowContent } from "../../shared/shadow-content";
 export const properties = ["textShadow"] satisfies Array<StyleProperty>;
 
 const property: StyleProperty = properties[0];
-const label = "Text Shadows";
 const initialTextShadow = "0px 2px 5px rgba(0, 0, 0, 0.2)";
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tStylePanel);
+
   const { currentStyle, createBatchUpdate, deleteProperty } = props;
   const [isOpen, setIsOpen] = useState(true);
   const value = currentStyle[property]?.value;
@@ -36,7 +42,7 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.textShadows}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
@@ -58,13 +64,13 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.textShadows}
             style={currentStyle}
             properties={properties}
             description="Adds shadow effects around a text."
             label={
               <SectionTitleLabel color={sectionStyleSource}>
-                {label}
+                {t.textShadows}
               </SectionTitleLabel>
             }
             onReset={() => deleteProperty(property)}
@@ -77,7 +83,7 @@ export const Section = (props: SectionProps) => {
           {...props}
           property={property}
           value={value}
-          label={label}
+          label={t.textShadows}
           deleteProperty={deleteProperty}
           renderContent={(layerProps) => {
             if (layerProps.layer.type !== "tuple") {

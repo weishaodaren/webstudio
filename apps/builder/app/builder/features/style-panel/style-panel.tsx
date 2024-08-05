@@ -18,7 +18,7 @@ import { $selectedInstanceRenderState } from "~/shared/nano-states";
 import {
   $selectedInstanceIntanceToTag,
   $selectedInstanceSelector,
-  $tStylePanle,
+  $tStylePanel,
 } from "~/shared/nano-states";
 import { sections } from "./sections";
 import { useParentStyle } from "./parent-style";
@@ -64,7 +64,7 @@ export const StylePanel = ({ selectedInstance }: StylePanelProps) => {
   /**
    * Store
    */
-  const t = useStore($tStylePanle);
+  const t = useStore($tStylePanel);
   const selectedInstanceRenderState = useStore($selectedInstanceRenderState);
   const selectedInstanceTag = useStore($selectedInstanceTag);
 

@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tBorder } from "~/shared/nano-states";
 import { Flex } from "@webstudio-is/design-system";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import type { SectionProps } from "../shared/section";
@@ -27,9 +29,13 @@ export const properties = [
 ] satisfies Array<StyleProperty>;
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tBorder);
   return (
     <CollapsibleSection
-      label="Borders"
+      label={t.borders}
       currentStyle={props.currentStyle}
       properties={properties}
     >

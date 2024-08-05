@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tSize } from "~/shared/nano-states";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import {
   Flex,
@@ -123,9 +125,13 @@ export const Section = ({
   deleteProperty,
   createBatchUpdate,
 }: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tSize);
   return (
     <CollapsibleSection
-      label="Size"
+      label={t.size}
       currentStyle={currentStyle}
       properties={properties}
       fullWidth

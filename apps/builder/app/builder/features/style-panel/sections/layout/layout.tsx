@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStore } from "@nanostores/react";
 import {
   Box,
   EnhancedTooltip,
@@ -36,6 +37,7 @@ import {
   ACSpaceBetweenIcon,
   ACStretchIcon,
 } from "@webstudio-is/icons";
+import { $tLayout } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
 import { FlexGrid } from "./shared/flex-grid";
 import { MenuControl, SelectControl } from "../../controls";
@@ -505,12 +507,13 @@ export const Section = ({
   deleteProperty,
   createBatchUpdate,
 }: SectionProps) => {
+  const t = useStore($tLayout);
   const value = toValue(currentStyle.display?.value);
 
   const { label, items } = styleConfigByName("display");
   return (
     <CollapsibleSection
-      label="Layout"
+      label={t.layout}
       currentStyle={currentStyle}
       properties={properties}
     >

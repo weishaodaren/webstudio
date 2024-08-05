@@ -36,7 +36,7 @@ import {
   $styleSourceSelections,
   $styleSources,
   $styles,
-  $tStylePanle,
+  $tStylePanel,
 } from "~/shared/nano-states";
 import { removeByMutable } from "~/shared/array-utils";
 import { cloneStyles } from "~/shared/tree-utils";
@@ -476,7 +476,7 @@ export const StyleSourcesSection = () => {
   /**
    * Store
    */
-  const t = useStore($tStylePanle);
+  const t = useStore($tStylePanel);
   const componentStates = useStore($componentStates);
   const availableStyleSources = useStore($availableStyleSources);
   const selectedInstanceStyleSources = useStore($selectedInstanceStyleSources);

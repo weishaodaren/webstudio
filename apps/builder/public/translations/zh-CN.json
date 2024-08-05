@@ -5,7 +5,7 @@
     "settingPanelTooltip": "设置面板允许自定义组件属性和HTML属性。",
     "stylePanelTooltip": "样式面板允许在视觉上操作CSS。"
   },
-  "stylePanle": {
+  "stylePanel": {
     "styleSources": "样式资源",
     "convertToToken": "转换为令牌",
     "edit": "编辑名称",
@@ -19,6 +19,41 @@
     "newToken": "新令牌",
     "create": "创建",
     "globalTokens": "全局令牌",
-    "componentTokens": "组件令牌"
+    "componentTokens": "组件令牌",
+    "textShadows": "文本阴影"
+  },
+  "stylePanel/layout": {
+    "layout": "布局"
+  },
+  "stylePanel/space": {
+    "space": "空间"
+  },
+  "stylePanel/size": {
+    "size": "尺寸"
+  },
+  "stylePanel/position": {
+    "position": "位置"
+  },
+  "stylePanel/typography": {
+    "typography": "排版"
+  },
+  "stylePanel/backgrounds": {
+    "backgrounds": "背景",
+    "description": "向实例添加一个或多个背景，例如颜色、图像或渐变。"
+  },
+  "stylePanel/borders": {
+    "borders": "边框"
+  },
+  "stylePanel/boxShadows": {
+    "boxShadows": "盒子阴影",
+    "description": "在元素的框架周围添加阴影效果。"
+  },
+  "stylePanel/filters": {
+    "filters": "滤镜",
+    "description": "滤镜效果允许您对元素应用图形效果，如模糊、颜色移动等。"
+  },
+  "stylePanel/backdropFilters": {
+    "backdropFilters": "背景滤镜",
+    "description": "背景滤镜类似于滤镜，但应用于元素后面的区域。这对于创建磨砂玻璃效果非常有用。"
   }
 }

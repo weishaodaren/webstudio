@@ -1,4 +1,6 @@
 import { forwardRef, type ComponentProps } from "react";
+import { useStore } from "@nanostores/react";
+import { $tSize, $tTypography } from "~/shared/nano-states";
 import {
   Flex,
   Grid,
@@ -59,9 +61,13 @@ export const properties = [
 ] satisfies Array<StyleProperty>;
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tTypography);
   return (
     <CollapsibleSection
-      label="Typography"
+      label={t.typography}
       currentStyle={props.currentStyle}
       properties={properties}
     >
@@ -122,13 +128,15 @@ export const TypographySectionFont = (props: SectionProps) => {
 export const TypographySectionSizing = (props: SectionProps) => {
   const { currentStyle, setProperty, deleteProperty } = props;
 
+  const t = useStore($tSize);
+
   return (
     <Grid gap="2" css={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
       <Grid gap="1">
         <PropertyName
           style={currentStyle}
           properties={["fontSize"]}
-          label="Size"
+          label={t.size}
           onReset={() => deleteProperty("fontSize")}
         />
         <TextControl

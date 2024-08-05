@@ -46,7 +46,7 @@ export const $tInspector = i18n("inspector", {
   stylePanelTooltip: "The Style panel allows manipulation of CSS visually.",
 });
 
-export const $tStylePanle = i18n("stylePanle", {
+export const $tStylePanel = i18n("stylePanel", {
   styleSources: "Style Sources",
   convertToToken: "Convert to token",
   edit: "Edit Name",
@@ -62,4 +62,52 @@ export const $tStylePanle = i18n("stylePanle", {
   create: "Create",
   globalTokens: "Global Tokens",
   componentTokens: "Component Tokens",
+  textShadows: "Text Shadows",
+});
+
+export const $tLayout = i18n("stylePanel/layout", {
+  layout: "Layout",
+});
+
+export const $tSpace = i18n("stylePanel/space", {
+  space: "Space",
+});
+
+export const $tSize = i18n("stylePanel/size", {
+  size: "Size",
+});
+
+export const $tPosition = i18n("stylePanel/position", {
+  position: "Position",
+});
+
+export const $tTypography = i18n("stylePanel/typography", {
+  typography: "Typography",
+});
+
+export const $tBackground = i18n("stylePanel/backgrounds", {
+  backgrounds: "Backgrounds",
+  description:
+    "Add one or more backgrounds to the instance such as a color, image, or gradient.",
+});
+
+export const $tBorder = i18n("stylePanel/borders", {
+  borders: "Borders",
+});
+
+export const $tBoxShadows = i18n("stylePanel/boxShadows", {
+  boxShadows: "Box Shadows",
+  description: "Adds shadow effects around an element's frame.",
+});
+
+export const $tFilters = i18n("stylePanel/filters", {
+  filters: "Filters",
+  description:
+    "Filter effects allow you to apply graphical effects like blurring, color shifting, and more to elements.",
+});
+
+export const $tBackdropFilters = i18n("stylePanel/backdropFilters", {
+  backdropFilters: "BackdropFilters",
+  description:
+    "Backdrop filters are similar to filters, but are applied to the area behind an element. This can be useful for creating frosted glass effects.",
 });

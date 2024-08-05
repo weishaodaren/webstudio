@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tBoxShadows } from "~/shared/nano-states";
 import {
   SectionTitle,
   SectionTitleButton,
@@ -21,12 +23,24 @@ import { ShadowContent } from "../../shared/shadow-content";
 export const properties = ["boxShadow"] satisfies Array<StyleProperty>;
 
 const property: StyleProperty = properties[0];
-const label = "Box Shadows";
 const initialBoxShadow = "0px 2px 5px 0px rgba(0, 0, 0, 0.2)";
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Props
+   */
   const { currentStyle, deleteProperty } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tBoxShadows);
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
+
   const value = currentStyle[property]?.value;
   const sectionStyleSource =
     value?.type === "unparsed" || value?.type === "guaranteedInvalid"
@@ -36,7 +50,7 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.boxShadows}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
@@ -58,13 +72,13 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.boxShadows}
             style={currentStyle}
             properties={properties}
-            description="Adds shadow effects around an element's frame."
+            description={t.description}
             label={
               <SectionTitleLabel color={sectionStyleSource}>
-                {label}
+                {t.boxShadows}
               </SectionTitleLabel>
             }
             onReset={() => deleteProperty(property)}
@@ -77,7 +91,7 @@ export const Section = (props: SectionProps) => {
           {...props}
           property={property}
           value={value}
-          label={label}
+          label={t.boxShadows}
           deleteProperty={deleteProperty}
           renderContent={(layerProps) => {
             if (layerProps.layer.type !== "tuple") {
