@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tOutline } from "~/shared/nano-states";
 import { Flex, Grid, theme, Box } from "@webstudio-is/design-system";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import { ColorControl } from "../../controls";
@@ -16,9 +18,20 @@ export const properties = [
   "outlineOffset",
 ] satisfies Array<StyleProperty>;
 
+/**
+ * Component
+ */
 export const Section = (props: SectionProps) => {
+  /**
+   * Props
+   */
   const { currentStyle, setProperty, deleteProperty } = props;
   const { outlineStyle } = currentStyle;
+
+  /**
+   * Store
+   */
+  const t = useStore($tOutline);
 
   if (outlineStyle?.value.type !== "keyword") {
     return;
@@ -26,7 +39,7 @@ export const Section = (props: SectionProps) => {
 
   return (
     <CollapsibleSection
-      label="Outline"
+      label={t.outline}
       currentStyle={currentStyle}
       properties={properties}
     >

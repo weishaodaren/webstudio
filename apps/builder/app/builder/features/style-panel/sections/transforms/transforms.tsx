@@ -2,6 +2,8 @@ import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
 import type { SectionProps } from "../shared/section";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import { useMemo, useState } from "react";
+import { useStore } from "@nanostores/react";
+import { $tTransforms } from "~/shared/nano-states";
 import {
   CssValueListArrowFocus,
   CssValueListItem,
@@ -53,14 +55,24 @@ export const transformPanels = [
 
 export type TransformPanel = (typeof transformPanels)[number];
 
-const label = "Transforms";
 export const properties = [
   "translate",
   "scale",
   "transform",
 ] satisfies Array<StyleProperty>;
 
+/**
+ * Component
+ */
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tTransforms);
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
 
   if (isFeatureEnabled("transforms") === false) {
@@ -90,7 +102,7 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.transforms}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
@@ -135,7 +147,7 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.transforms}
             style={currentStyle}
             properties={properties}
             label={
@@ -146,7 +158,7 @@ export const Section = (props: SectionProps) => {
                   rotateAndSkewStyleSrouce
                 }
               >
-                {label}
+                {t.transforms}
               </SectionTitleLabel>
             }
             onReset={handleResetForAllTransformProperties}

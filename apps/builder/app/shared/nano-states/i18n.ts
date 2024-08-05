@@ -62,7 +62,6 @@ export const $tStylePanel = i18n("stylePanel", {
   create: "Create",
   globalTokens: "Global Tokens",
   componentTokens: "Component Tokens",
-  textShadows: "Text Shadows",
 });
 
 export const $tLayout = i18n("stylePanel/layout", {
@@ -100,6 +99,11 @@ export const $tBoxShadows = i18n("stylePanel/boxShadows", {
   description: "Adds shadow effects around an element's frame.",
 });
 
+export const $tTextShadows = i18n("stylePanel/textShadows", {
+  textShadows: "Text Shadows",
+  description: "Adds shadow effects around a text.",
+});
+
 export const $tFilters = i18n("stylePanel/filters", {
   filters: "Filters",
   description:
@@ -110,4 +114,21 @@ export const $tBackdropFilters = i18n("stylePanel/backdropFilters", {
   backdropFilters: "BackdropFilters",
   description:
     "Backdrop filters are similar to filters, but are applied to the area behind an element. This can be useful for creating frosted glass effects.",
+});
+
+export const $tTransitions = i18n("stylePanel/transitions", {
+  transitions: "Transitions",
+  description: "Animate the transition between states on this instance.",
+});
+
+export const $tTransforms = i18n("stylePanel/transforms", {
+  transforms: "Transforms",
+});
+
+export const $tOutline = i18n("stylePanel/outline", {
+  outline: "Outline",
+});
+
+export const $tAdvanced = i18n("stylePanel/advanced", {
+  advanced: "Advanced",
 });

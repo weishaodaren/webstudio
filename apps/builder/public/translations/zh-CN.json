@@ -19,8 +19,7 @@
     "newToken": "新令牌",
     "create": "创建",
     "globalTokens": "全局令牌",
-    "componentTokens": "组件令牌",
-    "textShadows": "文本阴影"
+    "componentTokens": "组件令牌"
   },
   "stylePanel/layout": {
     "layout": "布局"
@@ -48,6 +47,10 @@
     "boxShadows": "盒子阴影",
     "description": "在元素的框架周围添加阴影效果。"
   },
+  "stylePanel/textShadows": {
+    "textShadows": "文本阴影",
+    "description": "在文本周围添加阴影效果。"
+  },
   "stylePanel/filters": {
     "filters": "滤镜",
     "description": "滤镜效果允许您对元素应用图形效果，如模糊、颜色移动等。"
@@ -55,5 +58,18 @@
   "stylePanel/backdropFilters": {
     "backdropFilters": "背景滤镜",
     "description": "背景滤镜类似于滤镜，但应用于元素后面的区域。这对于创建磨砂玻璃效果非常有用。"
+  },
+  "stylePanel/transitions": {
+    "transitions": "过渡",
+    "description": "在此实例上动画状态之间的转换。"
+  },
+  "stylePanel/transforms": {
+    "transforms": "转换"
+  },
+  "stylePanel/outline": {
+    "outline": "轮廓"
+  },
+  "stylePanel/advanced": {
+    "advanced": "高级"
   }
 }

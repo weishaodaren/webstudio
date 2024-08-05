@@ -3,7 +3,7 @@ import type { SectionProps } from "../shared/section";
 import type { LayersValue, StyleProperty } from "@webstudio-is/css-engine";
 import { useState } from "react";
 import { useStore } from "@nanostores/react";
-import { $tStylePanel } from "~/shared/nano-states";
+import { $tTextShadows } from "~/shared/nano-states";
 import {
   SectionTitle,
   SectionTitleButton,
@@ -27,11 +27,18 @@ const initialTextShadow = "0px 2px 5px rgba(0, 0, 0, 0.2)";
 
 export const Section = (props: SectionProps) => {
   /**
+   * Props
+   */
+  const { currentStyle, createBatchUpdate, deleteProperty } = props;
+
+  /**
    * Store
    */
-  const t = useStore($tStylePanel);
+  const t = useStore($tTextShadows);
 
-  const { currentStyle, createBatchUpdate, deleteProperty } = props;
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
   const value = currentStyle[property]?.value;
   const sectionStyleSource =
@@ -67,7 +74,7 @@ export const Section = (props: SectionProps) => {
             title={t.textShadows}
             style={currentStyle}
             properties={properties}
-            description="Adds shadow effects around a text."
+            description={t.description}
             label={
               <SectionTitleLabel color={sectionStyleSource}>
                 {t.textShadows}
