@@ -1,5 +1,5 @@
 import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
-import { $tFilters } from "~/shared/nano-states";
+import { $tFilters, $tBackdropFilters } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
 import { useStore } from "@nanostores/react";
 import { useState } from "react";
@@ -36,6 +36,7 @@ export const Section = (props: SectionProps) => {
    * Store
    */
   const t = useStore($tFilters);
+  const tBackdropFilters = useStore($tBackdropFilters);
 
   /**
    * State
@@ -57,7 +58,7 @@ export const Section = (props: SectionProps) => {
         <SectionTitle
           dots={getDots(currentStyle, properties)}
           suffix={
-            <Tooltip content={"Add a filter"}>
+            <Tooltip content={t.tooltip}>
               <SectionTitleButton
                 prefix={<PlusIcon />}
                 onClick={() => {
@@ -105,6 +106,11 @@ export const Section = (props: SectionProps) => {
                 {...layerProps}
                 property={property}
                 layer={layerProps.layer}
+                labels={{
+                  fn: tBackdropFilters.function,
+                  value: tBackdropFilters.value,
+                  code: tBackdropFilters.code,
+                }}
                 tooltip={
                   <Tooltip
                     variant="wrapped"
@@ -113,8 +119,7 @@ export const Section = (props: SectionProps) => {
                         <Text variant="regularBold">{t.filters}</Text>
                         <Text variant="monoBold">filter</Text>
                         <Text>
-                          Applies graphical effects like blur or color shift to
-                          an element, for example:
+                          {t.tooltipDescription}
                           <br /> <br />
                           <Text variant="mono">{initialFilter}</Text>
                         </Text>

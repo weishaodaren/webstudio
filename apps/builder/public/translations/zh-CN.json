@@ -54,7 +54,9 @@
   },
   "stylePanel/filters": {
     "filters": "滤镜",
-    "description": "滤镜效果允许您对元素应用图形效果，如模糊、颜色移动等。"
+    "description": "滤镜效果允许您对元素应用图形效果，如模糊、颜色移动等。",
+    "tooltip": "添加一个滤镜",
+    "tooltipDescription": "对元素应用模糊或颜色偏移等图形效果，例如:"
   },
   "stylePanel/backdropFilters": {
     "backdropFilters": "背景滤镜",

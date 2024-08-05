@@ -109,6 +109,9 @@ export const $tFilters = i18n("stylePanel/filters", {
   filters: "Filters",
   description:
     "Filter effects allow you to apply graphical effects like blurring, color shifting, and more to elements.",
+  tooltip: "Add a filter",
+  tooltipDescription:
+    " Applies graphical effects like blur or color shift to an element, for example:",
 });
 
 export const $tBackdropFilters = i18n("stylePanel/backdropFilters", {
