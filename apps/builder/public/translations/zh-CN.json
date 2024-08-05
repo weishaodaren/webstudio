@@ -62,7 +62,21 @@
   },
   "stylePanel/transitions": {
     "transitions": "过渡",
-    "description": "在此实例上动画状态之间的转换。"
+    "description": "在此实例上动画状态之间的转换。",
+    "common": "普通",
+    "property": "特性",
+    "propertyDescription": "设置将受转换影响的CSS属性。",
+    "easing": "缓动",
+    "easingDescription": "通过改变动画持续时间中不同点的过渡速度来影响动画的外观和感觉",
+    "easingDefault": "默认",
+    "custom": "自定义",
+    "easeIn": "渐入",
+    "easeOut": "渐出",
+    "easeInOut": "渐入渐出",
+    "delay": "延迟",
+    "delayDescription": "指定过渡开始前等待的时间。",
+    "duration": "持续时间",
+    "durationDescription": "设置过渡动画完成所需的时间长度。"
   },
   "stylePanel/transforms": {
     "transforms": "转换",

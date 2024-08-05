@@ -37,6 +37,9 @@ type TransitionPropertyProps = {
   onPropertySelection: (params: {
     property: KeywordValue | UnparsedValue;
   }) => void;
+  commonLabel: string;
+  propertyLabel: string;
+  propertDescription: string;
 };
 
 const commonPropertiesSet = new Set(commonTransitionProperties);
@@ -48,6 +51,9 @@ const properties = Array.from(
 export const TransitionProperty = ({
   property,
   onPropertySelection,
+  commonLabel,
+  propertyLabel,
+  propertDescription,
 }: TransitionPropertyProps) => {
   const valueString = toValue(property);
   const [inputValue, setInputValue] = useState(valueString);
@@ -128,17 +134,15 @@ export const TransitionProperty = ({
           variant="wrapped"
           content={
             <Flex gap="2" direction="column">
-              <Text variant="regularBold">Property</Text>
+              <Text variant="regularBold">{propertyLabel}</Text>
               <Text variant="monoBold" color="moreSubtle">
                 transition-property
               </Text>
-              <Text>
-                Sets the CSS properties that will be affected by the transition.
-              </Text>
+              <Text>{propertDescription}</Text>
             </Flex>
           }
         >
-          <Label css={{ display: "inline" }}> Property </Label>
+          <Label css={{ display: "inline" }}> {propertyLabel} </Label>
         </Tooltip>
       </Flex>
       <ComboboxRoot open={isOpen}>
@@ -156,7 +160,7 @@ export const TransitionProperty = ({
               <ComboboxScrollArea>
                 {isOpen && (
                   <>
-                    <ComboboxLabel>Common</ComboboxLabel>
+                    <ComboboxLabel>{commonLabel}</ComboboxLabel>
                     {commonProperties.map(renderItem)}
                     <ComboboxSeparator />
                     {filteredProperties.map((property, index) =>

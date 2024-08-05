@@ -190,6 +190,20 @@ export const Section = (props: SectionProps) => {
         renderItemContent={(index) => (
           <TransitionContent
             index={index}
+            commonLabel={t.common}
+            propertyLabel={t.property}
+            propertDescription={t.description}
+            easingLabel={t.easing}
+            easingDescription={t.easingDescription}
+            defaultLabel={t.easingDefault}
+            customLabel={t.custom}
+            easeInLabel={t.easeIn}
+            easeOutLabel={t.easeOut}
+            easeInOutLabel={t.easeInOut}
+            delayLable={t.delay}
+            delayDescription={t.delayDescription}
+            durationLabel={t.duration}
+            durationDescription={t.durationDescription}
             currentStyle={currentStyle}
             createBatchUpdate={createBatchUpdate}
           />

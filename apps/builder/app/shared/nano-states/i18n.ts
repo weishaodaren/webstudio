@@ -120,6 +120,24 @@ export const $tBackdropFilters = i18n("stylePanel/backdropFilters", {
 export const $tTransitions = i18n("stylePanel/transitions", {
   transitions: "Transitions",
   description: "Animate the transition between states on this instance.",
+  common: "Common",
+  property: "Property",
+  propertyDescription:
+    "Sets the CSS properties that will be affected by the transition.",
+  easing: "Easing",
+  easingDescription: `Affects the look and feel of the animation by varying the speed
+                of the transition at different points in its duration.`,
+  easingDefault: "Default",
+  custom: "Custom",
+  easeIn: "Ease In",
+  easeOut: "Ease Out",
+  easeInOut: "Ease In Out",
+  delay: "Delay",
+  delayDescription:
+    "Specify the duration to wait before the transition begins.",
+  duration: "Duration",
+  durationDescription:
+    "Sets the length of time a transition animation should take to complete.",
 });
 
 export const $tTransforms = i18n("stylePanel/transforms", {
