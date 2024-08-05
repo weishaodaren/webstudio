@@ -74,6 +74,25 @@ type ShadowContentProps = {
   ) => void;
   deleteProperty: DeleteProperty;
   hideCodeEditor?: boolean;
+  labels: {
+    xOffsetLabel: string;
+    xOffsetDescription: string;
+    yOffsetLabel: string;
+    yOffsetDescription: string;
+    blurRadiusLabel: string;
+    blurRadiusDescription: string;
+    spreadRadiusLabel: string;
+    spreadRadiusDescription: string;
+    insetLabel: string;
+    insetDescription: string;
+    xLabel: string;
+    yLabel: string;
+    blurLabel: string;
+    spreadLabel: string;
+    colorDescription: string;
+    colorLabel: string;
+    codeLabel: string;
+  };
 };
 
 const convertValuesToTupple = (
@@ -102,6 +121,25 @@ export const ShadowContent = ({
   hideCodeEditor = false,
   onEditLayer,
   deleteProperty,
+  labels: {
+    xOffsetLabel,
+    xOffsetDescription,
+    yOffsetLabel,
+    yOffsetDescription,
+    blurRadiusLabel,
+    blurRadiusDescription,
+    spreadRadiusLabel,
+    spreadRadiusDescription,
+    insetLabel,
+    insetDescription,
+    xLabel,
+    yLabel,
+    blurLabel,
+    spreadLabel,
+    colorDescription,
+    colorLabel,
+    codeLabel,
+  },
 }: ShadowContentProps) => {
   const [intermediateValue, setIntermediateValue] = useState<
     IntermediateStyleValue | InvalidValue | undefined
@@ -177,16 +215,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">X Offset</Text>
+                <Text variant="regularBold">{xOffsetLabel}</Text>
                 <Text variant="monoBold">offset-x</Text>
-                <Text>
-                  Sets the horizontal offset of the shadow. Negative values
-                  place the shadow to the left.
-                </Text>
+                <Text>{xOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>X</Label>
+            <Label css={{ width: "fit-content" }}>{xLabel}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetX"
@@ -211,16 +246,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Y Offset</Text>
+                <Text variant="regularBold">{yOffsetLabel}</Text>
                 <Text variant="monoBold">offset-y</Text>
-                <Text>
-                  Sets the vertical offset of the shadow. Negative values place
-                  the shadow above.
-                </Text>
+                <Text>{yOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Y</Label>
+            <Label css={{ width: "fit-content" }}>{yLabel}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetY"
@@ -245,16 +277,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Blur Radius</Text>
+                <Text variant="regularBold">{blurRadiusLabel}</Text>
                 <Text variant="monoBold">blur-radius</Text>
-                <Text>
-                  The larger this value, the bigger the blur, so the shadow
-                  becomes bigger and lighter.
-                </Text>
+                <Text>{blurRadiusDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Blur</Label>
+            <Label css={{ width: "fit-content" }}>{blurLabel}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowBlur"
@@ -280,16 +309,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">Spread Radius</Text>
+                  <Text variant="regularBold">{spreadRadiusLabel}</Text>
                   <Text variant="monoBold">spread-radius</Text>
-                  <Text>
-                    Positive values will cause the shadow to expand and grow
-                    bigger, negative values will cause the shadow to shrink.
-                  </Text>
+                  <Text>{spreadRadiusDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ width: "fit-content" }}>Spread</Label>
+              <Label css={{ width: "fit-content" }}>{spreadLabel}</Label>
             </Tooltip>
             <CssValueInputContainer
               key="boxShadowSpread"
@@ -325,13 +351,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Color</Text>
+                <Text variant="regularBold">{colorLabel}</Text>
                 <Text variant="monoBold">color</Text>
-                <Text>Sets the shadow color and opacity.</Text>
+                <Text>{colorDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Color</Label>
+            <Label css={{ width: "fit-content" }}>{colorLabel}</Label>
           </Tooltip>
           <ColorControl
             property="color"
@@ -354,16 +380,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">Inset</Text>
+                  <Text variant="regularBold">{insetLabel}</Text>
                   <Text variant="monoBold">inset</Text>
-                  <Text>
-                    Changes the shadow from an outer shadow (outset) to an inner
-                    shadow (inset).
-                  </Text>
+                  <Text>{insetDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ display: "inline" }}>Inset</Label>
+              <Label css={{ display: "inline" }}>{insetLabel}</Label>
             </Tooltip>
             <ToggleGroup
               type="single"
@@ -406,7 +429,7 @@ export const ShadowContent = ({
           >
             <Label>
               <Flex align={"center"} gap={1}>
-                Code
+                {codeLabel}
                 {tooltip}
               </Flex>
             </Label>

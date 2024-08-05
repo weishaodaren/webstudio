@@ -46,7 +46,23 @@
   },
   "stylePanel/boxShadows": {
     "boxShadows": "盒子阴影",
-    "description": "在元素的框架周围添加阴影效果。"
+    "description": "在元素的框架周围添加阴影效果。",
+    "tooltip": "粘贴一个不带属性名的box-shadow CSS代码，例如:",
+    "x": "X轴",
+    "xOffset": "X 偏移",
+    "xOffsetDescription": "设置阴影的水平偏移。负值将阴影放置在左侧。",
+    "y": "Y轴",
+    "yOffset": "Y 偏移",
+    "yOffsetDescription": "设置阴影的垂直偏移。负值将阴影放置在上方。",
+    "blur": "模糊",
+    "blurRadius": "模糊半径",
+    "blurRadiusDescription": "此值越大，模糊效果越明显，阴影变得更大且更轻。",
+    "spread": "扩展",
+    "spreadRadius": "扩展半径",
+    "spreadRadiusDescription": "正值将导致阴影扩展变大，负值将导致阴影缩小。",
+    "colorDescription": "设置阴影的颜色和不透明度。",
+    "insetLabel": "内嵌",
+    "insetDescription": "将阴影从外部阴影（外投影）更改为内部阴影（内投影）。"
   },
   "stylePanel/textShadows": {
     "textShadows": "文本阴影",

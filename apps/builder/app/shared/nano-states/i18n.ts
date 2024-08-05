@@ -98,6 +98,28 @@ export const $tBorder = i18n("stylePanel/borders", {
 export const $tBoxShadows = i18n("stylePanel/boxShadows", {
   boxShadows: "Box Shadows",
   description: "Adds shadow effects around an element's frame.",
+  tooltip:
+    "Paste a box-shadow CSS code without the property name, for example:",
+  x: "X",
+  xOffset: "X Offset",
+  xOffsetDescription:
+    "Sets the horizontal offset of the shadow. Negative values place the shadow to the left.",
+  y: "Y",
+  yOffset: "Y Offset",
+  yOffsetDescription:
+    "Sets the vertical offset of the shadow. Negative values place the shadow above.",
+  blur: "Blur",
+  blurRadius: "Blur Radius",
+  blurRadiusDescription:
+    "The larger this value, the bigger the blur, so the shadow becomes bigger and lighter.",
+  spread: "Spread",
+  spreadRadius: "Spread Radius",
+  spreadRadiusDescription:
+    "Positive values will cause the shadow to expand and grow bigger, negative values will cause the shadow to shrink.",
+  colorDescription: "Sets the shadow color and opacity.",
+  insetLabel: "Inset",
+  insetDescription:
+    "Changes the shadow from an outer shadow (outset) to an inner shadow (inset).",
 });
 
 export const $tTextShadows = i18n("stylePanel/textShadows", {
