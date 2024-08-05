@@ -182,10 +182,22 @@ export const Section = (props: SectionProps) => {
   );
 };
 
+/**
+ * Compoennt
+ */
 const TransformSection = (
   props: SectionProps & { index: number; panel: TransformPanel }
 ) => {
+  /**
+   * Props
+   */
   const { currentStyle, setProperty, deleteProperty, panel, index } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tTransforms);
+
   const properties = useMemo(() => {
     const property =
       panel === "rotate" || panel === "skew" ? "transform" : panel;
@@ -208,17 +220,52 @@ const TransformSection = (
     propertyValue: properties.value,
   };
 
+  const translatePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.translateX,
+      yLabel: t.translateY,
+      zLabel: t.translateZ,
+    },
+  };
+
+  const scalePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+      zLabel: t.scaleZ,
+    },
+  };
+
+  const rotatePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+      zLabel: t.scaleZ,
+    },
+  };
+
+  const skewPanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+    },
+  };
+
   return (
     <FloatingPanel
-      title={humanizeString(panel)}
+      title={t[panel]}
       content={
         <Flex direction="column" css={{ p: theme.spacing[9] }}>
           {panel === "translate" && (
-            <TranslatePanelContent {...contentPanelProps} />
+            <TranslatePanelContent {...translatePanelProps} />
           )}
-          {panel === "scale" && <ScalePanelContent {...contentPanelProps} />}
-          {panel === "rotate" && <RotatePanelContent {...contentPanelProps} />}
-          {panel === "skew" && <SkewPanelContent {...contentPanelProps} />}
+          {panel === "scale" && <ScalePanelContent {...scalePanelProps} />}
+          {panel === "rotate" && <RotatePanelContent {...rotatePanelProps} />}
+          {panel === "skew" && <SkewPanelContent {...skewPanelProps} />}
         </Flex>
       }
     >

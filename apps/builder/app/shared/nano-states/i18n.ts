@@ -124,6 +124,21 @@ export const $tTransitions = i18n("stylePanel/transitions", {
 
 export const $tTransforms = i18n("stylePanel/transforms", {
   transforms: "Transforms",
+  translate: "Translate",
+  translateX: " Translate X",
+  translateY: " Translate Y",
+  translateZ: " Translate Z",
+  scale: "Scale",
+  scaleX: " Scale X",
+  scaleY: " Scale Y",
+  scaleZ: " Scale Z",
+  rotate: "Rotate",
+  rotateX: " Rotate X",
+  rotateY: " Rotate Y",
+  rotateZ: " Rotate Z",
+  skew: "Skew",
+  skewX: " Skew X",
+  skewY: " Skew Y",
 });
 
 export const $tOutline = i18n("stylePanel/outline", {

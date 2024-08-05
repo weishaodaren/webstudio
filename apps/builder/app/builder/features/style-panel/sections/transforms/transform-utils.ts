@@ -9,12 +9,18 @@ import {
 import type { DeleteProperty, SetProperty } from "../../shared/use-style-data";
 import type { StyleInfo } from "../../shared/style-info";
 import type { TransformPanel } from "./transforms";
+import { $tTransforms } from "~/shared/nano-states";
 
 export type TransformPanelProps = {
   currentStyle: StyleInfo;
   propertyValue: TupleValue;
   setProperty: SetProperty;
   deleteProperty: DeleteProperty;
+  labels?: {
+    xLable: string;
+    yLabel: string;
+    zLabel?: string;
+  };
 };
 
 const defaultTranslate = "0px 0px 0px";
@@ -26,16 +32,18 @@ export const getHumanizedTextFromTransformLayer = (
   panel: TransformPanel,
   value: TupleValue
 ): { label: string; value: TupleValue } | undefined => {
+  const { translate, scale, skew: _skew, rotate: _rotate } = $tTransforms.get();
+
   switch (panel) {
     case "translate":
       return {
-        label: `Translate: ${toValue({ ...value, hidden: false })}`,
+        label: `${translate}: ${toValue({ ...value, hidden: false })}`,
         value,
       };
 
     case "scale":
       return {
-        label: `Scale: ${toValue({ ...value, hidden: false })}`,
+        label: `${scale}: ${toValue({ ...value, hidden: false })}`,
         value,
       };
 
@@ -51,7 +59,7 @@ export const getHumanizedTextFromTransformLayer = (
       }
 
       return {
-        label: `Rotate: ${toValue(rotateX.args)} ${toValue(rotateY.args)} ${toValue(rotateZ.args)}`,
+        label: `${_rotate}: ${toValue(rotateX.args)} ${toValue(rotateY.args)} ${toValue(rotateZ.args)}`,
         value: {
           type: "tuple",
           value: [rotateX, rotateY, rotateZ],
@@ -69,7 +77,7 @@ export const getHumanizedTextFromTransformLayer = (
       }
 
       return {
-        label: `Skew: ${toValue(skewX.args)} ${toValue(skewY.args)}`,
+        label: `${_skew}: ${toValue(skewX.args)} ${toValue(skewY.args)}`,
         value: {
           type: "tuple",
           value: [skewX, skewY],

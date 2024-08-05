@@ -65,7 +65,22 @@
     "description": "在此实例上动画状态之间的转换。"
   },
   "stylePanel/transforms": {
-    "transforms": "转换"
+    "transforms": "转换",
+    "translate": "移动",
+    "translateX": " X轴移动",
+    "translateY": " Y轴移动",
+    "translateZ": " Z轴移动",
+    "scale": "缩放",
+    "scaleX": " X轴缩放",
+    "scaleY": " Y轴缩放",
+    "scaleZ": " Z轴缩放",
+    "rotate": "旋转",
+    "rotateX": " X轴旋转",
+    "rotateY": " Y轴旋转",
+    "rotateZ": " Z轴旋转",
+    "skew": "倾斜",
+    "skewX": " X轴倾斜",
+    "skewY": " Y轴倾斜"
   },
   "stylePanel/outline": {
     "outline": "轮廓",

@@ -64,8 +64,14 @@ const convertToUnitValue = (
   }
 };
 
+/**
+ * Component
+ */
 export const ScalePanelContent = (props: TransformPanelProps) => {
-  const { propertyValue, setProperty, deleteProperty } = props;
+  /**
+   * Props
+   */
+  const { propertyValue, setProperty, deleteProperty, labels } = props;
   const [scaleX, scaleY, scaleZ] = propertyValue.value;
   const [isScalingLocked, setScalingLock] = useState(true);
   const [intermediateScalingX, setIntermediateScalingX] = useState<
@@ -175,7 +181,7 @@ export const ScalePanelContent = (props: TransformPanelProps) => {
           css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
         >
           <XAxisIcon />
-          <Label> Scale X</Label>
+          <Label>{labels?.xLable}</Label>
           <CssValueInput
             key="scaleX"
             styleSource="local"
@@ -215,7 +221,7 @@ export const ScalePanelContent = (props: TransformPanelProps) => {
           css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
         >
           <YAxisIcon />
-          <Label> Scale Y</Label>
+          <Label>{labels?.yLabel}</Label>
           <CssValueInput
             key="scaleY"
             styleSource="local"
@@ -255,7 +261,7 @@ export const ScalePanelContent = (props: TransformPanelProps) => {
           css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
         >
           <ZAxisIcon />
-          <Label> Scale Z</Label>
+          <Label>{labels?.zLabel}</Label>
           <CssValueInput
             key="scaleZ"
             styleSource="local"

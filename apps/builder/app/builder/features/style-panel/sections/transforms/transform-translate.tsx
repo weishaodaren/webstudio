@@ -17,7 +17,7 @@ import { parseCssValue } from "@webstudio-is/css-data";
 const property: StyleProperty = "translate";
 
 export const TranslatePanelContent = (props: TransformPanelProps) => {
-  const { propertyValue, setProperty } = props;
+  const { propertyValue, setProperty, labels } = props;
   const [translateX, translateY, translateZ] = propertyValue.value;
 
   const handlePropertyUpdate = (
@@ -61,7 +61,7 @@ export const TranslatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 2fr 2fr" }}
       >
         <XAxisIcon />
-        <Label> Translate X</Label>
+        <Label>{labels?.xLable}</Label>
         <CssValueInputContainer
           key="translateX"
           styleSource="local"
@@ -79,7 +79,7 @@ export const TranslatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 2fr 2fr" }}
       >
         <YAxisIcon />
-        <Label> Translate Y</Label>
+        <Label>{labels?.yLabel}</Label>
         <CssValueInputContainer
           key="translateX"
           styleSource="local"
@@ -97,7 +97,7 @@ export const TranslatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <ZAxisIcon />
-        <Label> Translate Z</Label>
+        <Label>{labels?.zLabel}</Label>
         <CssValueInputContainer
           key="translateX"
           styleSource="local"
