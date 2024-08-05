@@ -129,9 +129,7 @@ export const Section = (props: SectionProps) => {
           suffix={
             <Tooltip
               content={
-                isStyleInLocalState === false
-                  ? "Transitions can only be added in local state"
-                  : "Add a transition"
+                isStyleInLocalState === false ? t.localTooltip : t.addTooltip
               }
             >
               <SectionTitleButton

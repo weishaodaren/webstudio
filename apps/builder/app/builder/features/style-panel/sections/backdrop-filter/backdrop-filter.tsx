@@ -57,7 +57,7 @@ export const Section = (props: SectionProps) => {
         <SectionTitle
           dots={getDots(currentStyle, properties)}
           suffix={
-            <Tooltip content={"Add a backdrop-filter"}>
+            <Tooltip content={t.tooltip}>
               <SectionTitleButton
                 prefix={<PlusIcon />}
                 onClick={() => {
@@ -108,6 +108,11 @@ export const Section = (props: SectionProps) => {
                 {...layerProps}
                 property={property}
                 layer={layerProps.layer}
+                labels={{
+                  fn: t.function,
+                  value: t.value,
+                  code: t.code,
+                }}
                 tooltip={
                   <Tooltip
                     variant="wrapped"
@@ -116,8 +121,7 @@ export const Section = (props: SectionProps) => {
                         <Text variant="regularBold">{t.backdropFilters}</Text>
                         <Text variant="monoBold">backdrop-filter</Text>
                         <Text>
-                          Applies graphical effects like blur or color shift to
-                          the area behind an element
+                          {t.tooltipDescription}
                           <br /> <br />
                           <Text variant="mono">{initialBackdropFilter}</Text>
                         </Text>

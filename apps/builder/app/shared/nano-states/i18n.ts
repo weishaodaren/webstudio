@@ -115,6 +115,12 @@ export const $tBackdropFilters = i18n("stylePanel/backdropFilters", {
   backdropFilters: "BackdropFilters",
   description:
     "Backdrop filters are similar to filters, but are applied to the area behind an element. This can be useful for creating frosted glass effects.",
+  tooltip: "Add a backdrop-filter",
+  tooltipDescription:
+    " Applies graphical effects like blur or color shift to the area behind an element",
+  function: "Function",
+  value: "Value",
+  code: "Code",
 });
 
 export const $tTransitions = i18n("stylePanel/transitions", {
@@ -138,6 +144,8 @@ export const $tTransitions = i18n("stylePanel/transitions", {
   duration: "Duration",
   durationDescription:
     "Sets the length of time a transition animation should take to complete.",
+  addTooltip: "Add a transition",
+  localTooltip: "Transitions can only be added in local state",
 });
 
 export const $tTransforms = i18n("stylePanel/transforms", {

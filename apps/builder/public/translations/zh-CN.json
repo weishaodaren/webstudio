@@ -58,7 +58,12 @@
   },
   "stylePanel/backdropFilters": {
     "backdropFilters": "背景滤镜",
-    "description": "背景滤镜类似于滤镜，但应用于元素后面的区域。这对于创建磨砂玻璃效果非常有用。"
+    "description": "背景滤镜类似于滤镜，但应用于元素后面的区域。这对于创建磨砂玻璃效果非常有用。",
+    "tooltip": "添加一个背景滤镜",
+    "tooltipDescription": "对元素后面的区域应用图形效果，如模糊或颜色偏移",
+    "function": "函数",
+    "value": "值",
+    "code": "代码"
   },
   "stylePanel/transitions": {
     "transitions": "过渡",
@@ -76,7 +81,9 @@
     "delay": "延迟",
     "delayDescription": "指定过渡开始前等待的时间。",
     "duration": "持续时间",
-    "durationDescription": "设置过渡动画完成所需的时间长度。"
+    "durationDescription": "设置过渡动画完成所需的时间长度。",
+    "addTooltip": "添加一个过渡",
+    "localTooltip": "只能在本地状态下添加过渡"
   },
   "stylePanel/transforms": {
     "transforms": "转换",
