@@ -6,7 +6,9 @@
     "cancel": "取消",
     "untitled": "未命名",
     "language": "语言",
-    "chooseImage": "从资源中选择图像"
+    "chooseImage": "从资源中选择图像",
+    "upload": "上传",
+    "search": "搜索"
   },
   "leftPanel/category": {
     "components": "组件",

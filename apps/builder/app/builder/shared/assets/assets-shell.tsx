@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tLeftPanel } from "~/shared/nano-states";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import type { AssetType } from "@webstudio-is/asset-uploader";
 import {
@@ -52,7 +54,19 @@ export const AssetsShell = ({
   type,
   accept,
 }: AssetsShellProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanel);
+
+  /**
+   * Ref
+   */
   const ref = useRef<HTMLDivElement>(null);
+
+  /**
+   * State
+   */
   const [monitorState, setMonitorState] =
     useState<ExternalMonitorDragState>(IDLE);
 
@@ -165,8 +179,8 @@ export const AssetsShell = ({
         direction="column"
         shrink={false}
       >
-        <AssetUpload type={type} accept={accept} />
-        <SearchField {...searchProps} autoFocus placeholder="Search" />
+        <AssetUpload type={type} accept={accept} label={t.upload} />
+        <SearchField {...searchProps} autoFocus placeholder={t.search} />
       </Flex>
       <Separator />
       {isEmpty && <NotFound />}
