@@ -243,6 +243,55 @@ export const $tComponents = i18n("components", {
   code: "Code Text",
   codeDescription:
     "Use this component when you want to display code as text on the page.",
+  text: "Text",
+  textDescription:
+    "A generic container for any text content that is not a heading or a link.",
+  heading: "Heading",
+  headingDescription:
+    "Use HTML headings to structure and organize content. Use the Tag property in settings to change the heading level (h1-h6).",
+  paragraph: "Paragraph",
+  paragraphDescription: "A container for multi-line text.",
+  blockquote: "Blockquote",
+  blockquoteDescription:
+    "Use to style a quote from an external source like an article or book.",
+  webhook: "Webhook Form",
+  webhookDescription: "Collect user data and send it to any webhook.",
+  contentEmbed: "Content Embed",
+  contentEmbedDescription:
+    "Content Embed allows styling of HTML, which can be provided via the Code property statically or loaded dynamically from any Resource, for example, from a CMS.",
+  image: "Image",
+  imageDescription:
+    "Add an image asset to the page. Webstudio automatically converts images to WebP or AVIF format and makes them responsive for best performance.",
+  vimeo: "Vimeo",
+  vimeoDescription:
+    "Add a video to your page that is hosted on Vimeo. Paste a Vimeo URL and configure the video in the Settings tab.",
+  form: "Form",
+  formDescription: "Create filters, surveys, searches and more.",
+  button: "Button",
+  buttonDescription:
+    "Use a button to submit forms or trigger actions within a page. Do not use a button to navigate users to another resource or another page - that’s what a link is used for.",
+  inputLabel: "Input Label",
+  inputLabelDescription: "Input Label",
+  textInput: "Text Input",
+  textInputDescription:
+    "A single-line text input for collecting string data from your users.",
+  select: "Select",
+  selectDescription:
+    "A drop-down menu for users to select a single option from a predefined list.",
+  textarea: "Text Area",
+  textareaDescription:
+    "A multi-line text input for collecting longer string data from your users.",
+  radio: "Radio",
+  radioDescription:
+    "Use within a form to allow your users to select a single option from a set of mutually exclusive choices. Group multiple radios by matching their “Name” properties.",
+  checkbox: "Checkbox",
+  checkboxDescription:
+    "Use within a form to allow your users to toggle between checked and not checked. Group checkboxes by matching their “Name” properties. Unlike radios, any number of checkboxes in a group can be checked.",
+  collection: "Collection",
+  collectionDescription: "Collection",
+  time: "Time",
+  timeDescription:
+    "Converts machine-readable date and time to a human-readable format.",
 });
 
 /**
