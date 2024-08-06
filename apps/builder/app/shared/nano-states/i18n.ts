@@ -96,6 +96,53 @@ export const $tPosition = i18n("stylePanel/position", {
 
 export const $tTypography = i18n("stylePanel/typography", {
   typography: "Typography",
+  family: "Family",
+  weight: "Weight",
+  spacing: "Spacing",
+  textAlign: "Text Align",
+  textAlignStartDesc: "Aligns the text based on the writing direction.",
+  textAlignCenterDesc: "Centers the text horizontally within its container.",
+  textAlignEndDesc: "Aligns the text based on the writing direction.",
+  textAlignJustifyDesc:
+    "Adjusts word spacing to align text to both the left and right edges of the container.",
+  textDecoration: "Text Decoration Line",
+  textDecorationNoneDesc: "No decoration is applied to the text.",
+  textDecorationUnderlineDesc: "Adds a horizontal line underneath the text.",
+  textDecorationLinethroughDesc:
+    "Draws a horizontal line through the middle of the text.",
+  textTransform: "Text Transform",
+  textTransformNoneDesc:
+    "No transformation is applied to the text. The text appears as it is.",
+  textTransformUpperDesc:
+    "Transforms the text to appear in all uppercase letters.",
+  textTransformCapsDesc:
+    "Transforms the first character of each word to uppercase, while the remaining characters are in lowercase.",
+  textTransformLowerDesc:
+    "Transforms the text to appear in all lowercase letters.",
+  fontStyle: "Font Style",
+  normalDesc: "The default value. The text appears in a normal, upright style.",
+  italicDesc:
+    "The text appears in italic style, where it is slanted to the right.",
+  advancedTooltip: "More typography options",
+  advanced: "Advanced Typography",
+  whiteSpace: "White Space",
+  wrapMode: "Wrap Mode",
+  wrapStyle: "Wrap Style",
+  direction: "Direction",
+  directionLTRDesc:
+    "Sets the text direction to left-to-right, which is the default for most languages.",
+  directionRTLDesc:
+    "Sets the text direction to right-to-left, typically used for languages such as Arabic or Hebrew.",
+  hyphens: "Hyphens",
+  hyphensNoneDesc:
+    "Disables hyphenation of words. Words will not be hyphenated even if they exceed the width of their container.",
+  hyphensAutoDesc:
+    "Enables automatic hyphenation of words. The browser will hyphenate long words at appropriate points to fit within the width of their container.",
+  overflow: "Text Overflow",
+  overflowClipDesc:
+    "The overflowing text is clipped and hidden without any indication.",
+  overflowEllipsisDesc:
+    "The overflowing text is truncated with an ellipsis (...) to indicate that there is more content. To make the text-overflow: ellipsis property work, you need to set the following CSS properties: white-space: nowrap; overflow: hidden;",
 });
 
 export const $tBackground = i18n("stylePanel/backgrounds", {
@@ -217,6 +264,7 @@ export const $tOutline = i18n("stylePanel/outline", {
   outline: "Outline",
   color: "Color",
   width: "Width",
+  height: "Height",
   offset: "Offset",
   style: "Style",
 });
