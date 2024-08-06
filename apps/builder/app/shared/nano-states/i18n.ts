@@ -219,6 +219,37 @@ export const $tAdvanced = i18n("stylePanel/advanced", {
   advanced: "Advanced",
 });
 
+export const $tComponents = i18n("components", {
+  components: "Components",
+  box: "Box",
+  boxDescription:
+    "A container for content. By default this is a Div, but the tag can be changed in settings.",
+  link: "Link",
+  linkDescription:
+    "Use a link to send your users to another page, section, or resource. Configure links in the Settings panel.",
+});
+
+/**
+ * 组件
+ * @description 参考 `componentCategories`
+ * @import import { componentCategories } from "@webstudio-is/react-sdk";
+ */
+export const $tComponentsCategory = i18n("components/category", {
+  general: "general",
+  text: "text",
+  data: "data",
+  media: "media",
+  forms: "forms",
+  radix: "radix",
+  xml: "xml",
+  hidden: "hidden",
+  internal: "internal",
+});
+
+export const $tLeftPanel = i18n("leftPanel", {
+  closePanel: "Close panel",
+});
+
 // CSS 声明
 export const $tDeclarations = i18n("declarations/generated", {
   "alignContent:normal":

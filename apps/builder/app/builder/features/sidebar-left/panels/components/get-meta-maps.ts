@@ -1,7 +1,27 @@
 import { type WsComponentMeta } from "@webstudio-is/react-sdk";
 
+export type ComponentsInfo = Record<
+  NonNullable<WsComponentMeta["label"]>,
+  Pick<WsComponentMeta, "label" | "description">
+>;
+
+/**
+ * 获取组件国际化映射
+ */
+const getComponentsi18n = (
+  meta: WsComponentMeta,
+  mapping: ComponentsInfo
+): Pick<WsComponentMeta, "label" | "description"> | undefined => {
+  if (!meta.label) {
+    return;
+  }
+
+  return mapping[meta.label] ? mapping[meta.label] : undefined;
+};
+
 export const getMetaMaps = (
-  metaByComponentName: Map<string, WsComponentMeta>
+  metaByComponentName: Map<string, WsComponentMeta>,
+  mapping: ComponentsInfo
 ) => {
   const metaByCategory: Map<
     WsComponentMeta["category"],
@@ -13,6 +33,12 @@ export const getMetaMaps = (
     if (meta.category === undefined || meta.category === "hidden") {
       continue;
     }
+
+    // 国际化
+    const t = getComponentsi18n(meta, mapping);
+    meta.label = t?.label ?? meta.label;
+    meta.description = t?.description ?? meta.description;
+
     let categoryMetas = metaByCategory.get(meta.category);
     if (categoryMetas === undefined) {
       categoryMetas = [];

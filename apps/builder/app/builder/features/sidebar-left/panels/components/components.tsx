@@ -22,22 +22,55 @@ import {
   useDraggable,
 } from "./use-draggable";
 import { MetaIcon } from "~/builder/shared/meta-icon";
-import { $registeredComponentMetas, $selectedPage } from "~/shared/nano-states";
-import { getMetaMaps } from "./get-meta-maps";
+import {
+  $registeredComponentMetas,
+  $selectedPage,
+  $tComponents,
+  $tComponentsCategory,
+  $tLeftPanel,
+} from "~/shared/nano-states";
+import { getMetaMaps, type ComponentsInfo } from "./get-meta-maps";
 import { getInstanceLabel } from "~/shared/instance-utils";
 import { isFeatureEnabled } from "@webstudio-is/feature-flags";
 import { insert } from "./insert";
 
+/**
+ * Component
+ */
 export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tComponents);
+  const tComponentsCategory = useStore($tComponentsCategory);
+  const tLeftPanel = useStore($tLeftPanel);
   const metaByComponentName = useStore($registeredComponentMetas);
   const selectedPage = useStore($selectedPage);
 
   const documentType = selectedPage?.meta.documentType ?? "html";
 
+  /**
+   * Memo
+   * @description 组件国际化映射
+   * @returns { ComponentsInfo }
+   */
+  const mapping: ComponentsInfo = useMemo(() => {
+    const { box, boxDescription, link, linkDescription } = t;
+    return {
+      Box: { label: box, description: boxDescription },
+      Link: { label: link, description: linkDescription },
+    };
+  }, [t]);
+
+  /**
+   * Memo
+   * @description 组件分类
+   */
   const { metaByCategory, componentNamesByMeta } = useMemo(
-    () => getMetaMaps(metaByComponentName),
-    [metaByComponentName]
+    () => getMetaMaps(metaByComponentName, mapping),
+    [mapping, metaByComponentName]
   );
+
   const { dragCard, draggableContainerRef } = useDraggable({
     publish,
     metaByComponentName,
@@ -46,10 +79,16 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
   return (
     <Root ref={draggableContainerRef}>
       <Header
-        title="Components"
-        suffix={<CloseButton onClick={() => onSetActiveTab("none")} />}
+        title={t.components}
+        suffix={
+          <CloseButton
+            onClick={() => onSetActiveTab("none")}
+            label={tLeftPanel.closePanel}
+          />
+        }
       />
       <ScrollArea>
+        {/* 分类 */}
         {componentCategories
           .filter((category) => {
             if (category === "hidden") {
@@ -75,13 +114,18 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
             return true;
           })
           .map((category) => (
-            <CollapsibleSection label={category} key={category} fullWidth>
+            <CollapsibleSection
+              label={tComponentsCategory[category]}
+              key={category}
+              fullWidth
+            >
               <List asChild>
                 <Flex
                   gap="2"
                   wrap="wrap"
                   css={{ px: theme.spacing[9], overflow: "auto" }}
                 >
+                  {/* 组件 */}
                   {(metaByCategory.get(category) ?? [])
                     .filter((meta: WsComponentMeta) => {
                       if (documentType === "xml" && meta.category === "data") {
