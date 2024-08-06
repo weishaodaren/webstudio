@@ -3,7 +3,13 @@
  * @link https://github.com/nanostores/i18n
  */
 
-import { createI18n, localeFrom, browser, formatter } from "@nanostores/i18n";
+import {
+  createI18n,
+  localeFrom,
+  browser,
+  formatter,
+  params,
+} from "@nanostores/i18n";
 import { persistentAtom } from "@nanostores/persistent";
 
 export const setting = persistentAtom<string | undefined>("locale", undefined);
@@ -353,6 +359,8 @@ export const $tLeftPanel = i18n("leftPanel", {
   show: "Show",
   cancel: "Cancel",
   untitled: "Untitled",
+  language: "Language",
+  chooseImage: "Choose Image From Assets",
 });
 
 export const $tPages = i18n("pages", {
@@ -362,10 +370,46 @@ export const $tPages = i18n("pages", {
   newFolderSettings: "new Folder Settings",
   creating: "Creating",
   createFolder: "Create folder",
+  createPage: "Create page",
   folderName: "Folder Name",
   parentFolder: "Parent Folder",
   slug: "Slug",
   slugTooltip: "Slug will be used as part of the path to the page",
+  newPageSettings: "New Page Settings",
+  pageName: "Page Name",
+  makeHomePage: params(" Make “{name}” the home page"),
+  dynamicPath: "Dynamic Path",
+  dynamicPathTooltip:
+    "The path can include dynamic parameters like :name, which could be made optional using :name?, or have a wildcard such as /* or /:name* to store whole remaining part at the end of the URL.",
+  statusCode: "Status Code",
+  statusCodeContent1: "Status code value can be a",
+  statusCodeContent2: "HTTP Status",
+  statusCodeContent3:
+    "number or an expression that returns the status code dynamic response handling.",
+  redirect: "Redirect",
+  redirectTooltip:
+    "Redirect value can be a path or an expression that returns a path for dynamic response handling.",
+  documentType: "Document Type",
+  search: "Search",
+  searchSubtitle:
+    "Optimize the way this page appears in search engine results pages.",
+  searchLabel: "Search Result Preview",
+  title: "Title",
+  description: "Description",
+  searchResults: "Exclude this page from search results",
+  socialImage: "Social Image",
+  socialImageSubtitle:
+    " This image appears when you share a link to this page on social media sites. If no image is set here, the Social Image set in the Project Settings will be used. The optimal dimensions for the image are 1200x630 px or larger with a 1.91:1 aspect ratio.",
+  socialSharingPreview: "Social Sharing Preview",
+  customMetadata: "Custom Metadata",
+  metadataSubtitle1:
+    "Use this section to input metadata for the document, which will be used to generate",
+  metadataSubtitle2: "tags. Each pair consists of a",
+  metadataSubtitle3: "attribute, indicating the type of metadata, and a",
+  metadataSubtitle4: "attribute, specifying its value.",
+  addMetadata: "Add another metadata pair",
+  metadataProperty: "property",
+  metadataContent: "content",
 });
 
 // CSS 声明

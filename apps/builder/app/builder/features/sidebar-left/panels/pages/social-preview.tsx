@@ -9,6 +9,7 @@ type SocialPreviewProps = {
   ogUrl: string;
   ogTitle: string;
   ogDescription: string;
+  label: string;
 };
 
 const imgStyle = css({
@@ -32,12 +33,13 @@ export const SocialPreview = ({
   ogDescription,
   ogTitle,
   ogUrl,
+  label,
 }: SocialPreviewProps) => {
   const imageLoader = useStore($imageLoader);
 
   return (
     <Grid gap={1}>
-      <Label>Social Sharing Preview</Label>
+      <Label>{label}</Label>
 
       <Grid
         gap={1}

@@ -4,6 +4,8 @@
     "removeTooltip": "从DOM中删除实例。断点对此设置没有影响。",
     "show": "显示",
     "cancel": "取消",
-    "untitled": "未命名"
+    "untitled": "未命名",
+    "language": "语言",
+    "chooseImage": "从资源中选择图像"
   }
 }
