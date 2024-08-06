@@ -23,6 +23,7 @@ import {
   $registeredComponentMetas,
   $props,
   $propsIndex,
+  $tLeftPanel,
 } from "~/shared/nano-states";
 import { MetaIcon } from "../meta-icon";
 import { useContentEditable } from "~/shared/dom-hooks";
@@ -36,17 +37,14 @@ import { nanoid } from "nanoid";
 const ShowToggle = ({
   show,
   onChange,
+  label,
 }: {
   show: boolean;
   onChange: (show: boolean) => void;
+  label: string;
 }) => {
   return (
-    <Tooltip
-      // If you are changing it, change the other one too
-      content="Removes the instance from the DOM. Breakpoints have no effect on this setting."
-      disableHoverableContent
-      variant="wrapped"
-    >
+    <Tooltip content={label} disableHoverableContent variant="wrapped">
       <SmallIconButton
         aria-label="Show"
         onClick={() => onChange(show ? false : true)}
@@ -99,12 +97,19 @@ const canLeaveParent = ([instanceId]: InstanceSelector) => {
   return meta?.type !== "rich-text-child";
 };
 
+/**
+ * Component
+ */
 export const InstanceTree = (
   props: Omit<
     TreeProps<Instance>,
     "renderItem" | "canLeaveParent" | "getItemChildren" | "editingItemId"
   >
 ) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanel);
   const metas = useStore($registeredComponentMetas);
   const instances = useStore($instances);
   const editingItemSelector = useStore($editingItemSelector);
@@ -179,6 +184,7 @@ export const InstanceTree = (
           selectionEvent="focus"
           suffix={
             <ShowToggle
+              label={t.removeTooltip}
               show={show}
               onChange={(show) => {
                 updateShowProp(itemData.id, show);

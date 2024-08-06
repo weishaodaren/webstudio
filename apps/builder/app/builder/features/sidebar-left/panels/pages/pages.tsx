@@ -25,7 +25,7 @@ import type { TabContentProps } from "../../types";
 import { CloseButton, Header, Root } from "../../shared/panel";
 import { ExtendedPanel } from "../../shared/extended-panel";
 import { NewPageSettings, PageSettings } from "./page-settings";
-import { $pages, $selectedPageId } from "~/shared/nano-states";
+import { $pages, $selectedPageId, $tPages } from "~/shared/nano-states";
 import { switchPage } from "~/shared/pages";
 import {
   $editingPagesItemId,
@@ -137,9 +137,14 @@ const PagesPanel = ({
   onEdit: (pageId: string | undefined) => void;
   editingItemId?: string;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
   const pages = useStore($pages);
   const treeData = useMemo(() => pages && toTreeData(pages), [pages]);
   const expandedItems = useStore($expandedItems);
+
   useReparentOrphans();
   const renderItem = useCallback(
     (props: TreeItemRenderProps<TreeData>) => {
@@ -218,21 +223,21 @@ const PagesPanel = ({
   return (
     <Root>
       <Header
-        title="Pages"
+        title={t.pages}
         suffix={
           <>
-            <Tooltip content="New folder" side="bottom">
+            <Tooltip content={t.newFolder} side="bottom">
               <Button
                 onClick={() => onCreateNewFolder()}
-                aria-label="New folder"
+                aria-label={t.newFolder}
                 prefix={<NewFolderIcon />}
                 color="ghost"
               />
             </Tooltip>
-            <Tooltip content="New page" side="bottom">
+            <Tooltip content={t.newPage} side="bottom">
               <Button
                 onClick={() => onCreateNewPage()}
-                aria-label="New page"
+                aria-label={t.newPage}
                 prefix={<NewPageIcon />}
                 color="ghost"
               />

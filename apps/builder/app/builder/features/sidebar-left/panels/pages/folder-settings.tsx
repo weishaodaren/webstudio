@@ -34,7 +34,7 @@ import {
 } from "@webstudio-is/icons";
 import { useIds } from "~/shared/form-utils";
 import { Header, HeaderSuffixSpacer } from "../../shared/panel";
-import { $pages } from "~/shared/nano-states";
+import { $pages, $tPages, $tLeftPanel } from "~/shared/nano-states";
 import { nanoid } from "nanoid";
 import { serverSyncStore } from "~/shared/sync";
 import { useEffectEvent } from "~/shared/hook-utils/effect-event";
@@ -112,6 +112,10 @@ const autoSelectHandler: FocusEventHandler<HTMLInputElement> = (event) =>
   event.target.select();
 
 const FormFields = ({
+  folderNameText,
+  ParentFolderText,
+  slugText,
+  slugContent,
   disabled,
   autoSelect,
   errors,
@@ -119,6 +123,10 @@ const FormFields = ({
   folderId,
   onChange,
 }: {
+  folderNameText: string;
+  ParentFolderText: string;
+  slugText: string;
+  slugContent: string;
   disabled?: boolean;
   autoSelect?: boolean;
   errors: Errors;
@@ -145,7 +153,7 @@ const FormFields = ({
       <ScrollArea>
         <Grid gap={3} css={{ my: theme.spacing[5], mx: theme.spacing[8] }}>
           <Grid gap={1}>
-            <Label htmlFor={fieldIds.name}>Folder Name</Label>
+            <Label htmlFor={fieldIds.name}>{folderNameText}</Label>
             <InputErrorsTooltip errors={errors.name}>
               <InputField
                 tabIndex={1}
@@ -165,7 +173,7 @@ const FormFields = ({
           </Grid>
 
           <Grid gap={1}>
-            <Label htmlFor={fieldIds.parentFolderId}>Parent Folder</Label>
+            <Label htmlFor={fieldIds.parentFolderId}>{ParentFolderText}</Label>
             <Select
               tabIndex={1}
               options={filterSelfAndChildren(folderId, pages.folders)}
@@ -186,11 +194,8 @@ const FormFields = ({
           <Grid gap={1}>
             <Label htmlFor={fieldIds.slug}>
               <Flex align="center" css={{ gap: theme.spacing[3] }}>
-                Slug
-                <Tooltip
-                  content={"Slug will be used as part of the path to the page"}
-                  variant="wrapped"
-                >
+                {slugText}
+                <Tooltip content={slugContent} variant="wrapped">
                   <HelpIcon
                     color={rawTheme.colors.foregroundSubtle}
                     tabIndex={0}
@@ -232,6 +237,10 @@ const nameToSlug = (name: string) => {
 
 export const newFolderId = "new-folder";
 
+/**
+ * Component
+ * @description 新文件夹设置
+ */
 export const NewFolderSettings = ({
   onClose,
   onSuccess,
@@ -239,6 +248,11 @@ export const NewFolderSettings = ({
   onClose: () => void;
   onSuccess: (folderId: Folder["id"]) => void;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
+  const tPanel = useStore($tLeftPanel);
   const pages = useStore($pages);
 
   const [values, setValues] = useState<Values>({
@@ -257,6 +271,10 @@ export const NewFolderSettings = ({
 
   return (
     <NewFolderSettingsView
+      createText={t.createFolder}
+      creatingText={t.creating}
+      title={t.newFolderSettings}
+      cancelText={tPanel.cancel}
       onSubmit={handleSubmit}
       onClose={onClose}
       isSubmitting={false}
@@ -267,6 +285,10 @@ export const NewFolderSettings = ({
         disabled={false}
         values={values}
         folderId={newFolderId}
+        folderNameText={t.folderName}
+        ParentFolderText={t.parentFolder}
+        slugText={t.slug}
+        slugContent={t.slugTooltip}
         onChange={(value) => {
           setValues((values) => {
             const changes = { [value.field]: value.value };
@@ -289,22 +311,30 @@ const NewFolderSettingsView = ({
   isSubmitting,
   onClose,
   children,
+  title,
+  cancelText,
+  creatingText,
+  createText,
 }: {
   onSubmit: () => void;
   isSubmitting: boolean;
   onClose: () => void;
   children: JSX.Element;
+  title: string;
+  cancelText: string;
+  creatingText: string;
+  createText: string;
 }) => {
   return (
     <>
       <Header
-        title="New Folder Settings"
+        title={title}
         suffix={
           <>
-            <Tooltip content="Cancel" side="bottom">
+            <Tooltip content={cancelText} side="bottom">
               <Button
                 onClick={onClose}
-                aria-label="Cancel"
+                aria-label={cancelText}
                 prefix={<ChevronDoubleLeftIcon />}
                 color="ghost"
                 // Tab should go:
@@ -318,7 +348,7 @@ const NewFolderSettingsView = ({
               onClick={onSubmit}
               tabIndex={2}
             >
-              {isSubmitting ? "Creating" : "Create folder"}
+              {isSubmitting ? creatingText : createText}
             </Button>
           </>
         }
@@ -380,6 +410,10 @@ export const FolderSettings = ({
   onDelete: () => void;
   folderId: string;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
   const pages = useStore($pages);
   const folder = pages?.folders.find(({ id }) => id === folderId);
   const [unsavedValues, setUnsavedValues] = useState<Partial<Values>>({});
@@ -451,6 +485,10 @@ export const FolderSettings = ({
       onDelete={handleDelete}
     >
       <FormFields
+        folderNameText={t.folderName}
+        ParentFolderText={t.parentFolder}
+        slugText={t.slug}
+        slugContent={t.slugTooltip}
         folderId={folderId}
         errors={errors}
         values={values}

@@ -27,7 +27,6 @@ import {
   $selectedPage,
   $tComponents,
   $tComponentsCategory,
-  $tLeftPanel,
 } from "~/shared/nano-states";
 import { getMetaMaps, type ComponentsInfo } from "./get-meta-maps";
 import { getInstanceLabel } from "~/shared/instance-utils";
@@ -43,7 +42,6 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
    */
   const t = useStore($tComponents);
   const tComponentsCategory = useStore($tComponentsCategory);
-  const tLeftPanel = useStore($tLeftPanel);
   const metaByComponentName = useStore($registeredComponentMetas);
   const selectedPage = useStore($selectedPage);
 
@@ -196,12 +194,7 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
     <Root ref={draggableContainerRef}>
       <Header
         title={t.components}
-        suffix={
-          <CloseButton
-            onClick={() => onSetActiveTab("none")}
-            label={tLeftPanel.closePanel}
-          />
-        }
+        suffix={<CloseButton onClick={() => onSetActiveTab("none")} />}
       />
       <ScrollArea>
         {/* 分类 */}

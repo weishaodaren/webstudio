@@ -348,6 +348,24 @@ export const $tComponentsCategory = i18n("components/category", {
 
 export const $tLeftPanel = i18n("leftPanel", {
   closePanel: "Close panel",
+  removeTooltip:
+    "Removes the instance from the DOM. Breakpoints have no effect on this setting.",
+  show: "Show",
+  cancel: "Cancel",
+  untitled: "Untitled",
+});
+
+export const $tPages = i18n("pages", {
+  pages: "Pages",
+  newFolder: "New folder",
+  newPage: "New page",
+  newFolderSettings: "new Folder Settings",
+  creating: "Creating",
+  createFolder: "Create folder",
+  folderName: "Folder Name",
+  parentFolder: "Parent Folder",
+  slug: "Slug",
+  slugTooltip: "Slug will be used as part of the path to the page",
 });
 
 // CSS 声明

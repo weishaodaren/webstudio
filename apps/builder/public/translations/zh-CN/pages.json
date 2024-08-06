@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "pages": "页面",
+    "newFolder": "新文件夹",
+    "newPage": "新页面",
+    "newFolderSettings": "新文件夹设置",
+    "creating": "新建中",
+    "createFolder": "新建文件夹",
+    "folderName": "文件夹名称",
+    "parentFolder": "父级文件夹",
+    "slug": "URL 友好名称",
+    "slugTooltip": "URL 友好名称将用作页面路径的一部分"
+  }
+}
