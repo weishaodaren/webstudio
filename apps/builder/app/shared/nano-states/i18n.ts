@@ -292,6 +292,41 @@ export const $tComponents = i18n("components", {
   time: "Time",
   timeDescription:
     "Converts machine-readable date and time to a human-readable format.",
+  sheet: "Sheet",
+  sheetDescription:
+    "Displays content in a menu that slides out from the side of the screen, triggered by a button. Use this component for a typical mobile hamburger menu.",
+  navigationMenu: "Navigation Menu",
+  navigationMenuDescription: "A collection of links for navigating websites.",
+  tabs: "Tabs",
+  tabsDescription:
+    "A set of panels with content that are displayed one at a time. Duplicate both a tab trigger and tab content to add more tabs. Triggers and content are connected according to their order in the Navigator.",
+  accordion: "Accordion",
+  accordionDescription:
+    "A vertically stacked set of interactive headings that each reveal an associated section of content. Clicking on the heading will open the item and close other items.",
+  dialog: "Dialog",
+  dialogDescription:
+    "Displays content with an overlay that covers the window, triggered by a button. Clicking the overlay will close the dialog.",
+  collapsible: "Collapsible",
+  collapsibleDescription:
+    "An interactive component which expands and collapses some content, triggered by a button.",
+  popover: "Popover",
+  popoverDescription:
+    "Displays rich content in a portal, triggered by a button.",
+  tooltip: "Tooltip",
+  tooltipDescription:
+    "Displays content that is related to the trigger, when the trigger is hovered with the mouse or focused with the keyboard. You are reading an example of a tooltip right now.",
+  selectComponent: "Select",
+  selectComponentDescription:
+    "Use within a form to give your users a list of options to choose from.",
+  switchComponent: "Switch",
+  switchDescription:
+    "A control that allows the user to toggle between checked and not checked.",
+  radioGroup: "Radio Group",
+  radioGroupDescription:
+    "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.",
+  labelComponent: "Label",
+  labelDescription:
+    "An accessible label to describe the purpose of an input. Match the “For” property on the label with the “ID” of the input to connect them.",
 });
 
 /**

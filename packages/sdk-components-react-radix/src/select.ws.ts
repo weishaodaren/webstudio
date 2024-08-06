@@ -108,6 +108,7 @@ export const metaSelect: WsComponentMeta = {
   type: "container",
   icon: SelectIcon,
   stylable: false,
+  label: "Select",
   description:
     "Use within a form to give your users a list of options to choose from.",
   template: [
