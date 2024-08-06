@@ -204,7 +204,7 @@ const PagesPanel = ({
         </TreeItemBody>
       );
     },
-    [editingItemId, onEdit, pages]
+    [editingItemId, onEdit, pages?.homePage.id, t]
   );
 
   const selectTreeNode = useCallback(

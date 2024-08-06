@@ -1,3 +1,9 @@
+import { useStore } from "@nanostores/react";
+import {
+  $tBoxShadows,
+  $tOutline,
+  $tBackdropFilters,
+} from "~/shared/nano-states";
 import {
   toValue,
   type InvalidValue,
@@ -74,25 +80,6 @@ type ShadowContentProps = {
   ) => void;
   deleteProperty: DeleteProperty;
   hideCodeEditor?: boolean;
-  labels: {
-    xOffsetLabel: string;
-    xOffsetDescription: string;
-    yOffsetLabel: string;
-    yOffsetDescription: string;
-    blurRadiusLabel: string;
-    blurRadiusDescription: string;
-    spreadRadiusLabel: string;
-    spreadRadiusDescription: string;
-    insetLabel: string;
-    insetDescription: string;
-    xLabel: string;
-    yLabel: string;
-    blurLabel: string;
-    spreadLabel: string;
-    colorDescription: string;
-    colorLabel: string;
-    codeLabel: string;
-  };
 };
 
 const convertValuesToTupple = (
@@ -121,26 +108,17 @@ export const ShadowContent = ({
   hideCodeEditor = false,
   onEditLayer,
   deleteProperty,
-  labels: {
-    xOffsetLabel,
-    xOffsetDescription,
-    yOffsetLabel,
-    yOffsetDescription,
-    blurRadiusLabel,
-    blurRadiusDescription,
-    spreadRadiusLabel,
-    spreadRadiusDescription,
-    insetLabel,
-    insetDescription,
-    xLabel,
-    yLabel,
-    blurLabel,
-    spreadLabel,
-    colorDescription,
-    colorLabel,
-    codeLabel,
-  },
 }: ShadowContentProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tBoxShadows);
+  const tOutline = useStore($tOutline);
+  const tBackdropFilters = useStore($tBackdropFilters);
+
+  /**
+   * State
+   */
   const [intermediateValue, setIntermediateValue] = useState<
     IntermediateStyleValue | InvalidValue | undefined
   >();
@@ -215,13 +193,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">{xOffsetLabel}</Text>
+                <Text variant="regularBold">{t.xOffset}</Text>
                 <Text variant="monoBold">offset-x</Text>
-                <Text>{xOffsetDescription}</Text>
+                <Text>{t.xOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>{xLabel}</Label>
+            <Label css={{ width: "fit-content" }}>{t.x}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetX"
@@ -246,13 +224,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">{yOffsetLabel}</Text>
+                <Text variant="regularBold">{t.yOffset}</Text>
                 <Text variant="monoBold">offset-y</Text>
-                <Text>{yOffsetDescription}</Text>
+                <Text>{t.yOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>{yLabel}</Label>
+            <Label css={{ width: "fit-content" }}>{t.y}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetY"
@@ -277,13 +255,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">{blurRadiusLabel}</Text>
+                <Text variant="regularBold">{t.blurRadius}</Text>
                 <Text variant="monoBold">blur-radius</Text>
-                <Text>{blurRadiusDescription}</Text>
+                <Text>{t.blurRadiusDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>{blurLabel}</Label>
+            <Label css={{ width: "fit-content" }}>{t.blur}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowBlur"
@@ -309,13 +287,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">{spreadRadiusLabel}</Text>
+                  <Text variant="regularBold">{t.spreadRadius}</Text>
                   <Text variant="monoBold">spread-radius</Text>
-                  <Text>{spreadRadiusDescription}</Text>
+                  <Text>{t.blurRadiusDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ width: "fit-content" }}>{spreadLabel}</Label>
+              <Label css={{ width: "fit-content" }}>{t.spread}</Label>
             </Tooltip>
             <CssValueInputContainer
               key="boxShadowSpread"
@@ -351,13 +329,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">{colorLabel}</Text>
+                <Text variant="regularBold">{tOutline.color}</Text>
                 <Text variant="monoBold">color</Text>
-                <Text>{colorDescription}</Text>
+                <Text>{t.colorDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>{colorLabel}</Label>
+            <Label css={{ width: "fit-content" }}>{tOutline.color}</Label>
           </Tooltip>
           <ColorControl
             property="color"
@@ -380,13 +358,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">{insetLabel}</Text>
+                  <Text variant="regularBold">{t.insetLabel}</Text>
                   <Text variant="monoBold">inset</Text>
-                  <Text>{insetDescription}</Text>
+                  <Text>{t.insetDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ display: "inline" }}>{insetLabel}</Label>
+              <Label css={{ display: "inline" }}>{t.insetLabel}</Label>
             </Tooltip>
             <ToggleGroup
               type="single"
@@ -429,7 +407,7 @@ export const ShadowContent = ({
           >
             <Label>
               <Flex align={"center"} gap={1}>
-                {codeLabel}
+                {tBackdropFilters.code}
                 {tooltip}
               </Flex>
             </Label>

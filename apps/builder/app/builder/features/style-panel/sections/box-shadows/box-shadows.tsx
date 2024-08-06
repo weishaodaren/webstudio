@@ -1,9 +1,5 @@
 import { useStore } from "@nanostores/react";
-import {
-  $tBoxShadows,
-  $tOutline,
-  $tBackdropFilters,
-} from "~/shared/nano-states";
+import { $tBoxShadows } from "~/shared/nano-states";
 import {
   SectionTitle,
   SectionTitleButton,
@@ -39,8 +35,6 @@ export const Section = (props: SectionProps) => {
    * Store
    */
   const t = useStore($tBoxShadows);
-  const tOutline = useStore($tOutline);
-  const tBackdropFilters = useStore($tBackdropFilters);
 
   /**
    * State
@@ -109,25 +103,6 @@ export const Section = (props: SectionProps) => {
                 {...layerProps}
                 layer={layerProps.layer}
                 property={property}
-                labels={{
-                  xOffsetLabel: t.xOffset,
-                  xOffsetDescription: t.xOffsetDescription,
-                  yOffsetLabel: t.yOffset,
-                  yOffsetDescription: t.yOffsetDescription,
-                  blurRadiusLabel: t.blurRadius,
-                  blurRadiusDescription: t.blurRadiusDescription,
-                  spreadRadiusLabel: t.spreadRadius,
-                  spreadRadiusDescription: t.blurRadiusDescription,
-                  insetLabel: t.insetLabel,
-                  insetDescription: t.insetDescription,
-                  xLabel: t.x,
-                  yLabel: t.y,
-                  blurLabel: t.blur,
-                  spreadLabel: t.spread,
-                  colorLabel: tOutline.color,
-                  colorDescription: t.colorDescription,
-                  codeLabel: tBackdropFilters.code,
-                }}
                 tooltip={
                   <Tooltip
                     variant="wrapped"
