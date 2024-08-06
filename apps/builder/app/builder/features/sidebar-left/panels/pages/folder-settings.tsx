@@ -72,6 +72,7 @@ const fieldNames = Object.keys(fieldDefaultValues) as Array<FieldName>;
 const validateValues = (
   pages: undefined | Pages,
   values: Values,
+  errorMsg: string,
   folderId?: Folder["id"]
 ): Errors => {
   const parsedResult = Values.safeParse(values);
@@ -89,7 +90,8 @@ const validateValues = (
       ) === false
     ) {
       errors.slug = errors.slug ?? [];
-      errors.slug.push(`Slug "${values.slug}" is already in use`);
+      // errors.slug.push(`Slug "${values.slug}" is already in use`);
+      errors.slug.push(errorMsg);
     }
   }
   return errors;
@@ -260,7 +262,11 @@ export const NewFolderSettings = ({
     slug: nameToSlug(fieldDefaultValues.name),
   });
 
-  const errors = validateValues(pages, values);
+  const errors = validateValues(
+    pages,
+    values,
+    t.slugInUse({ slug: values.slug })
+  );
   const handleSubmit = () => {
     if (Object.keys(errors).length === 0) {
       const folderId = nanoid();
@@ -423,7 +429,12 @@ export const FolderSettings = ({
     ...unsavedValues,
   };
 
-  const errors = validateValues(pages, values, folderId);
+  const errors = validateValues(
+    pages,
+    values,
+    t.slugInUse({ slug: values.slug }),
+    folderId
+  );
 
   const debouncedFn = useEffectEvent(() => {
     if (
@@ -480,6 +491,9 @@ export const FolderSettings = ({
 
   return (
     <FolderSettingsView
+      title={t.folderSettings}
+      deleteText={t.deleteFolder}
+      closeText={t.closeFolderSettings}
       folder={folder}
       onClose={onClose}
       onDelete={handleDelete}
@@ -503,11 +517,17 @@ const FolderSettingsView = ({
   onClose,
   children,
   folder,
+  title,
+  deleteText,
+  closeText,
 }: {
   onDelete: () => void;
   onClose: () => void;
   children: JSX.Element;
   folder: Folder;
+  title: string;
+  deleteText: string;
+  closeText: string;
 }) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] =
     useState<boolean>(false);
@@ -523,24 +543,24 @@ const FolderSettingsView = ({
   return (
     <>
       <Header
-        title="Folder Settings"
+        title={title}
         suffix={
           <>
-            <Tooltip content="Delete folder" side="bottom">
+            <Tooltip content={deleteText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<TrashIcon />}
                 onClick={hanldeRequestDelete}
-                aria-label="Delete folder"
+                aria-label={deleteText}
                 tabIndex={2}
               />
             </Tooltip>
-            <Tooltip content="Close folder settings" side="bottom">
+            <Tooltip content={closeText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<ChevronDoubleLeftIcon />}
                 onClick={onClose}
-                aria-label="Close folder settings"
+                aria-label={closeText}
                 tabIndex={2}
               />
             </Tooltip>

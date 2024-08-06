@@ -1611,6 +1611,9 @@ const updatePage = (pageId: Page["id"], values: Partial<Values>) => {
   });
 };
 
+/**
+ * Component
+ */
 export const PageSettings = ({
   onClose,
   onDuplicate,
@@ -1622,6 +1625,10 @@ export const PageSettings = ({
   onDelete: () => void;
   pageId: string;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
   const pages = useStore($pages);
   const page = pages && findPageByIdOrPath(pageId, pages);
 
@@ -1704,6 +1711,10 @@ export const PageSettings = ({
 
   return (
     <PageSettingsView
+      title={t.pageSettings}
+      deleteText={t.deletePage}
+      duplicateText={t.duplicatePage}
+      closeText={t.closePageSettings}
       onClose={onClose}
       onDelete={values.isHomePage === false ? hanldeDelete : undefined}
       onDuplicate={() => {
@@ -1728,44 +1739,52 @@ const PageSettingsView = ({
   onDuplicate,
   onClose,
   children,
+  title,
+  deleteText,
+  duplicateText,
+  closeText,
 }: {
   onDelete?: () => void;
   onDuplicate: () => void;
   onClose: () => void;
   children: JSX.Element;
+  title: string;
+  deleteText: string;
+  duplicateText: string;
+  closeText: string;
 }) => {
   return (
     <>
       <Header
-        title="Page Settings"
+        title={title}
         suffix={
           <>
             {onDelete && (
-              <Tooltip content="Delete page" side="bottom">
+              <Tooltip content={deleteText} side="bottom">
                 <Button
                   color="ghost"
                   prefix={<TrashIcon />}
                   onClick={onDelete}
-                  aria-label="Delete page"
+                  aria-label={deleteText}
                   tabIndex={2}
                 />
               </Tooltip>
             )}
-            <Tooltip content="Duplicate page" side="bottom">
+            <Tooltip content={duplicateText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<CopyIcon />}
                 onClick={onDuplicate}
-                aria-label="Duplicate page"
+                aria-label={duplicateText}
                 tabIndex={2}
               />
             </Tooltip>
-            <Tooltip content="Close page settings" side="bottom">
+            <Tooltip content={closeText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<ChevronDoubleLeftIcon />}
                 onClick={onClose}
-                aria-label="Close page settings"
+                aria-label={closeText}
                 tabIndex={2}
               />
             </Tooltip>

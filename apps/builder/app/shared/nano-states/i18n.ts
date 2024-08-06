@@ -363,6 +363,7 @@ export const $tLeftPanel = i18n("leftPanel", {
   chooseImage: "Choose Image From Assets",
   upload: "Upload",
   search: "Search",
+  cssPreview: "CSS Preview",
 });
 
 export const $tLeftPanelCategory = i18n("leftPanel/category", {
@@ -420,6 +421,16 @@ export const $tPages = i18n("pages", {
   addMetadata: "Add another metadata pair",
   metadataProperty: "property",
   metadataContent: "content",
+  slugInUse: params('Slug "{slug}" is already in use 123'),
+  closePageSettings: "Close page settings",
+  openPageSettings: "Open page settings",
+  closeFolderSettings: "Close folder settings",
+  openFolderSettings: "Open folder settings",
+  pageSettings: "Page Settings",
+  deletePage: "Delete page",
+  duplicatePage: "Duplicate page",
+  folderSettings: "Folder Settings",
+  deleteFolder: "Delete folder",
 });
 
 // CSS 声明

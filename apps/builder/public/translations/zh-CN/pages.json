@@ -39,6 +39,16 @@
     "metadataSubtitle4": "属性，指定其值。",
     "addMetadata": "添加另一个元数据组",
     "metadataProperty": "属性",
-    "metadataContent": "内容"
+    "metadataContent": "内容",
+    "slugInUse": "“{slug}” 已经被使用了",
+    "closePageSettings": "关闭页面设置",
+    "openPageSettings": "打开页面设置",
+    "closeFolderSettings": "关闭文件夹设置",
+    "openFolderSettings": "打开文件夹设置",
+    "pageSettings": "页面设置",
+    "deletePage": "删除页面",
+    "duplicatePage": "复制页面",
+    "folderSettings": "文件夹设置",
+    "deleteFolder": "删除文件夹"
   }
 }

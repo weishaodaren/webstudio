@@ -95,7 +95,7 @@ const useHighlightedCss = () => {
   }, [currentStyle]);
 };
 
-export const CssPreview = () => {
+export const CssPreview = ({ label }: { label: string }) => {
   const code = useHighlightedCss();
 
   if (code === undefined) {
@@ -103,7 +103,7 @@ export const CssPreview = () => {
   }
 
   return (
-    <CollapsibleSection label="CSS Preview" fullWidth>
+    <CollapsibleSection label={label} fullWidth>
       <ScrollArea css={{ px: theme.spacing[9] }}>
         <pre tabIndex={0} className={preStyle()}>
           <div
