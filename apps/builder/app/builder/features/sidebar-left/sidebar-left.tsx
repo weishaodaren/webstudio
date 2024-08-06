@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, rawTheme } from "@webstudio-is/design-system";
 import { useSubscribe, type Publish } from "~/shared/pubsub";
-import { $dragAndDropState, $isPreviewMode } from "~/shared/nano-states";
+import {
+  $dragAndDropState,
+  $isPreviewMode,
+  $tLeftPanelCategory,
+} from "~/shared/nano-states";
 import { panels } from "./panels";
 import { useClientSettings } from "~/builder/shared/client-settings";
 import { Flex } from "@webstudio-is/design-system";
@@ -90,7 +94,18 @@ type SidebarLeftProps = {
   publish: Publish;
 };
 
+/**
+ * Component
+ */
 export const SidebarLeft = ({ publish }: SidebarLeftProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanelCategory);
+
+  /**
+   * Hook
+   */
   const [activeTab, setActiveTab] = useActiveTab();
   useHideActiveTabOnPreview();
   const dragAndDropState = useStore($dragAndDropState);
@@ -163,7 +178,7 @@ export const SidebarLeft = ({ publish }: SidebarLeftProps) => {
                     return (
                       <SidebarTabsTrigger
                         key={label}
-                        label={label}
+                        label={t[label.toLowerCase() as keyof typeof t]}
                         value={tabName}
                         onClick={() => {
                           setActiveTab(

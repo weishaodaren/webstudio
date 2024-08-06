@@ -27,6 +27,7 @@ import {
   $selectedPage,
   $tComponents,
   $tComponentsCategory,
+  $tLeftPanel,
 } from "~/shared/nano-states";
 import { getMetaMaps, type ComponentsInfo } from "./get-meta-maps";
 import { getInstanceLabel } from "~/shared/instance-utils";
@@ -298,4 +299,4 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
 
 export const Icon = PlusIcon;
 
-export const label = "Components";
+export const label = $tLeftPanel.get().components;

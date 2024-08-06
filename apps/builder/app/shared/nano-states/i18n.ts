@@ -352,7 +352,15 @@ export const $tComponentsCategory = i18n("components/category", {
   internal: "internal",
 });
 
-export const $tLeftPanel = i18n("leftPanel", {
+export const $tLeftPanelCategory = i18n("leftPanel/category", {
+  components: "Components",
+  pages: "Pages",
+  navigator: "Navigator",
+  assets: "Assets",
+  marketplace: "Marketplace",
+});
+
+export const $tLeftPanel = i18n("leftPanel/", {
   closePanel: "Close panel",
   removeTooltip:
     "Removes the instance from the DOM. Breakpoints have no effect on this setting.",
@@ -361,6 +369,11 @@ export const $tLeftPanel = i18n("leftPanel", {
   untitled: "Untitled",
   language: "Language",
   chooseImage: "Choose Image From Assets",
+  components: "Components",
+  pages: "Pages",
+  navigator: "Navigator",
+  assets: "Assets",
+  marketplace: "Marketplace",
 });
 
 export const $tPages = i18n("pages", {

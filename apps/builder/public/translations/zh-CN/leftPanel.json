@@ -7,5 +7,12 @@
     "untitled": "未命名",
     "language": "语言",
     "chooseImage": "从资源中选择图像"
+  },
+  "leftPanel/category": {
+    "components": "组件",
+    "pages": "页面",
+    "navigator": "导航器",
+    "assets": "资源",
+    "marketplace": "市场"
   }
 }
