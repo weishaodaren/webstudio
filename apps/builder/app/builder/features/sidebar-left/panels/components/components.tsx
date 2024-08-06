@@ -55,10 +55,33 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
    * @returns { ComponentsInfo }
    */
   const mapping: ComponentsInfo = useMemo(() => {
-    const { box, boxDescription, link, linkDescription } = t;
+    const {
+      box,
+      boxDescription,
+      link,
+      linkDescription,
+      list,
+      listDescription,
+      listItem,
+      listItemDescription,
+      separator,
+      separatorDescription,
+      slot,
+      slotDescription,
+      html,
+      htmlDescription,
+      code,
+      codeDescription,
+    } = t;
     return {
       Box: { label: box, description: boxDescription },
       Link: { label: link, description: linkDescription },
+      List: { label: list, description: listDescription },
+      "List Item": { label: listItem, description: listItemDescription },
+      Separator: { label: separator, description: separatorDescription },
+      Slot: { label: slot, description: slotDescription },
+      "HTML Embed": { label: html, description: htmlDescription },
+      "Code Text": { label: code, description: codeDescription },
     };
   }, [t]);
 

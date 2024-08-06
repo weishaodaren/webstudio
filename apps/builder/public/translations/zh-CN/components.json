@@ -4,7 +4,19 @@
     "box": "盒子",
     "boxDescription": "内容的容器。默认情况下，这是一个Div，但可以在设置中更改标记。",
     "link": "链接",
-    "linkDescription": "使用链接将用户发送到另一个页面、部分或资源。在Settings面板中配置链接。"
+    "linkDescription": "使用链接将用户发送到另一个页面、部分或资源。在Settings面板中配置链接。",
+    "list": "列表",
+    "listDescription": "对内容进行分组，如菜单中的链接或食谱中的步骤。",
+    "listItem": "列表项",
+    "listItemDescription": "向现有列表添加新项。",
+    "separator": "分隔符",
+    "separatorDescription": "用于直观地划分内容部分，有助于提高网页的可读性和组织性。",
+    "slot": "插槽",
+    "slotDescription": "插槽是一个容器，用于存放你想要在整个项目中引用的内容。对一个插槽的子节点所做的更改将反映在该插槽的所有其他实例中。",
+    "html": "嵌入HTML",
+    "htmlDescription": "用于向页面添加HTML代码，例如SVG或脚本。",
+    "code": "代码",
+    "codeDescription": "当您想要在页面上以文本形式显示代码时，使用此组件。"
   },
   "components/category": {
     "general": "常规",

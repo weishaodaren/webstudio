@@ -227,6 +227,22 @@ export const $tComponents = i18n("components", {
   link: "Link",
   linkDescription:
     "Use a link to send your users to another page, section, or resource. Configure links in the Settings panel.",
+  list: "List",
+  listDescription: "Groups content, like links in a menu or steps in a recipe.",
+  listItem: "List Item",
+  listItemDescription: "Adds a new item to an existing list.",
+  separator: "Separator",
+  separatorDescription:
+    "Used to visually divide sections of content, helping to improve readability and organization within a webpage.",
+  slot: "Slot",
+  slotDescription:
+    "Slot is a container for content that you want to reference across the project. Changes made to a Slot's children will be reflected in all other instances of that Slot.",
+  html: "HTML Embed",
+  htmlDescription:
+    "Used to add HTML code to the page, such as an SVG or script.",
+  code: "Code Text",
+  codeDescription:
+    "Use this component when you want to display code as text on the page.",
 });
 
 /**
