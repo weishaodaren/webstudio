@@ -1,5 +1,6 @@
+import { useMemo } from "react";
 import { useStore } from "@nanostores/react";
-import { $tOutline } from "~/shared/nano-states";
+import { $tOutline, $tDeclarations } from "~/shared/nano-states";
 import { Flex, Grid, theme, Box } from "@webstudio-is/design-system";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import { ColorControl } from "../../controls";
@@ -9,6 +10,12 @@ import { OutlineStyle } from "./outline-style";
 import { PropertyName } from "../../shared/property-name";
 import { OutlineWidth } from "./outline-width";
 import { OutlineOffset } from "./outline-offset";
+import {
+  DashBorderIcon,
+  DashedBorderIcon,
+  DottedBorderIcon,
+  SmallXIcon,
+} from "@webstudio-is/icons";
 
 const property: StyleProperty = "outlineColor";
 export const properties = [
@@ -32,6 +39,45 @@ export const Section = (props: SectionProps) => {
    * Store
    */
   const t = useStore($tOutline);
+  const tD = useStore($tDeclarations);
+
+  /**
+   * Memo
+   * @description 单选集合
+   */
+  const items = useMemo(
+    () => [
+      {
+        child: <SmallXIcon />,
+        title: t.none,
+        description: tD["outlineStyle:none"],
+        value: "none",
+        propertyValues: "outline-style: none;",
+      },
+      {
+        child: <DashBorderIcon />,
+        title: t.solid,
+        description: tD["outlineStyle:solid"],
+        value: "solid",
+        propertyValues: "outline-style: solid;",
+      },
+      {
+        child: <DashedBorderIcon />,
+        title: t.dashed,
+        description: tD["outlineStyle:dashed"],
+        value: "dashed",
+        propertyValues: "outline-style: dashed;",
+      },
+      {
+        child: <DottedBorderIcon />,
+        title: t.dotted,
+        description: tD["outlineStyle:dotted"],
+        value: "dotted",
+        propertyValues: "outline-style: dotted;",
+      },
+    ],
+    [tD]
+  );
 
   if (outlineStyle?.value.type !== "keyword") {
     return;
@@ -46,6 +92,7 @@ export const Section = (props: SectionProps) => {
       <Flex direction="column" gap={2}>
         <OutlineStyle
           label={t.style}
+          items={items}
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}

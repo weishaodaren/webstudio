@@ -40,7 +40,6 @@ import { TranslatePanelContent } from "./transform-translate";
 import { ScalePanelContent } from "./transform-scale";
 import { RotatePanelContent } from "./transform-rotate";
 import { SkewPanelContent } from "./transform-skew";
-import { humanizeString } from "~/shared/string-utils";
 import { getStyleSource } from "../../shared/style-info";
 import { PropertyName } from "../../shared/property-name";
 import { getDots } from "../../shared/collapsible-section";
@@ -137,7 +136,7 @@ export const Section = (props: SectionProps) => {
                           setIsOpen(true);
                         }}
                       >
-                        {humanizeString(panel)}
+                        {t[panel]}
                       </DropdownMenuItem>
                     );
                   })}

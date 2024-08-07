@@ -80,6 +80,7 @@ export const $tStylePanel = i18n("stylePanel", {
 
 export const $tLayout = i18n("stylePanel/layout", {
   layout: "Layout",
+  display: "Display",
 });
 
 export const $tSpace = i18n("stylePanel/space", {
@@ -289,6 +290,10 @@ export const $tOutline = i18n("stylePanel/outline", {
   height: "Height",
   offset: "Offset",
   style: "Style",
+  none: "None",
+  solid: "Solid",
+  dashed: "Dashed",
+  dotted: "Dotted",
 });
 
 export const $tAdvanced = i18n("stylePanel/advanced", {

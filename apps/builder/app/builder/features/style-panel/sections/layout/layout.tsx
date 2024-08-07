@@ -510,7 +510,7 @@ export const Section = ({
   const t = useStore($tLayout);
   const value = toValue(currentStyle.display?.value);
 
-  const { label, items } = styleConfigByName("display");
+  const { items } = styleConfigByName("display");
   return (
     <CollapsibleSection
       label={t.layout}
@@ -528,7 +528,7 @@ export const Section = ({
           <PropertyName
             style={currentStyle}
             properties={["display"]}
-            label={label}
+            label={t.display}
             onReset={() => deleteProperty("display")}
           />
           <SelectControl

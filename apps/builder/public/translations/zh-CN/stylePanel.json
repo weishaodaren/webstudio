@@ -17,7 +17,8 @@
     "resetValue": "重新设置"
   },
   "stylePanel/layout": {
-    "layout": "布局"
+    "layout": "布局",
+    "display": "显示"
   },
   "stylePanel/space": {
     "space": "空间"
@@ -181,7 +182,11 @@
     "width": "宽度",
     "height": "高度",
     "offset": "位移",
-    "style": "风格"
+    "style": "风格",
+    "none": "无",
+    "solid": "实线",
+    "dashed": "虚线",
+    "dotted": "点线"
   },
   "stylePanel/advanced": {
     "advanced": "高级"
