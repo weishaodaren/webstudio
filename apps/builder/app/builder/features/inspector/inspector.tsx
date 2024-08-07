@@ -103,7 +103,7 @@ export const Inspector = ({ navigatorLayout }: InspectorProps) => {
         <Card
           css={{ p: theme.spacing[9], mt: theme.spacing[9], width: "100%" }}
         >
-          <Text>Select an instance on the canvas</Text>
+          <Text>{t.selectInstance}</Text>
         </Card>
       </Box>
     );

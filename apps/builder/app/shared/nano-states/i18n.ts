@@ -99,6 +99,10 @@ export const $tInspector = i18n("inspector", {
   systemResourceText: "System Resource",
   systemResourceDesc:
     "A System Resource is a configuration for Webstudio data.",
+  selectInstance: "Select an instance on the canvas",
+  emptyVariable1: "No variables created",
+  emptyVariable2: "on this instance",
+  createVariable: "Create variable",
 });
 
 export const $tStylePanel = i18n("stylePanel", {

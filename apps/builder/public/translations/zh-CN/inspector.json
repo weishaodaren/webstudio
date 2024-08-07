@@ -39,6 +39,10 @@
     "graphQLText": "GraphQL",
     "graphQLDesc": "资源是用于安全数据提取的配置。您可以在任何字段中安全地使用密钥。",
     "systemResourceText": "系统资源",
-    "systemResourceDesc": "系统资源是我们数据的配置。"
+    "systemResourceDesc": "系统资源是我们数据的配置。",
+    "selectInstance": "在画布上选择一个实例",
+    "emptyVariable1": "尚未创建变量",
+    "emptyVariable2": "在此实例上",
+    "createVariable": "创建变量"
   }
 }
