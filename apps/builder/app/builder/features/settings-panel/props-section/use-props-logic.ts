@@ -12,6 +12,7 @@ import {
   $registeredComponentMetas,
   $registeredComponentPropsMetas,
   $tLeftPanel,
+  $tInspector,
 } from "~/shared/nano-states";
 
 type PropOrName = { prop?: Prop; propName: string };
@@ -141,6 +142,7 @@ export const usePropsLogic = ({
    * Store
    */
   const t = useStore($tLeftPanel);
+  const tInspector = useStore($tInspector);
   const instanceMeta = useStore($registeredComponentMetas).get(
     instance.component
   );
@@ -204,7 +206,7 @@ export const usePropsLogic = ({
     systemProps.push({
       propName: textContentAttribute,
       meta: {
-        label: "Text Content",
+        label: tInspector.textContent,
         required: false,
         control: "textContent",
         type: "string",

@@ -212,7 +212,7 @@ ComboboxContent.displayName = "ComboboxContent";
 
 export const ComboboxAnchor = PopoverAnchor;
 
-type Match<Item> = (
+export type Match<Item> = (
   search: string,
   items: Item[],
   itemToString: (item: Item | null) => string

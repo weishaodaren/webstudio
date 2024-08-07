@@ -57,6 +57,24 @@ export const $tInspector = i18n("inspector", {
   settingPanelTooltip:
     "The Settings panel allows for customizing component properties and HTML attributes.",
   stylePanelTooltip: "The Style panel allows manipulation of CSS visually.",
+  textContent: "Text Content",
+  name: "Name",
+  propertiesAttributes: "Properties & Attributes",
+  selectORCreate: "Select or create",
+  noDescription: "No description available",
+  createAttribute: params("Create attribute: “{search}”"),
+  binding: "Binding",
+  resetBinding: "Reset binding",
+  variables: "Variables",
+  variablesTooltip:
+    "Click on the available variables in this scope to insert them into the Expression Editor.",
+  noVariables: "No variables available",
+  expressionEditor: "Expression Editor",
+  expressionEditorTooltip1:
+    " Use JavaScript syntax to access variables along with comparison and arithmetic operators.",
+  expressionEditorTooltip2:
+    "Use the dot notation to access nested object values:",
+  expressionEditorTooltip3: "Variable.nested.value",
 });
 
 export const $tStylePanel = i18n("stylePanel", {

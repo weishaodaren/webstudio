@@ -19,7 +19,7 @@ const saveLabel = (label: string, selectedInstance: Instance) => {
   });
 };
 
-export const SettingsSection = () => {
+export const SettingsSection = ({ label }: { label: string }) => {
   const selectedInstance = useStore($selectedInstance);
   const metas = useStore($registeredComponentMetas);
   const id = useId();
@@ -42,7 +42,7 @@ export const SettingsSection = () => {
   return (
     <Row>
       <HorizontalLayout
-        label={<Label htmlFor={id}>Name</Label>}
+        label={<Label htmlFor={id}>{label}</Label>}
         deletable={false}
         onDelete={() => {}}
       >

@@ -3,6 +3,21 @@
     "style": "样式",
     "settings": "设置",
     "settingPanelTooltip": "设置面板允许自定义组件属性和HTML属性。",
-    "stylePanelTooltip": "样式面板允许在视觉上操作CSS。"
+    "stylePanelTooltip": "样式面板允许在视觉上操作CSS。",
+    "textContent": "文本内容",
+    "name": "名称",
+    "propertiesAttributes": "属性和参数",
+    "selectORCreate": "选择或者创建",
+    "noDescription": "没有可用的描述",
+    "createAttribute": "创建属性: “{search}”",
+    "binding": "绑定",
+    "resetBinding": "重新绑定",
+    "variables": "变量",
+    "variablesTooltip": "单击此作用域中的可用变量，将它们插入表达式编辑器。",
+    "noVariables": "无可用变量",
+    "expressionEditor": "表达式编辑器",
+    "expressionEditorTooltip1": "使用 JavaScript 语法来访问变量以及比较和算术运算符。",
+    "expressionEditorTooltip2": "使用点表示法来访问嵌套对象的值:",
+    "expressionEditorTooltip3": "变量.嵌套.值"
   }
 }
