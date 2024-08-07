@@ -23,7 +23,25 @@
     "space": "空间"
   },
   "stylePanel/size": {
-    "size": "尺寸"
+    "size": "尺寸",
+    "width": "宽度",
+    "height": "高度",
+    "minWidth": "最小宽度",
+    "maxWidth": "最大宽度",
+    "minHeight": "最小高度",
+    "maxHeight": "最大高度",
+    "aspectRatio": "宽高比",
+    "overflow": "溢出处理",
+    "objectFit": "对象适应",
+    "objectPosition": "对象位置",
+    "overflowVisibleDesc": "内容完全可见,如果超出容器大小,会延伸出去。",
+    "overflowHiddenDesc": "超出容器大小的内容会被剪裁并隐藏,不会出现滚动条。",
+    "overflowScrollDesc": "在容器内添加滚动条,允许用户滚动并查看超出部分的内容。",
+    "overflowAutoDesc": "只有在必要时(基于内容大小)才会在容器内添加滚动条。",
+    "top": "顶部",
+    "left": "左侧",
+    "leftDesc": "左侧位置偏移量",
+    "topDesc": "顶部位置偏移量"
   },
   "stylePanel/position": {
     "position": "位置"

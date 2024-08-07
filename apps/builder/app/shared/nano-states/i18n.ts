@@ -88,6 +88,28 @@ export const $tSpace = i18n("stylePanel/space", {
 
 export const $tSize = i18n("stylePanel/size", {
   size: "Size",
+  width: "Width",
+  height: "Height",
+  minWidth: "Min Width",
+  maxWidth: "Max Width",
+  minHeight: "Min Height",
+  maxHeight: "Max Height",
+  aspectRatio: "Aspect Ratio",
+  overflow: "Overflow",
+  objectFit: "Object Fit",
+  objectPosition: "Object Position",
+  overflowVisibleDesc:
+    "Content is fully visible and extends beyond the container if it exceeds its size.",
+  overflowHiddenDesc:
+    "Content that exceeds the container's size is clipped and hidden without scrollbars.",
+  overflowScrollDesc:
+    "Scrollbars are added to the container, allowing users to scroll and view the exceeding content.",
+  overflowAutoDesc:
+    "Scrollbars are added to the container only when necessary, based on the content size.",
+  left: "Left",
+  top: "Top",
+  leftDesc: "Left position offset",
+  topDesc: "Top position offset",
 });
 
 export const $tPosition = i18n("stylePanel/position", {
