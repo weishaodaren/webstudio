@@ -43,6 +43,9 @@
     "selectInstance": "在画布上选择一个实例",
     "emptyVariable1": "尚未创建变量",
     "emptyVariable2": "在此实例上",
-    "createVariable": "创建变量"
+    "createVariable": "创建变量",
+    "preview": "预览",
+    "copied": "已复制",
+    "copyUrl": "复制 {url}"
   }
 }

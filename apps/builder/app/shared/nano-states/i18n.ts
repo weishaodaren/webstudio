@@ -103,6 +103,9 @@ export const $tInspector = i18n("inspector", {
   emptyVariable1: "No variables created",
   emptyVariable2: "on this instance",
   createVariable: "Create variable",
+  preview: "Toggle Preview",
+  copied: "Copied",
+  copyUrl: params("Copy {url}"),
 });
 
 export const $tStylePanel = i18n("stylePanel", {
