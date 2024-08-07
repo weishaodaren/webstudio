@@ -106,6 +106,18 @@ export const $tInspector = i18n("inspector", {
   preview: "Toggle Preview",
   copied: "Copied",
   copyUrl: params("Copy {url}"),
+  breakpoints: "Breakpoints",
+  editBreakpoints: "Edit breakpoints",
+  done: "Done",
+  scale: "Scale",
+  allSizes: "All Sizes",
+  noFoundBreakpoint: "No breakpoints found",
+  breakpointName: "Breakpoint name",
+  deleteBreakpoints: params('Are you sure you want to delete "{label}"?'),
+  deleteBreakpointsContent:
+    "Deleting a breakpoint will also delete all styles associated with this breakpoint.",
+  deleteText: "Delete",
+  abortText: "Abort",
 });
 
 export const $tStylePanel = i18n("stylePanel", {

@@ -46,6 +46,17 @@
     "createVariable": "创建变量",
     "preview": "预览",
     "copied": "已复制",
-    "copyUrl": "复制 {url}"
+    "copyUrl": "复制 {url}",
+    "breakpoints": "断点",
+    "editBreakpoints": "编辑断点",
+    "done": "完成",
+    "scale": "缩放",
+    "allSizes": "所有尺寸",
+    "noFoundBreakpoint": "没有找到断点",
+    "breakpointName": "断点名称",
+    "deleteBreakpoints": "确定要删除“{label}”吗?",
+    "deleteBreakpointsContent": "删除断点同时也会删除与此断点相关的所有样式。",
+    "deleteText": "删除",
+    "abortText": "取消"
   }
 }

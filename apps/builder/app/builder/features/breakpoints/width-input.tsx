@@ -83,7 +83,7 @@ const useEnhancedInput = ({
   };
 };
 
-export const WidthInput = ({ min }: { min: number }) => {
+export const WidthInput = ({ min, label }: { min: number; label: string }) => {
   const id = useId();
   const canvasWidth = useStore($canvasWidth);
   const selectedBreakpoint = useStore($selectedBreakpoint);
@@ -131,7 +131,7 @@ export const WidthInput = ({ min }: { min: number }) => {
 
   return (
     <Flex gap="2" align="center">
-      <Label htmlFor={id}>Width</Label>
+      <Label htmlFor={id}>{label}</Label>
       <InputField
         {...inputProps}
         css={{ width: theme.spacing[19] }}
