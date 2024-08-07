@@ -26,7 +26,7 @@ export const SettingsPanelContainer = ({
     <>
       <SettingsSection label={t.name} />
       <PropsSectionContainer selectedInstance={selectedInstance} />
-      <VariablesSection />
+      <VariablesSection label={t.variables} />
       {allowDynamicData === false && (
         <PanelBanner>
           <img

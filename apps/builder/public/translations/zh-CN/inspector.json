@@ -18,6 +18,27 @@
     "expressionEditor": "表达式编辑器",
     "expressionEditorTooltip1": "使用 JavaScript 语法来访问变量以及比较和算术运算符。",
     "expressionEditorTooltip2": "使用点表示法来访问嵌套对象的值:",
-    "expressionEditorTooltip3": "变量.嵌套.值"
+    "expressionEditorTooltip3": "变量.嵌套.值",
+    "newVariable": "新建变量",
+    "editVariable": "编辑变量",
+    "copyTooltip": "将资源复制为 cURL 命令",
+    "refreshTooltip": "刷新资源数据",
+    "type": "类型",
+    "value": "值",
+    "variableValue": "变量值",
+    "stringText": "字符串",
+    "stringDesc": "任何字母数字文本。",
+    "numberText": "数字",
+    "numberDesc": "任何数字，可用于数学表达式。",
+    "booleanText": "布尔",
+    "booleanDesc": "布尔值是一个 true/false 开关。",
+    "jsonText": "JSON",
+    "jsonDesc": "任何 JSON 值",
+    "resourceText": "资源",
+    "resourceDesc": "资源是用于安全数据提取的配置。您可以在任何字段中安全地使用密钥。",
+    "graphQLText": "GraphQL",
+    "graphQLDesc": "资源是用于安全数据提取的配置。您可以在任何字段中安全地使用密钥。",
+    "systemResourceText": "系统资源",
+    "systemResourceDesc": "系统资源是我们数据的配置。"
   }
 }

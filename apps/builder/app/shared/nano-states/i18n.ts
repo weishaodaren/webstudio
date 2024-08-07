@@ -75,6 +75,30 @@ export const $tInspector = i18n("inspector", {
   expressionEditorTooltip2:
     "Use the dot notation to access nested object values:",
   expressionEditorTooltip3: "Variable.nested.value",
+  newVariable: "New Variable",
+  editVariable: "Edit Variable",
+  copyTooltip: "Copy resource as cURL command",
+  refreshTooltip: "Refresh resource data",
+  type: "type",
+  value: "Value",
+  variableValue: "Variable value",
+  stringText: "String",
+  stringDesc: "Any alphanumeric text.",
+  numberText: "Number",
+  numberDesc: "Any number, can be used in math expressions.",
+  booleanText: "Boolean",
+  booleanDesc: "A boolean is a true/false switch.",
+  jsonText: "JSON",
+  jsonDesc: "Any JSON value",
+  resourceText: "Resource",
+  resourceDesc:
+    "A Resource is a configuration for secure data fetching. You can safely use secrets in any field.",
+  graphQLText: "GraphQL",
+  graphQLDesc:
+    "A Resource is a configuration for secure data fetching. You can safely use secrets in any field.",
+  systemResourceText: "System Resource",
+  systemResourceDesc:
+    "A System Resource is a configuration for Webstudio data.",
 });
 
 export const $tStylePanel = i18n("stylePanel", {
