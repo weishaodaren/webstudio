@@ -4270,3 +4270,501 @@ export const $tDeclarations = i18n("declarations/generated", {
   "textDecorationLine:unset":
     "Resets the text decoration line to its initial value.",
 });
+
+// CSS 属性
+export const $tProperties = i18n("declarations/properties", {
+  accentColor: "Sets the color used for highlighting user interface controls.",
+  alignContent: "Aligns a flex container's lines within the flex container.",
+  alignItems: "Aligns items along the cross axis of a flex container.",
+  alignSelf: "Aligns a flex item along the cross axis of its container.",
+  alignTracks: "Defines how tracks are aligned in a grid container.",
+  animationComposition: "Specifies whether an animation is additive or not.",
+  animationDelay: "Defines a delay for the start of an animation.",
+  animationDirection:
+    "Defines whether an animation should play forwards, backwards, or alternate.",
+  animationDuration:
+    "Specifies how long an animation should take to complete one cycle.",
+  animationFillMode:
+    "Sets which values are applied before/after the animation.",
+  animationIterationCount: "Defines how many times an animation should play.",
+  animationName: "Specifies the name of an animation to apply to an element.",
+  animationPlayState: "Specifies whether an animation is running or paused.",
+  animationTimingFunction:
+    "Specifies how an animation progresses over one cycle.",
+  animationTimeline: "Defines the timeline of an animation.",
+  appearance:
+    "Determines whether an element should be styled like a standard HTML element or not.",
+  aspectRatio: "Controls the aspect ratio of an element's box.",
+  backdropFilter: "Applies a filter effect to the background of an element.",
+  backfaceVisibility: "Defines whether the back face of an element is visible.",
+  backgroundAttachment:
+    "Sets whether a background image is fixed or scrolls with the rest of the page.",
+  backgroundBlendMode:
+    "Defines how background images blend with each other and the element's background color.",
+  backgroundClip: "Specifies the area where the background image is visible.",
+  backgroundColor: "Sets the background color of an element.",
+  backgroundImage: "Sets one or more background images for an element.",
+  backgroundOrigin: "Specifies where the background image(s) come from.",
+  backgroundPosition: "Sets the starting position of a background image.",
+  backgroundPositionX:
+    "Sets the horizontal starting position of a background image.",
+  backgroundPositionY:
+    "Sets the vertical starting position of a background image.",
+  backgroundRepeat: "Sets how a background image will be repeated.",
+  backgroundSize: "Sets the size of a background image.",
+  blockOverflow:
+    "Defines how to handle content that overflows the block container.",
+  blockSize: "Defines the height of an element's content box.",
+  borderBlockColor:
+    "Controls the color of the border of a block-level element.",
+  borderBlockStyle:
+    "Controls the style of the border of a block-level element.",
+  borderBlockWidth:
+    "Controls the width of the border of a block-level element.",
+  borderBlockEndColor:
+    "Controls the color of the border at the end of a block-level element.",
+  borderBlockEndStyle:
+    "Controls the style of the border at the end of a block-level element.",
+  borderBlockEndWidth:
+    "Controls the width of the border at the end of a block-level element.",
+  borderBlockStartColor:
+    "Controls the color of the border at the start of a block-level element.",
+  borderBlockStartStyle:
+    "Controls the style of the border at the start of a block-level element.",
+  borderBlockStartWidth:
+    "Controls the width of the border at the start of a block-level element.",
+  borderBottomColor: "Controls the color of the bottom border of an element.",
+  borderBottomLeftRadius:
+    "Controls the radius of the bottom-left corner of an element.",
+  borderBottomRightRadius:
+    "Controls the radius of the bottom-right corner of an element.",
+  borderBottomStyle: "Controls the style of the bottom border of an element.",
+  borderBottomWidth: "Controls the width of the bottom border of an element.",
+  borderCollapse:
+    "Controls whether the borders of table cells are collapsed or separated.",
+  borderEndEndRadius:
+    "Controls the radius of the end of the border at the end of a block-level element.",
+  borderEndStartRadius:
+    "Controls the radius of the rounded border corners at the end and start of a box.",
+  borderImageOutset:
+    "Determines the amount by which the border image area extends beyond the border box.",
+  borderImageRepeat: "Specifies how the border image is repeated.",
+  borderImageSlice: "Defines how to slice the border image.",
+  borderImageSource: "Specifies the path to the image to be used as a border.",
+  borderImageWidth: "Specifies the width of the border image.",
+  borderInlineColor: "Sets the color of the inline border.",
+  borderInlineStyle: "Sets the style of the inline border.",
+  borderInlineWidth: "Sets the width of the inline border.",
+  borderInlineEndColor:
+    "Sets the color of the inline border at the end of a box.",
+  borderInlineEndStyle:
+    "Sets the style of the inline border at the end of a box.",
+  borderInlineEndWidth:
+    "Sets the width of the inline border at the end of a box.",
+  borderInlineStartColor:
+    "Sets the color of the inline border at the start of a box.",
+  borderInlineStartStyle:
+    "Sets the style of the inline border at the start of a box.",
+  borderInlineStartWidth:
+    "Sets the width of the inline border at the start of a box.",
+  borderLeftColor: "Sets the color of the left border.",
+  borderLeftStyle: "Style of the left border of an element",
+  borderLeftWidth: "Width of the left border of an element",
+  borderRightColor: "Color of the right border of an element",
+  borderRightStyle: "Style of the right border of an element",
+  borderRightWidth: "Width of the right border of an element",
+  borderSpacing: "Distance between adjacent borders of elements",
+  borderStartEndRadius: "Radius of bottom right corner in block flow",
+  borderStartStartRadius: "Radius of top left corner in block flow",
+  borderTopColor: "Color of the top border of an element",
+  borderTopLeftRadius: "Radius of top left corner of an element",
+  borderTopRightRadius: "Radius of top right corner of an element",
+  borderTopStyle: "Style of the top border of an element",
+  borderTopWidth: "Width of the top border of an element",
+  bottom:
+    "Distance between the bottom edge of an element and the bottom edge of its containing block",
+  boxDecorationBreak:
+    "Specifies how the background, padding, border, and box shadow of an element are broken across multiple lines",
+  boxShadow: "Shadow effect around an element",
+  boxSizing: "Determines how the sizing of an element is calculated.",
+  breakAfter: "Specifies how page breaks should occur after an element.",
+  breakBefore: "Specifies how page breaks should occur before an element.",
+  breakInside: "Specifies how page breaks should occur within an element.",
+  captionSide: "Specifies the position of a table caption.",
+  caretColor: "Specifies the color of the cursor caret.",
+  caretShape: "Specifies the shape of the cursor caret.",
+  clear:
+    "Specifies which sides of an element where other floating elements are not allowed.",
+  clip: "Clips an absolutely positioned element.",
+  clipPath: "Clips an element to a specific shape.",
+  color: "Specifies the color of text.",
+  printColorAdjust: "Specifies how colors are adjusted during printing.",
+  colorScheme: "Specifies the preferred color scheme for the user agent.",
+  columnCount:
+    "Specifies the number of columns an element should be divided into.",
+  columnFill: "Specifies how to fill columns, balancing content.",
+  columnGap: "Specifies the gap between columns.",
+  columnRuleColor: "Sets the color of the rule between columns.",
+  columnRuleStyle: "Sets the style of the rule between columns.",
+  columnRuleWidth: "Sets the width of the rule between columns.",
+  columnSpan: "Specifies how many columns an element should span across.",
+  columnWidth: "Sets the width of columns in multi-column layouts.",
+  contain: "Defines the scope of potential element re-layouts.",
+  containIntrinsicBlockSize: "Specifies the ideal block size of the element.",
+  containIntrinsicHeight: "Specifies the ideal height of the element.",
+  containIntrinsicInlineSize: "Specifies the ideal inline size of the element.",
+  containIntrinsicWidth: "Specifies the ideal width of the element.",
+  content:
+    "Inserts generated content, like icons or text, before or after an element.",
+  contentVisibility: "Controls whether an element's content is visible.",
+  counterIncrement: "Increments the value of one or more CSS counters.",
+  counterReset: "Resets the value of one or more CSS counters.",
+  counterSet: "Sets the value of one or more CSS counters.",
+  cursor:
+    "Defines the type of cursor to be displayed when pointing over an element.",
+  direction:
+    "Sets the direction of text, either left-to-right or right-to-left.",
+  display: "Determines how an element is rendered on the page.",
+  emptyCells:
+    "Controls the display of borders and backgrounds for empty table cells.",
+  filter: "Applies visual effects (blur, grayscale, etc.) to an element.",
+  flexBasis:
+    "Sets the initial size of a flex item before free space is distributed.",
+  flexDirection: "Sets the direction of the main axis in a flex container.",
+  flexGrow: "Determines how much a flex item will grow relative to others.",
+  flexShrink: "Determines how much a flex item will shrink relative to others.",
+  flexWrap:
+    "Controls whether flex items are forced onto one line or can wrap onto multiple lines.",
+  float: "Positions an element to the left or right of its container.",
+  fontFamily: "Sets the font family of text content.",
+  fontFeatureSettings:
+    "Enables or disables font features like ligatures and kerning.",
+  fontKerning: "Controls the usage of kerning in fonts.",
+  fontLanguageOverride: "Overrides the language of text content.",
+  fontOpticalSizing: "Enables or disables optical sizing of fonts.",
+  fontVariationSettings:
+    "Enables or disables font variations like weight and width.",
+  fontSize: "The size of the font.",
+  fontSizeAdjust: "Preserve the readability of text when font fallback occurs.",
+  fontStretch: "The width variation of the font.",
+  fontStyle: "The style of the font (italic, oblique, normal).",
+  fontSynthesis: "The synthesis method used when rendering fonts.",
+  fontVariant: "The variation of the font (normal, small-caps).",
+  fontVariantAlternates: "Alternate glyphs for specific characters.",
+  fontVariantCaps: "Control of the capitalization of text.",
+  fontVariantEastAsian: "Alternate glyphs for East Asian scripts.",
+  fontVariantLigatures: "Control of ligatures and contextual forms.",
+  fontVariantNumeric:
+    "Alternate glyphs for numbers, fractions, and ordinal markers.",
+  fontVariantPosition: "Control of superscript and subscript glyphs.",
+  fontWeight: "The weight (boldness) of the font.",
+  forcedColorAdjust: "Control of forced background and foreground colors.",
+  gridAutoColumns: "The size of columns that are not explicitly set.",
+  gridAutoFlow: "The placement of grid items in the grid container.",
+  gridAutoRows: "Defines the size of rows not explicitly set in a grid.",
+  gridColumnEnd: "Defines the end position of a grid item's column.",
+  gridColumnStart: "Defines the start position of a grid item's column.",
+  gridRowEnd: "Defines the end position of a grid item's row.",
+  gridRowStart: "Defines the start position of a grid item's row.",
+  gridTemplateAreas: "Defines named grid areas for the grid container.",
+  gridTemplateColumns: "Defines the number and size of columns in a grid.",
+  gridTemplateRows: "Defines the number and size of rows in a grid.",
+  hangingPunctuation:
+    "Controls whether punctuation marks should hang outside the margin box of a block container.",
+  height: "Defines the height of an element.",
+  hyphenateCharacter: "Defines the character used as a hyphenation point.",
+  hyphens: "Controls hyphenation of text in block elements.",
+  imageOrientation: "Defines the orientation of an image.",
+  imageRendering: "Controls image scaling and pixelation.",
+  imageResolution: "Defines the pixel density of an image.",
+  initialLetter:
+    "Controls the styling of the first letter of a block-level element.",
+  initialLetterAlign:
+    "Controls the alignment of the first letter or character of an element.",
+  inlineSize: "Sets the size of an element in the inline direction.",
+  inputSecurity:
+    "Determines whether or not the text entered into a password field is visible.",
+  insetBlockEnd:
+    "Sets the block-end position of an element relative to its nearest positioned ancestor.",
+  insetBlockStart:
+    "Sets the block-start position of an element relative to its nearest positioned ancestor.",
+  insetInlineEnd:
+    "Sets the inline-end position of an element relative to its nearest positioned ancestor.",
+  insetInlineStart:
+    "Sets the inline-start position of an element relative to its nearest positioned ancestor.",
+  isolation:
+    "Determines whether an element should create a new stacking context.",
+  justifyContent: "Aligns flex items along the main axis of their container.",
+  justifyItems:
+    "Aligns items inside a grid cell along both the row and column axis.",
+  justifySelf: "Aligns a grid item along both the row and column axis.",
+  justifyTracks: "Aligns grid tracks along the row or column axis.",
+  left: "Sets the left position of an element relative to its nearest positioned ancestor.",
+  letterSpacing: "Controls the spacing between characters in a block of text.",
+  lineBreak:
+    "Specifies how lines should break within words and other elements.",
+  lineClamp:
+    "Limits the number of lines of text that can be displayed within an element.",
+  lineHeight: "Controls the height of each line of text.",
+  lineHeightStep: "Controls the step used to increment line-height.",
+  listStyleImage: "Specifies an image as the list-item marker.",
+  listStylePosition: "Specifies the position of the list-item markers.",
+  listStyleType: "Specifies the type of list-item marker.",
+  marginBlockEnd: "Sets the margin at the bottom of a block-level element.",
+  marginBlockStart: "Sets the margin at the top of a block-level element.",
+  marginBottom: "Sets the margin at the bottom of an element.",
+  marginInlineEnd:
+    "Sets the margin on the right side of an inline-level element.",
+  marginInlineStart:
+    "Sets the margin on the left side of an inline-level element.",
+  marginLeft: "Sets the margin on the left side of an element.",
+  marginRight: "Sets the margin on the right side of an element.",
+  marginTop: "Sets the margin at the top of an element.",
+  marginTrim:
+    "Determines whether a margin is collapsed with its parent element.",
+  maskBorderMode: "Specifies how to fill the border of a masked element.",
+  maskBorderOutset:
+    "Specifies the distance by which to extend the border image.",
+  maskBorderRepeat: "Repeats the mask border image in the mask painting area.",
+  maskBorderSlice:
+    "Specifies inward offsets from the top, right, bottom, and left edges of the mask image.",
+  maskBorderSource: "Determines the mask border image.",
+  maskBorderWidth: "Specifies the widths of the mask border.",
+  maskClip: "Limits the painting area to the area inside the mask.",
+  maskComposite:
+    "Specifies how the mask image is composited with the element's background.",
+  maskImage: "Sets the mask image of an element.",
+  maskMode: "Specifies how mask images are combined.",
+  maskOrigin:
+    "Determines the position of the mask image relative to the mask position.",
+  maskPosition: "Sets the initial position of the mask image.",
+  maskRepeat: "Specifies how the mask image is repeated.",
+  maskSize: "Specifies the size of the mask image.",
+  maskType: "Specifies the type of mask.",
+  masonryAutoFlow: "Controls the flow direction and arrangement of grid items.",
+  mathDepth:
+    "Sets the minimum height of an element that contains math content.",
+  mathShift:
+    "Determines the amount of extra space to add between math content and the surrounding text.",
+  mathStyle: "Sets the display style for MathML formulas.",
+  maxBlockSize: "Specifies the maximum block-level size of an element.",
+  maxHeight: "Sets the maximum height of an element.",
+  maxInlineSize: "Specifies the maximum inline size of an element.",
+  maxLines: "Sets the maximum number of lines for an element.",
+  maxWidth: "Sets the maximum width of an element.",
+  minBlockSize: "Specifies the minimum block-level size of an element.",
+  minHeight: "Sets the minimum height of an element.",
+  minInlineSize: "Specifies the minimum inline size of an element.",
+  minWidth: "Sets the minimum width of an element.",
+  mixBlendMode: "Specifies how an element blends with its background.",
+  objectFit: "Specifies how the content of an element should fit.",
+  objectPosition:
+    "Specifies the alignment of the replaced element inside its container.",
+  offsetAnchor:
+    "Sets the positioning reference for an absolutely positioned element.",
+  offsetDistance:
+    "Specifies the distance between an element and its positioned container.",
+  offsetPath: "Specifies a motion path for an absolutely positioned element.",
+  offsetPosition:
+    "Controls the position of a positioned element relative to its containing block.",
+  offsetRotate:
+    "Controls the rotation of an element around a fixed point in degrees.",
+  opacity: "Controls the transparency of an element.",
+  order: "Controls the order in which an element appears in a flex container.",
+  orphans: "Controls the minimum number of lines for the last line of a block.",
+  outlineColor: "Controls the color of an element's outline.",
+  outlineOffset:
+    "Controls the space between an element's outline and its border.",
+  outlineStyle: "Controls the style of an element's outline.",
+  outlineWidth: "Controls the width of an element's outline.",
+  overflow:
+    "Controls how content overflows its container when it is too large.",
+  overflowAnchor:
+    "Controls whether or not to allow an element to be anchored to a specific point in the viewport.",
+  overflowBlock: "Controls how content overflows its container vertically.",
+  overflowClipMargin:
+    "Controls the margin that is used to clip the overflow of an element.",
+  overflowInline: "Controls how content overflows its container horizontally.",
+  overflowWrap:
+    "Controls how words should be wrapped when they are too long for their container.",
+  overflowX: "Controls how content overflows its container horizontally only.",
+  overflowY: "overflowY",
+  overscrollBehavior: "overscrollBehavior",
+  overscrollBehaviorBlock: "overscrollBehaviorBlock",
+  overscrollBehaviorInline: "overscrollBehaviorInline",
+  overscrollBehaviorX: "overscrollBehaviorX",
+  overscrollBehaviorY: "overscrollBehaviorY",
+  paddingBlockEnd: "paddingBlockEnd",
+  paddingBlockStart: "paddingBlockStart",
+  paddingBottom:
+    "Defines the space between the content of an element and its bottom border. Can affect layout height.",
+  paddingInlineEnd: "paddingInlineEnd",
+  paddingInlineStart: "paddingInlineStart",
+  paddingLeft:
+    "Defines the space between the content of an element and its left border. Can affect layout width.",
+  paddingRight:
+    "Defines the space between the content of an element and its right border. Can affect layout width.",
+  paddingTop:
+    "Defines the space between the content of an element and its top border. Can affect layout height.",
+  pageBreakAfter: "pageBreakAfter",
+  pageBreakBefore: "pageBreakBefore",
+  pageBreakInside: "Controls whether a page break occurs inside an element.",
+  paintOrder: "Specifies the order in which shapes are filled.",
+  perspective: "Defines the perspective from which an element is viewed.",
+  perspectiveOrigin: "Defines the position of the perspective element.",
+  pointerEvents: "Determines whether an element can be clicked.",
+  position: "Sets the position of an element.",
+  quotes: "Defines the quotation marks for a blockquote.",
+  resize: "Allows users to resize an element.",
+  right:
+    "Sets the distance between the right edge of an element and its container.",
+  rotate: "Rotates an element.",
+  rowGap: "Sets the size of the gap between rows in a grid.",
+  rubyAlign:
+    "Aligns ruby text to the start, center, or end of a ruby container.",
+  rubyMerge: "Determines how ruby text is merged between adjacent elements.",
+  rubyPosition: "Sets the position of the ruby text container.",
+  scale: "Scales an element up or down.",
+  scrollbarColor: "Sets the color of the scrollbar track and thumb.",
+  scrollbarGutter:
+    "Controls the size of the gutter (space) between scrollbar and element.",
+  scrollbarWidth: "Controls the width of the scrollbar.",
+  scrollBehavior: "Controls the smoothness of a scroll animation.",
+  scrollMarginBlockStart: "Controls the margin before the starting of a block.",
+  scrollMarginBlockEnd: "Controls the margin after the ending of a block.",
+  scrollMarginBottom: "Controls the margin at the bottom of an element.",
+  scrollMarginInlineStart:
+    "Controls the margin before the starting of an inline element.",
+  scrollMarginInlineEnd:
+    "Controls the margin after the ending of an inline element.",
+  scrollMarginLeft: "Controls the margin at the left side of an element.",
+  scrollMarginRight: "Controls the margin at the right side of an element.",
+  scrollMarginTop: "Controls the margin at the top of an element.",
+  scrollPaddingBlockStart:
+    "Controls the padding before the starting of a block.",
+  scrollPaddingBlockEnd: "Controls the padding after the ending of a block.",
+  scrollPaddingBottom: "Controls the padding at the bottom of an element.",
+  scrollPaddingInlineStart:
+    "Controls the padding before the starting of an inline element.",
+  scrollPaddingInlineEnd:
+    "Controls the padding after the ending of an inline element.",
+  scrollPaddingLeft: "The padding area to the left of a scroll container.",
+  scrollPaddingRight: "The padding area to the right of a scroll container.",
+  scrollPaddingTop: "The padding area above a scroll container.",
+  scrollSnapAlign:
+    "Defines where a snap point will be aligned within a scroll container.",
+  scrollSnapStop:
+    "Defines whether the scroll container should stop on a snap point.",
+  scrollSnapType: "Defines the type of snap points used in a scroll container.",
+  scrollTimelineAxis: "Defines the axis of the scroll timeline.",
+  scrollTimelineName: "Defines the name of the scroll timeline.",
+  shapeImageThreshold:
+    "Defines the alpha channel threshold for shape detection.",
+  shapeMargin:
+    "Defines the margin between a shape and its surrounding content.",
+  shapeOutside: "Defines a shape to wrap content around.",
+  tabSize: "Defines the width of a tab character.",
+  tableLayout:
+    "Defines the algorithm used to lay out table cells, rows, and columns.",
+  textAlign: "Defines the horizontal alignment of text.",
+  textAlignLast:
+    "Defines the horizontal alignment of the last line of text in a block.",
+  textCombineUpright:
+    "Defines the combination of text in vertical orientation.",
+  textDecorationColor:
+    "Controls color of underlines, overlines, and strikethroughs.",
+  textDecorationLine: "Specifies underlines, overlines, and strikethroughs.",
+  textDecorationSkip:
+    "Specifies which parts of text decoration are skipped over.",
+  textDecorationSkipInk:
+    "Specifies which parts of text decoration are skipped over, taking into account the ink area.",
+  textDecorationStyle:
+    "Specifies the style of underlines, overlines, and strikethroughs.",
+  textDecorationThickness:
+    "Specifies the thickness of underlines, overlines, and strikethroughs.",
+  textEmphasisColor: "Controls color of text emphasis marks.",
+  textEmphasisPosition: "Specifies position of text emphasis marks.",
+  textEmphasisStyle: "Specifies style of text emphasis marks.",
+  textIndent:
+    "Specifies how much horizontal space is before the first line of text.",
+  textJustify: "Specifies how the last line of a text is aligned.",
+  textOrientation: "Specifies the orientation of text within a line.",
+  textOverflow: "Specifies how overflowed content is displayed.",
+  textRendering: "Specifies quality of text rendering.",
+  textShadow: "Adds shadow to text.",
+  textSizeAdjust: "Controls the sizing of text relative to its container.",
+  textTransform: "Controls the capitalization of text.",
+  textUnderlineOffset:
+    "Controls the distance between the text and its underline.",
+  textUnderlinePosition:
+    "Controls the position of the underline in relation to the text.",
+  top: "Controls the vertical position of an element relative to its container.",
+  touchAction: "Controls how touch inputs are handled by the browser.",
+  transform: "Applies a 2D or 3D transformation to an element.",
+  transformBox: "Defines the layout box to which the transform applies.",
+  transformOrigin: "Controls the origin point of a transform.",
+  transformStyle: "Controls how nested elements are rendered in 3D space.",
+  transitionDelay: "Controls the delay before a transition effect starts.",
+  transitionDuration: "Controls the duration of a transition effect.",
+  transitionProperty:
+    "Controls which CSS properties are affected by a transition effect.",
+  transitionTimingFunction: "Controls the speed curve of a transition effect.",
+  translate: "Translates an element along the X and/or Y axis.",
+  unicodeBidi: "Controls the handling of bidirectional text.",
+  userSelect: "Controls whether an element can be selected by the user.",
+  verticalAlign: "Aligns inline-level elements vertically.",
+  visibility: "Determines whether an element is visible or hidden.",
+  whiteSpace: "Determines how white space inside an element is handled.",
+  widows: "Sets the minimum number of lines in a block container.",
+  width: "Sets the width of an element.",
+  willChange: "Lets you inform the browser about property changes in advance.",
+  wordBreak:
+    "Determines how words should break when reaching the end of a line.",
+  wordSpacing: "Sets the spacing between words.",
+  wordWrap:
+    "Determines whether to break words if the text exceeds the container.",
+  writingMode: "Sets the direction in which lines of text are written.",
+  zIndex:
+    "Sets the stack order of an element. Higher value means closer to the top.",
+  WebkitFontSmoothing:
+    "Adjusts how text is rendered to improve readability, especially on non-retina displays.",
+  MozOsxFontSmoothing:
+    "Controls the smoothing strategy used while displaying text on macOS and iOS devices.",
+  animationRangeEnd:
+    "Sets the offset within the animation cycle where the animation ends.",
+  animationRangeStart:
+    "Sets the offset within the animation cycle where the animation starts.",
+  containerName: "Specifies the name of the flexible box layout container.",
+  containerType:
+    "Defines the display container type for the layout, like block or inline.",
+  fontPalette: "Handles color font system options for certain OpenType fonts.",
+  fontSynthesisPosition:
+    "Determines the method of synthesizing font variations for the position.",
+  fontSynthesisSmallCaps:
+    "Specifies the mechanism for synthesizing small-caps font faces.",
+  fontSynthesisStyle:
+    "Sets the synthesis style for a font, like normal or italic.",
+  fontSynthesisWeight:
+    "Establishes the font weight synthesis method for non-system fonts.",
+  fontVariantEmoji:
+    "Adjusts the usage of emoji characters in fonts to reflect the font variant preference.",
+  hyphenateLimitChars:
+    "Specifies the minimum number of characters in a word before hyphenation is allowed.",
+  overlay: "Specifies the stacking order for positioned elements that overlap.",
+  page: "Sets various properties related to page breaks and print layout.",
+  textWrap:
+    "Specifies the behavior of text wrapping in relation to the element's content box dimensions.",
+  textWrapMode:
+    "Controls the behavior of how the text wraps when reaching the end of a line",
+  textWrapStyle: "Defines the style of wrapping that will be applied to text",
+  timelineScope:
+    "Indicates whether a timeline is equivalent or independent from others",
+  transition: "Specifies the CSS property to apply a transition effect to",
+  transitionBehavior: "Determines how to animate a transition",
+  viewTimelineAxis: "Sets the axis used for a timeline view",
+  viewTimelineInset: "Sets the inset (left) position in a timeline",
+  viewTimelineName: "Sets a custom name for a timeline view",
+  viewTransitionName: "Sets a custom name for a transition effect",
+  whiteSpaceCollapse:
+    "Specifies how white space inside an element is collapsed",
+});

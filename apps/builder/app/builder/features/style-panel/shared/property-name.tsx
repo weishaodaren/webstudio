@@ -6,7 +6,6 @@ import {
 } from "react";
 import { useStore } from "@nanostores/react";
 import type { StyleProperty } from "@webstudio-is/css-engine";
-import { propertyDescriptions } from "@webstudio-is/css-data";
 import {
   theme,
   Button,
@@ -34,6 +33,7 @@ import {
   $selectedInstance,
   $selectedStyleSource,
   $styleSources,
+  $tProperties,
   $tStylePanel,
 } from "~/shared/nano-states";
 import {
@@ -125,12 +125,14 @@ const getBreakpointName = (
   return breakpoint?.minWidth ?? breakpoint?.maxWidth ?? "Base";
 };
 
-const getDescription = (properties: StyleProperty[]) => {
+const getDescription = (
+  properties: StyleProperty[],
+  translatedProperties: Record<string, string>
+) => {
   if (properties.length > 1) {
     return;
   }
-  const property = properties[0];
-  return propertyDescriptions[property as keyof typeof propertyDescriptions];
+  return translatedProperties[properties[0]];
 };
 
 /**
@@ -155,6 +157,7 @@ export const TooltipContent = ({
    * Store
    */
   const t = useStore($tStylePanel);
+  const tProperties = useStore($tProperties);
   const breakpoints = useStore($breakpoints);
   const selectedBreakpoint = useStore($selectedBreakpoint);
   const instances = useStore($instances);
@@ -163,7 +166,8 @@ export const TooltipContent = ({
   const metas = useStore($registeredComponentMetas);
   const selectedStyleSource = useStore($selectedStyleSource);
 
-  const descriptionWithFallback = description ?? getDescription(properties);
+  const descriptionWithFallback =
+    description ?? getDescription(properties, tProperties);
 
   const breakpointSet = new Set<string>();
   const styleSourceNameSet = new Set<string>();
