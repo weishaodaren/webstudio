@@ -81,8 +81,8 @@ export const Section = (props: SectionProps) => {
         />
         <TypographySectionSizing
           {...props}
-          widthLabel={tOutline.width}
-          heightLabel={tOutline.height}
+          widthLabel={t.fontSize}
+          heightLabel={t.lineHeight}
           spacingLabel={t.spacing}
         />
         <TypographySectionAdvanced {...props} />

@@ -182,6 +182,8 @@ export const $tTypography = i18n("stylePanel/typography", {
   typography: "Typography",
   family: "Family",
   weight: "Weight",
+  fontSize: "Font Size",
+  lineHeight: "Line Height",
   spacing: "Spacing",
   textAlign: "Text Align",
   textAlignStartDesc: "Aligns the text based on the writing direction.",

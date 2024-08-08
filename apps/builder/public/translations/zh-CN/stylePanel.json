@@ -51,6 +51,8 @@
     "typography": "排版",
     "family": "字体",
     "weight": "字号",
+    "fontSize": "尺寸",
+    "lineHeight": "行高",
     "spacing": "字距",
     "textAlign": "文本对齐",
     "textAlignStartDesc": "根据书写方向对齐文本。",
