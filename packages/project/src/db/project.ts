@@ -7,6 +7,7 @@ import {
 import { createBuild } from "@webstudio-is/project-build/index.server";
 import { MarketplaceApprovalStatus, Project, Title } from "../shared/schema";
 import { generateDomain, validateProjectDomain } from "./project-domain";
+import { nanoid } from "nanoid";
 
 export const loadById = async (
   projectId: Project["id"],
@@ -51,22 +52,31 @@ export const create = async (
 
   const projectId = crypto.randomUUID();
 
-  const project = await prisma.$transaction(async (client) => {
-    const project = await client.project.create({
-      data: {
-        id: projectId,
-        userId,
-        title,
-        domain: generateDomain(title),
-      },
-    });
-
-    await createBuild({ projectId: project.id }, context, client);
-
-    return project;
+  // create project without user first
+  // and set user only after build is successfully created
+  // this way to make project creation transactional
+  // for user
+  const newProject = await context.postgrest.client.from("Project").insert({
+    id: projectId,
+    title,
+    domain: generateDomain(title),
   });
+  if (newProject.error) {
+    throw newProject.error;
+  }
 
-  return project;
+  await createBuild({ projectId }, context);
+
+  const updatedProject = await context.postgrest.client
+    .from("Project")
+    .update({ userId })
+    .eq("id", projectId)
+    .select("*")
+    .single();
+  if (updatedProject.error) {
+    throw updatedProject.error;
+  }
+  return updatedProject.data;
 };
 
 export const markAsDeleted = async (
@@ -82,10 +92,14 @@ export const markAsDeleted = async (
     return { errors: "Only the owner can delete the project" };
   }
 
-  return await prisma.project.update({
-    where: { id: projectId },
-    data: { isDeleted: true },
-  });
+  return await context.postgrest.client
+    .from("Project")
+    .update({
+      isDeleted: true,
+      // Free up the subdomain
+      domain: nanoid(),
+    })
+    .eq("id", projectId);
 };
 
 const assertEditPermission = async (projectId: string, context: AppContext) => {

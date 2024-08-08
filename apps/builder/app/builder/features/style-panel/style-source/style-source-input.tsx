@@ -19,8 +19,6 @@ import {
   ComboboxRoot,
   ComboboxAnchor,
   ComboboxContent,
-  DeprecatedTextFieldInput,
-  useDeprecatedTextFieldFocus,
   useCombobox,
   type CSS,
   ComboboxLabel,
@@ -33,6 +31,7 @@ import {
   styled,
   Flex,
   ComboboxScrollArea,
+  InputField,
 } from "@webstudio-is/design-system";
 import { CheckMarkIcon, DotIcon, LocalStyleIcon } from "@webstudio-is/icons";
 import {
@@ -43,14 +42,22 @@ import {
   type ForwardRefRenderFunction,
   type RefObject,
   type ReactNode,
+  useRef,
+  useCallback,
 } from "react";
 import { mergeRefs } from "@react-aria/utils";
 import { type ComponentState, stateCategories } from "@webstudio-is/react-sdk";
-import { type ItemSource, menuCssVars, StyleSource } from "./style-source";
+import {
+  type ItemSource,
+  type StyleSourceError,
+  menuCssVars,
+  StyleSourceControl,
+} from "./style-source-control";
 import { useSortable } from "./use-sortable";
 import { matchSorter } from "match-sorter";
 import { StyleSourceBadge } from "./style-source-badge";
 import { humanizeString } from "~/shared/string-utils";
+import { useFocusWithin } from "@react-aria/interactions";
 
 type IntermediateItem = {
   id: string;
@@ -84,7 +91,7 @@ const TextFieldContainer = styled("div", {
 });
 
 type TextFieldBaseWrapperProps<Item extends IntermediateItem> = Omit<
-  ComponentProps<"input">,
+  ComponentProps<typeof InputField>,
   "value"
 > &
   Pick<ComponentProps<typeof TextFieldContainer>, "css"> & {
@@ -100,6 +107,7 @@ type TextFieldBaseWrapperProps<Item extends IntermediateItem> = Omit<
     onEditItem?: (id?: Item["id"]) => void;
     editingItemId?: Item["id"];
     states: { label: string; selector: string }[];
+    error?: StyleSourceError;
   };
 
 const TextFieldBase: ForwardRefRenderFunction<
@@ -113,7 +121,6 @@ const TextFieldBase: ForwardRefRenderFunction<
     onFocus,
     onBlur,
     onClick,
-    type,
     onKeyDown,
     label,
     value,
@@ -125,19 +132,33 @@ const TextFieldBase: ForwardRefRenderFunction<
     onEditItem,
     editingItemId,
     states,
+    error,
     ...textFieldProps
   } = props;
-  const [internalInputRef, focusProps] = useDeprecatedTextFieldFocus({
-    onFocus,
-    onBlur,
-  });
   const { sortableRefCallback, dragItemId, placementIndicator } = useSortable({
     items: value,
     onSort,
   });
+  const internalInputRef = useRef<HTMLInputElement>(null);
+
+  const { focusWithinProps } = useFocusWithin({
+    onFocusWithin: onFocus,
+    onBlurWithin: onBlur,
+  });
+
+  const onClickCapture = useCallback(() => {
+    internalInputRef.current?.focus();
+  }, [internalInputRef]);
+
   return (
     <TextFieldContainer
-      {...focusProps}
+      {...focusWithinProps}
+      onClickCapture={onClickCapture}
+      // Setting tabIndex to -1 to allow this element to be focused via JavaScript.
+      // This is used when we need to hide the caret but want to:
+      //   1. keep the visual focused state of the component
+      //   2. keep focus somewhere insisde the component to not trigger some focus-trap logic
+      tabIndex={-1}
       ref={mergeRefs(forwardedRef, containerRef ?? null, sortableRefCallback)}
       css={css}
       style={
@@ -147,8 +168,9 @@ const TextFieldBase: ForwardRefRenderFunction<
     >
       {/* We want input to be the first element in DOM so it receives the focus first */}
       {editingItemId === undefined && (
-        <DeprecatedTextFieldInput
+        <InputField
           {...textFieldProps}
+          variant="chromeless"
           css={{
             color: theme.colors.hiContrast,
             fontVariantNumeric: "tabular-nums",
@@ -156,17 +178,23 @@ const TextFieldBase: ForwardRefRenderFunction<
             fontSize: theme.deprecatedFontSize[3],
             lineHeight: 1,
             order: 1,
+            border: "none",
+            flex: 1,
+            "&:focus-within, &:hover": {
+              outline: "none",
+            },
           }}
+          size="1"
           value={label}
-          type={type}
           onClick={onClick}
-          ref={mergeRefs(internalInputRef, inputRef ?? null)}
+          ref={inputRef}
+          inputRef={internalInputRef}
           spellCheck={false}
           aria-label="New Style Source Input"
         />
       )}
       {value.map((item) => (
-        <StyleSource
+        <StyleSourceControl
           key={item.id}
           menuItems={renderStyleSourceMenuItems(item)}
           id={item.id}
@@ -178,10 +206,12 @@ const TextFieldBase: ForwardRefRenderFunction<
           }
           stateLabel={
             item.id === selectedItemSelector?.styleSourceId
-              ? states.find((s) => s.selector === selectedItemSelector.state)
-                  ?.label
+              ? states.find(
+                  (state) => state.selector === selectedItemSelector.state
+                )?.label
               : undefined
           }
+          error={item.id === error?.id ? error : undefined}
           disabled={item.disabled}
           isDragging={item.id === dragItemId}
           isEditing={item.id === editingItemId}
@@ -202,7 +232,7 @@ const TextFieldBase: ForwardRefRenderFunction<
           ) : (
             item.label
           )}
-        </StyleSource>
+        </StyleSourceControl>
       ))}
       {placementIndicator}
     </TextFieldContainer>
@@ -213,6 +243,7 @@ const TextField = forwardRef(TextFieldBase);
 TextField.displayName = "TextField";
 
 type StyleSourceInputProps<Item extends IntermediateItem> = {
+  error?: StyleSourceError;
   items?: Array<Item>;
   value?: Array<Item>;
   selectedItemSelector: undefined | ItemSelector;
@@ -301,7 +332,7 @@ const renderMenuItems = (props: {
       <DropdownMenuLabel>{props.item.label}</DropdownMenuLabel>
       {props.item.source !== "local" && (
         <DropdownMenuItem onSelect={() => props.onEdit?.(props.item.id)}>
-          Edit Name
+          Rename
         </DropdownMenuItem>
       )}
       {props.item.source !== "local" && (
@@ -483,6 +514,7 @@ export const StyleSourceInput = (
           <TextField
             // @todo inputProps is any which breaks all types passed to TextField
             {...inputProps}
+            error={props.error}
             renderStyleSourceMenuItems={(item) =>
               renderMenuItems({
                 selectedItemSelector: props.selectedItemSelector,

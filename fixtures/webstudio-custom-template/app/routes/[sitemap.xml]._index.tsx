@@ -1,8 +1,7 @@
-/* eslint-disable camelcase */
 import { renderToString } from "react-dom/server";
 import { type LoaderFunctionArgs, redirect } from "@remix-run/server-runtime";
 import { isLocalResource, loadResources } from "@webstudio-is/sdk";
-import { ReactSdkContext } from "@webstudio-is/react-sdk";
+import { ReactSdkContext } from "@webstudio-is/react-sdk/runtime";
 import { Page } from "../__generated__/[sitemap.xml]._index";
 import {
   getPageMeta,

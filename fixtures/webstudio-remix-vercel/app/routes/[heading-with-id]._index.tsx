@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {
   type ServerRuntimeMetaFunction as MetaFunction,
   type LinksFunction,
@@ -17,8 +16,7 @@ import {
   formIdFieldName,
   formBotFieldName,
 } from "@webstudio-is/sdk";
-import { ReactSdkContext } from "@webstudio-is/react-sdk";
-import { n8nHandler } from "@webstudio-is/form-handlers";
+import { ReactSdkContext } from "@webstudio-is/react-sdk/runtime";
 import {
   Page,
   siteName,
@@ -288,10 +286,11 @@ export const action = async ({
     formData.delete(formBotFieldName);
 
     if (resource) {
-      resource = {
-        ...resource,
-        body: Object.fromEntries(formData),
-      };
+      resource.headers.push({
+        name: "Content-Type",
+        value: "application/json",
+      });
+      resource.body = Object.fromEntries(formData);
     } else {
       if (contactEmail === undefined) {
         throw new Error("Contact email not found");
@@ -305,31 +304,14 @@ export const action = async ({
       });
     }
 
-    if (resource) {
-      const { ok, statusText } = await loadResource(fetch, resource);
-      if (ok) {
-        return { success: true };
-      }
-      return { success: false, errors: [statusText] };
+    if (resource === undefined) {
+      throw Error("Resource not found");
     }
-
-    // @todo remove n8n handler after saas implement default resource
-    if (contactEmail === undefined) {
-      throw new Error("Contact email not found");
+    const { ok, statusText } = await loadResource(fetch, resource);
+    if (ok) {
+      return { success: true };
     }
-
-    const result = await n8nHandler({
-      formInfo: {
-        formId: projectId,
-        formData,
-        pageUrl: url.toString(),
-        toEmail: contactEmail,
-        fromEmail: url.hostname + "@webstudio.email",
-      },
-      hookUrl: context.N8N_FORM_EMAIL_HOOK,
-    });
-
-    return result;
+    return { success: false, errors: [statusText] };
   } catch (error) {
     console.error(error);
 

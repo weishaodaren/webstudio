@@ -885,3 +885,75 @@ describe("aspect-ratio", () => {
     });
   });
 });
+
+describe("font-family", () => {
+  test("support single value", () => {
+    expect(parseCssValue("fontFamily", "sans-serif")).toEqual({
+      type: "fontFamily",
+      value: ["sans-serif"],
+    });
+  });
+
+  test("support multiple values", () => {
+    expect(parseCssValue("fontFamily", "serif, sans-serif")).toEqual({
+      type: "fontFamily",
+      value: ["serif", "sans-serif"],
+    });
+  });
+
+  test("support space separated values", () => {
+    expect(parseCssValue("fontFamily", "Song Ti, Hei Ti")).toEqual({
+      type: "fontFamily",
+      value: ["Song Ti", "Hei Ti"],
+    });
+    // only two keywords
+    expect(parseCssValue("fontFamily", "Song Ti")).toEqual({
+      type: "fontFamily",
+      value: ["Song Ti"],
+    });
+  });
+
+  test("support quoted values", () => {
+    expect(parseCssValue("fontFamily", "\"Song Ti\", 'Hei Ti'")).toEqual({
+      type: "fontFamily",
+      value: ["Song Ti", "Hei Ti"],
+    });
+  });
+});
+
+test("parse transform-origin", () => {
+  expect(parseCssValue("transformOrigin", "bottom")).toEqual({
+    type: "tuple",
+    value: [{ type: "keyword", value: "bottom" }],
+  });
+
+  expect(parseCssValue("transformOrigin", "left 2px")).toEqual({
+    type: "tuple",
+    value: [
+      { type: "keyword", value: "left" },
+      { type: "unit", value: 2, unit: "px" },
+    ],
+  });
+
+  expect(parseCssValue("transformOrigin", "right top")).toEqual({
+    type: "tuple",
+    value: [
+      { type: "keyword", value: "right" },
+      { type: "keyword", value: "top" },
+    ],
+  });
+
+  expect(parseCssValue("transformOrigin", "2px 30% 10px")).toEqual({
+    type: "tuple",
+    value: [
+      { type: "unit", value: 2, unit: "px" },
+      { type: "unit", value: 30, unit: "%" },
+      { type: "unit", value: 10, unit: "px" },
+    ],
+  });
+
+  expect(parseCssValue("transformOrigin", "top left right")).toEqual({
+    type: "invalid",
+    value: "top left right",
+  });
+});
