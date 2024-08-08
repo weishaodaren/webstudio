@@ -143,6 +143,7 @@ const tupleProps = new Set<StyleProperty>([
   "transform",
   "filter",
   "backdropFilter",
+  "transformOrigin",
 ]);
 
 const availableUnits = new Set<string>(Object.values(units).flat());
@@ -365,7 +366,7 @@ export const parseCssValue = (
 
   // prevent infinite splitting into layers for items
   if (repeatedProps.has(property) && topLevel) {
-    const nodes = "children" in ast ? ast.children?.toArray() ?? [] : [ast];
+    const nodes = "children" in ast ? (ast.children?.toArray() ?? []) : [ast];
     let invalid = false;
     const layersValue: StyleValue = {
       type: "layers",
@@ -400,7 +401,7 @@ export const parseCssValue = (
   }
 
   if (property === "fontFamily") {
-    const nodes = "children" in ast ? ast.children?.toArray() ?? [] : [ast];
+    const nodes = "children" in ast ? (ast.children?.toArray() ?? []) : [ast];
     return {
       type: "fontFamily",
       value: splitRepeated(nodes).map((nodes) => {

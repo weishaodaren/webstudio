@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { useStore } from "@nanostores/react";
 import {
   Tree,
@@ -33,6 +33,7 @@ import type { InstanceSelector } from "~/shared/tree-utils";
 import { shallowEqual } from "shallow-equal";
 import { EyeconClosedIcon, EyeconOpenIcon } from "@webstudio-is/icons";
 import { nanoid } from "nanoid";
+import { mergeRefs } from "@react-aria/utils";
 
 const ShowToggle = ({
   show,
@@ -204,9 +205,8 @@ export const InstanceTree = (
               );
             }}
             prefix={<MetaIcon icon={meta.icon} />}
-          >
-            {label}
-          </TreeItem>
+            value={label}
+          />
         </TreeItemBody>
       );
     },
@@ -237,7 +237,7 @@ export const InstanceTree = (
 
 const TreeItem = ({
   prefix,
-  children,
+  value,
   isEditing,
   isEditable = false,
   onChangeValue,
@@ -246,16 +246,18 @@ const TreeItem = ({
   isEditable: boolean;
   isEditing: boolean;
   prefix?: React.ReactNode;
-  children: React.ReactNode;
+  value: string;
   onChangeValue: (value: string) => void;
   onChangeEditing: (isEditing: boolean) => void;
 }) => {
+  const editableRef = useRef<HTMLDivElement | null>(null);
   const { ref, handlers } = useContentEditable({
+    value,
     isEditable,
     isEditing,
     onChangeValue: (value: string) => {
       onChangeValue(value);
-      const button = ref.current?.closest(
+      const button = editableRef.current?.closest(
         "[data-item-button-id]"
       ) as HTMLElement;
       button?.focus();
@@ -265,12 +267,12 @@ const TreeItem = ({
 
   return (
     <EditableTreeItemLabel
-      ref={ref}
+      ref={mergeRefs(editableRef, ref)}
       {...handlers}
       isEditing={isEditing}
       prefix={prefix}
     >
-      {children}
+      {value}
     </EditableTreeItemLabel>
   );
 };

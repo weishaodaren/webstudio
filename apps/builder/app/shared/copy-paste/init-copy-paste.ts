@@ -1,33 +1,73 @@
 import { toastError } from "../error/toast-error";
-import { $authTokenPermissions } from "../nano-states";
+import {
+  $authTokenPermissions,
+  $textEditingInstanceSelector,
+} from "../nano-states";
 
-const isValidClipboardEvent = (event: ClipboardEvent) => {
-  const selection = document.getSelection();
-  if (selection?.type === "Range") {
-    return false;
+const isTextEditing = (event: ClipboardEvent) => {
+  // Text is edited on the Canvas using the default Canvas text editor settings.
+  if ($textEditingInstanceSelector.get() != null) {
+    return true;
   }
 
-  // Note on event.target:
-  //
-  //   The spec (https://w3c.github.io/clipboard-apis/#to-fire-a-clipboard-event)
-  //   says that if the context is not editable, the target should be the focused node.
-  //
-  //   But in practice it seems that the target is based
-  //   on where the cursor is, rather than which element has focus.
-  //   For example, if a <button> has focus, the target is the <body> element
-  //   (at least in Chrome).
-
-  // If cursor is in input,
-  // don't copy (we may want to add more exceptions here in the future)
+  // Text is edited inside an input, textarea, or contenteditable (i.e. codemirror editor) field.
   if (
     event.target instanceof HTMLInputElement ||
     event.target instanceof HTMLTextAreaElement ||
     (event.target instanceof HTMLElement &&
       event.target.closest("[contenteditable]"))
   ) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ *
+ * # Note:
+ * validateClipboardEvent determines when to use default copy/paste behavior or if a WebStudio instance will be copied, pasted, or cut.
+ * # How to test:
+ * 1. Focus on an input in the style panel (width, style source) or name input in settings. Select the text, then copy and paste any instance in the Navigator tree or on the Canvas.
+ * 2. Edit text in a paragraph on the Canvas. Select text (single or multiple lines), then press Cmd+X. The paragraph should not be deleted.
+ * 3. Select CSS preview text, then select an instance in the Navigator. Press Cmd+C, then Cmd+V.
+ **/
+const validateClipboardEvent = (event: ClipboardEvent) => {
+  if (event.clipboardData === null) {
     return false;
   }
 
+  if (isTextEditing(event)) {
+    return false;
+  }
+
+  // Allows native selection of text in the Builder panels, such as CSS Preview.
+  if (event.type === "copy") {
+    const isInBuilderContext = window.self === window.top;
+
+    if (isInBuilderContext) {
+      // Note on event.target:
+      //
+      //   The spec (https://w3c.github.io/clipboard-apis/#to-fire-a-clipboard-event)
+      //   says that if the context is not editable, the target should be the focused node.
+      //
+      //   But in practice it seems that the target is based
+      //   on where the cursor is, rather than which element has focus.
+      //   For example, if a <button> has focus, the target is the <body> element.
+      //   If some text is selected, the target is a wrapping element of the text.
+      //   (at least in Chrome).
+
+      // We are using the behavior described above: if some text is selected, the target is usually (at least in the cases we need) not the body.
+      if (event.target !== window.document.body) {
+        return false;
+      }
+    }
+  }
+
+  if ($authTokenPermissions.get().canCopy === false) {
+    toastError("Copying has been disabled by the project owner");
+    return false;
+  }
   return true;
 };
 
@@ -42,34 +82,23 @@ type Plugin = {
 
 export const initCopyPaste = (plugins: Plugin[]) => {
   const handleCopy = async (event: ClipboardEvent) => {
-    if ($authTokenPermissions.get().canCopy === false) {
-      toastError("Copying has been disabled by the project owner");
-      event.preventDefault();
+    if (validateClipboardEvent(event) === false) {
       return;
     }
 
-    if (
-      event.clipboardData === null ||
-      isValidClipboardEvent(event) === false
-    ) {
-      return;
-    }
     for (const { mimeType = defaultMimeType, onCopy } of plugins) {
       const data = await onCopy?.();
       if (data) {
         // must prevent default, otherwise setData() will not work
         event.preventDefault();
-        event.clipboardData.setData(mimeType, data);
+        event.clipboardData?.setData(mimeType, data);
         break;
       }
     }
   };
 
   const handleCut = (event: ClipboardEvent) => {
-    if (
-      event.clipboardData === null ||
-      isValidClipboardEvent(event) === false
-    ) {
+    if (validateClipboardEvent(event) === false) {
       return;
     }
     for (const { mimeType = defaultMimeType, onCut } of plugins) {
@@ -77,26 +106,21 @@ export const initCopyPaste = (plugins: Plugin[]) => {
       if (data) {
         // must prevent default, otherwise setData() will not work
         event.preventDefault();
-        event.clipboardData.setData(mimeType, data);
+        event.clipboardData?.setData(mimeType, data);
         break;
       }
     }
   };
 
   const handlePaste = (event: ClipboardEvent) => {
-    if (
-      event.clipboardData === null ||
-      // we might want a separate predicate for paste,
-      // but for now the logic is the same
-      isValidClipboardEvent(event) === false
-    ) {
+    if (validateClipboardEvent(event) === false) {
       return;
     }
 
     for (const { mimeType = defaultMimeType, onPaste } of plugins) {
       // this shouldn't matter, but just in case
       event.preventDefault();
-      const data = event.clipboardData.getData(mimeType).trim();
+      const data = event.clipboardData?.getData(mimeType).trim();
       if (data && onPaste?.(data)) {
         break;
       }
