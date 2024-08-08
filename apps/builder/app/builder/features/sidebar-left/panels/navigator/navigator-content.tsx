@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tLeftPanelCategory, $tLeftPanel } from "~/shared/nano-states";
 import { Flex, Separator } from "@webstudio-is/design-system";
 import { NavigatorTree } from "~/builder/shared/navigator-tree";
 import { Header, CloseButton, Root } from "../../shared/panel";
@@ -31,6 +33,12 @@ export const NavigatorContent = ({
   isClosable = true,
   onClose,
 }: NavigatorProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanelCategory);
+  const _t = useStore($tLeftPanel);
+
   const shortcutRef = useHotkeys<HTMLDivElement>(
     "enter",
     () => emitCommand("editInstanceText"),
@@ -40,13 +48,13 @@ export const NavigatorContent = ({
   return (
     <Root ref={shortcutRef}>
       <Header
-        title="Navigator"
+        title={t.navigator}
         suffix={isClosable && <CloseButton onClick={() => onClose?.()} />}
       />
       <Flex grow direction="column" justify="end">
         <NavigatorTree />
         <Separator />
-        <CssPreview />
+        <CssPreview label={_t.cssPreview} />
       </Flex>
     </Root>
   );

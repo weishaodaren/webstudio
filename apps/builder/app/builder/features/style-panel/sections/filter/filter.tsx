@@ -1,5 +1,7 @@
 import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
+import { $tFilters, $tBackdropFilters } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
+import { useStore } from "@nanostores/react";
 import { useState } from "react";
 import {
   Flex,
@@ -22,11 +24,23 @@ import { FilterSectionContent } from "../../shared/filter-content";
 export const properties = ["filter"] satisfies Array<StyleProperty>;
 
 const property: StyleProperty = properties[0];
-const label = "Filters";
 const initialFilter = "blur(0px)";
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Props
+   */
   const { currentStyle, deleteProperty } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tFilters);
+  const tBackdropFilters = useStore($tBackdropFilters);
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
   const value = currentStyle[property]?.value;
   const sectionStyleSource =
@@ -37,14 +51,14 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.filters}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
         <SectionTitle
           dots={getDots(currentStyle, properties)}
           suffix={
-            <Tooltip content={"Add a filter"}>
+            <Tooltip content={t.tooltip}>
               <SectionTitleButton
                 prefix={<PlusIcon />}
                 onClick={() => {
@@ -61,13 +75,13 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.filters}
             style={currentStyle}
             properties={properties}
-            description="Filter effects allow you to apply graphical effects like blurring, color shifting, and more to elements."
+            description={t.description}
             label={
               <SectionTitleLabel color={sectionStyleSource}>
-                {label}
+                {t.filters}
               </SectionTitleLabel>
             }
             onReset={() => deleteProperty(property)}
@@ -80,7 +94,7 @@ export const Section = (props: SectionProps) => {
           {...props}
           property={property}
           value={value}
-          label={label}
+          label={t.filters}
           deleteProperty={deleteProperty}
           renderContent={(layerProps) => {
             if (layerProps.layer.type !== "function") {
@@ -92,16 +106,20 @@ export const Section = (props: SectionProps) => {
                 {...layerProps}
                 property={property}
                 layer={layerProps.layer}
+                labels={{
+                  fn: tBackdropFilters.function,
+                  value: tBackdropFilters.value,
+                  code: tBackdropFilters.code,
+                }}
                 tooltip={
                   <Tooltip
                     variant="wrapped"
                     content={
                       <Flex gap="2" direction="column">
-                        <Text variant="regularBold">{label}</Text>
+                        <Text variant="regularBold">{t.filters}</Text>
                         <Text variant="monoBold">filter</Text>
                         <Text>
-                          Applies graphical effects like blur or color shift to
-                          an element, for example:
+                          {t.tooltipDescription}
                           <br /> <br />
                           <Text variant="mono">{initialFilter}</Text>
                         </Text>

@@ -2,6 +2,7 @@ import { useStore } from "@nanostores/react";
 import type { SectionProps } from "../shared/section";
 import { styleConfigByName } from "../../shared/configs";
 import { FloatingPanel } from "~/builder/shared/floating-panel";
+import { $tBackground } from "~/shared/nano-states";
 import {
   CssValueListItem,
   CssValueListArrowFocus,
@@ -157,13 +158,17 @@ const BackgroundsCollapsibleSection = ({
   currentStyle,
   createBatchUpdate,
 }: SectionProps & { children: React.ReactNode }) => {
-  const label = "Backgrounds";
-  const [isOpen, setIsOpen] = useOpenState({ label });
+  /**
+   * Store
+   */
+  const t = useStore($tBackground);
+
+  const [isOpen, setIsOpen] = useOpenState({ label: "Backgrounds" });
   const layersStyleSource = getLayersStyleSource(currentStyle);
 
   return (
     <CollapsibleSectionRoot
-      label={label}
+      label={t.backgrounds}
       fullWidth
       isOpen={isOpen}
       onOpenChange={(nextIsOpen) => {
@@ -184,12 +189,12 @@ const BackgroundsCollapsibleSection = ({
         >
           <PropertyName
             style={currentStyle}
-            title="Backgrounds"
-            description="Add one or more backgrounds to the instance such as a color, image, or gradient."
+            title={t.backgrounds}
+            description={t.description}
             properties={layeredBackgroundProps}
             label={
               <SectionTitleLabel color={layersStyleSource}>
-                {label}
+                {t.backgrounds}
               </SectionTitleLabel>
             }
             onReset={() => {

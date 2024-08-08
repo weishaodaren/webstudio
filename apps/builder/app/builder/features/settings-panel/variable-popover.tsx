@@ -13,6 +13,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
 } from "react";
 import { mergeRefs } from "@react-aria/utils";
 import { CopyIcon, RefreshIcon, UpgradeIcon } from "@webstudio-is/icons";
@@ -55,6 +56,7 @@ import {
   $selectedInstanceSelector,
   invalidateResource,
   getComputedResource,
+  $tInspector,
 } from "~/shared/nano-states";
 import { serverSyncStore } from "~/shared/sync";
 import { $userPlanFeatures } from "~/builder/shared/nano-states";
@@ -76,6 +78,7 @@ const validateName = (value: string) =>
   value.trim().length === 0 ? "Name is required" : "";
 
 const NameField = ({ defaultValue }: { defaultValue: string }) => {
+  const t = useStore($tInspector);
   const ref = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const nameId = useId();
@@ -84,7 +87,7 @@ const NameField = ({ defaultValue }: { defaultValue: string }) => {
   }, [defaultValue]);
   return (
     <Grid gap={1}>
-      <Label htmlFor={nameId}>Name</Label>
+      <Label htmlFor={nameId}>{t.name}</Label>
       <InputErrorsTooltip errors={error ? [error] : undefined}>
         <InputField
           inputRef={ref}
@@ -122,71 +125,98 @@ const TypeField = ({
   value: VariableType;
   onChange: (value: VariableType) => void;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const { allowDynamicData } = useStore($userPlanFeatures);
+
+  /**
+   * Memo
+   * @description 选项
+   */
   const optionsList: Array<{
     value: VariableType;
     disabled?: boolean;
     label: ReactNode;
     description: string;
-  }> = [
-    {
-      value: "string",
-      label: "String",
-      description: "Any alphanumeric text.",
-    },
-    {
-      value: "number",
-      label: "Number",
-      description: "Any number, can be used in math expressions.",
-    },
-    {
-      value: "boolean",
-      label: "Boolean",
-      description: "A boolean is a true/false switch.",
-    },
-    {
-      value: "json",
-      label: "JSON",
-      description: "Any JSON value",
-    },
-    {
-      value: "resource",
-      label: (
-        <Flex direction="row" gap="2" align="center">
-          Resource
-          {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
-        </Flex>
-      ),
-      description:
-        "A Resource is a configuration for secure data fetching. You can safely use secrets in any field.",
-    },
-    {
-      value: "graphql-resource",
-      label: (
-        <Flex direction="row" gap="2" align="center">
-          GraphQL
-          {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
-        </Flex>
-      ),
-      description:
-        "A Resource is a configuration for secure data fetching. You can safely use secrets in any field.",
-    },
-    {
-      value: "system-resource",
-      label: (
-        <Flex direction="row" gap="2" align="center">
-          System Resource
-          {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
-        </Flex>
-      ),
-      description: "A System Resource is a configuration for Webstudio data.",
-    },
-  ];
+  }> = useMemo(
+    () => [
+      {
+        value: "string",
+        label: t.stringText,
+        description: t.stringDesc,
+      },
+      {
+        value: "number",
+        label: t.numberText,
+        description: t.numberDesc,
+      },
+      {
+        value: "boolean",
+        label: t.booleanText,
+        description: t.booleanDesc,
+      },
+      {
+        value: "json",
+        label: t.jsonText,
+        description: t.jsonDesc,
+      },
+      {
+        value: "resource",
+        label: (
+          <Flex direction="row" gap="2" align="center">
+            {t.resourceText}
+            {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
+          </Flex>
+        ),
+        description: t.resourceDesc,
+      },
+      {
+        value: "graphql-resource",
+        label: (
+          <Flex direction="row" gap="2" align="center">
+            {t.graphQLText}
+            {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
+          </Flex>
+        ),
+        description: t.graphQLDesc,
+      },
+      {
+        value: "system-resource",
+        label: (
+          <Flex direction="row" gap="2" align="center">
+            {t.systemResourceText}
+            {allowDynamicData === false && <ProBadge>Pro</ProBadge>}
+          </Flex>
+        ),
+        description: t.systemResourceDesc,
+      },
+    ],
+    [
+      allowDynamicData,
+      t.booleanDesc,
+      t.booleanText,
+      t.graphQLDesc,
+      t.graphQLText,
+      t.jsonDesc,
+      t.jsonText,
+      t.numberDesc,
+      t.numberText,
+      t.resourceDesc,
+      t.resourceText,
+      t.stringDesc,
+      t.stringText,
+      t.systemResourceDesc,
+      t.systemResourceText,
+    ]
+  );
+
   const options = new Map(optionsList.map((option) => [option.value, option]));
 
   return (
     <Grid gap="1">
-      <Label>Type</Label>
+      <Label>{t.type}</Label>
       <Select
         options={Array.from(options.keys())}
         getLabel={(option: VariableType) => options.get(option)?.label}
@@ -276,6 +306,7 @@ const StringForm = forwardRef<
     variable?: DataSource;
   }
 >(({ variable }, ref) => {
+  const t = useStore($tInspector);
   const [value, setValue] = useState(
     variable?.type === "variable" && variable.value.type === "string"
       ? variable.value.value
@@ -290,7 +321,7 @@ const StringForm = forwardRef<
   return (
     <>
       <Flex direction="column" css={{ gap: theme.spacing[3] }}>
-        <Label htmlFor={valueId}>Value</Label>
+        <Label htmlFor={valueId}>{t.value}</Label>
         <EditorDialogControl>
           <TextArea
             name="value"
@@ -302,7 +333,7 @@ const StringForm = forwardRef<
             onChange={setValue}
           />
           <EditorDialog
-            title="Variable value"
+            title={t.variableValue}
             content={
               <TextArea
                 grow={true}
@@ -627,6 +658,7 @@ export const VariablePopoverTrigger = forwardRef<
   HTMLButtonElement,
   { variable?: DataSource; children: ReactNode }
 >(({ variable, children }, ref) => {
+  const t = useStore($tInspector);
   const areResourcesLoading = useStore($areResourcesLoading);
   const [isOpen, setOpen] = useState(false);
   const { containerRef } = useContext(VariablePopoverContext);
@@ -738,7 +770,7 @@ export const VariablePopoverTrigger = forwardRef<
         </ScrollArea>
         {/* put after content to avoid auto focusing "Close" button */}
         {variable === undefined ? (
-          <FloatingPanelPopoverTitle>New Variable</FloatingPanelPopoverTitle>
+          <FloatingPanelPopoverTitle>{t.newVariable}</FloatingPanelPopoverTitle>
         ) : (
           <FloatingPanelPopoverTitle
             actions={
@@ -746,12 +778,9 @@ export const VariablePopoverTrigger = forwardRef<
                 <>
                   {/* allow to copy curl only for default and graphql resource controls */}
                   {resources.get(variable.resourceId)?.control !== "system" && (
-                    <Tooltip
-                      content="Copy resource as cURL command"
-                      side="bottom"
-                    >
+                    <Tooltip content={t.copyTooltip} side="bottom">
                       <Button
-                        aria-label="Copy resource as cURL command"
+                        aria-label={t.copyTooltip}
                         prefix={<CopyIcon />}
                         color="ghost"
                         onClick={() => {
@@ -767,9 +796,9 @@ export const VariablePopoverTrigger = forwardRef<
                       />
                     </Tooltip>
                   )}
-                  <Tooltip content="Refresh resource data" side="bottom">
+                  <Tooltip content={t.refreshTooltip} side="bottom">
                     <Button
-                      aria-label="Refresh resource data"
+                      aria-label={t.refreshTooltip}
                       prefix={<RefreshIcon />}
                       color="ghost"
                       disabled={areResourcesLoading}
@@ -785,7 +814,7 @@ export const VariablePopoverTrigger = forwardRef<
               )
             }
           >
-            Edit Variable
+            {t.editVariable}
           </FloatingPanelPopoverTitle>
         )}
       </FloatingPanelPopoverContent>

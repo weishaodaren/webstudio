@@ -50,7 +50,16 @@ export const PositionControl = ({
   setProperty,
   deleteProperty,
   isAdvanced,
-}: ControlProps) => {
+  labels: { topText, topDesc, leftText, leftDesc, positionText },
+}: ControlProps & {
+  labels: {
+    topText: string;
+    leftText: string;
+    topDesc: string;
+    leftDesc: string;
+    positionText: string;
+  };
+}) => {
   const { items } = styleConfigByName(property);
   const styleInfo = currentStyle[property];
   const value = toTuple(styleInfo?.value);
@@ -77,7 +86,7 @@ export const PositionControl = ({
       <NonResetablePropertyName
         style={currentStyle}
         properties={[property]}
-        label="Position"
+        label={positionText}
       />
 
       <Flex gap="6">
@@ -103,8 +112,8 @@ export const PositionControl = ({
           <NonResetablePropertyName
             style={currentStyle}
             properties={[property]}
-            description="Left position offset"
-            label="Left"
+            description={leftDesc}
+            label={leftText}
           />
 
           <CssValueInputContainer
@@ -120,8 +129,8 @@ export const PositionControl = ({
           <NonResetablePropertyName
             style={currentStyle}
             properties={[property]}
-            description="Top position offset"
-            label="Top"
+            description={topDesc}
+            label={topText}
           />
 
           <CssValueInputContainer

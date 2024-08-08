@@ -17,7 +17,7 @@ import {
 } from "@webstudio-is/design-system";
 import { MinusIcon, PlusIcon } from "@webstudio-is/icons";
 import { useStore } from "@nanostores/react";
-import { $breakpoints } from "~/shared/nano-states";
+import { $breakpoints, $tInspector, $tSize } from "~/shared/nano-states";
 import { groupBreakpoints, isBaseBreakpoint } from "~/shared/breakpoints";
 import { serverSyncStore } from "~/shared/sync";
 
@@ -86,6 +86,8 @@ const BreakpointEditorItem = ({
   onChangeComplete,
   onDelete,
 }: BreakpointEditorItemProps) => {
+  const t = useStore($tInspector);
+  const tSize = useStore($tSize);
   const { formRef, handleChangeComplete, handleChange } =
     useHandleChangeComplete(breakpoint, onChangeComplete);
 
@@ -109,7 +111,7 @@ const BreakpointEditorItem = ({
           <InputField
             type="text"
             defaultValue={breakpoint.label}
-            placeholder="Breakpoint name"
+            placeholder={t.breakpointName}
             name="label"
             minLength={1}
             required
@@ -121,7 +123,7 @@ const BreakpointEditorItem = ({
               css={{ width: theme.spacing[28] }}
               options={["maxWidth", "minWidth"]}
               getLabel={(option) =>
-                option === "maxWidth" ? "Max Width" : "Min Width"
+                option === "maxWidth" ? tSize.maxWidth : tSize.minWidth
               }
               defaultValue={breakpoint.maxWidth ? "maxWidth" : "minWidth"}
               onChange={handleChangeComplete}
@@ -163,6 +165,10 @@ type BreakpointsEditorProps = {
 };
 
 export const BreakpointsEditor = ({ onDelete }: BreakpointsEditorProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const breakpoints = useStore($breakpoints);
   const [addedBreakpoints, setAddedBreakpoints] = useState<Breakpoint[]>([]);
   const initialBreakpointsRef = useRef(
@@ -204,7 +210,7 @@ export const BreakpointsEditor = ({ onDelete }: BreakpointsEditorProps) => {
           </IconButton>
         }
       >
-        {"Breakpoints"}
+        {t.breakpoints}
       </PanelTitle>
       <Separator />
       <Box css={{ marginTop: theme.spacing[5] }}>
@@ -223,7 +229,7 @@ export const BreakpointsEditor = ({ onDelete }: BreakpointsEditorProps) => {
         })}
       </Box>
       {allBreakpoints.length === 0 && (
-        <Text css={{ margin: theme.spacing[10] }}>No breakpoints found</Text>
+        <Text css={{ margin: theme.spacing[10] }}>{t.noFoundBreakpoint}</Text>
       )}
     </Flex>
   );

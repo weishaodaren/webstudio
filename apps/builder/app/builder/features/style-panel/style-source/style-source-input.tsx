@@ -240,6 +240,12 @@ type StyleSourceInputText = {
   clearText: string;
   removeText: string;
   deleteText: string;
+  localStyleHint: string;
+  tokenStyleHint: string;
+  newTokenText: string;
+  createTokenText?: string;
+  globalTokenText?: string;
+  componentTokenText?: string;
 };
 
 type StyleSourceInputProps<Item extends IntermediateItem> = {
@@ -433,14 +439,10 @@ const renderMenuItems = (
 
       <DropdownMenuSeparator />
       {props.item.source === "local" && (
-        <DropdownMenuItem hint>
-          Style instances without creating a token or override a token locally.
-        </DropdownMenuItem>
+        <DropdownMenuItem hint>{props.localStyleHint}</DropdownMenuItem>
       )}
       {props.item.source === "token" && (
-        <DropdownMenuItem hint>
-          Reuse styles across multiple instances by creating a token.
-        </DropdownMenuItem>
+        <DropdownMenuItem hint>{props.tokenStyleHint}</DropdownMenuItem>
       )}
     </>
   );
@@ -463,6 +465,12 @@ export const StyleSourceInput = (
     clearText,
     removeText,
     deleteText,
+    tokenStyleHint,
+    localStyleHint,
+    newTokenText,
+    createTokenText,
+    globalTokenText,
+    componentTokenText,
   } = props;
 
   /**
@@ -535,12 +543,15 @@ export const StyleSourceInput = (
             {...inputProps}
             renderStyleSourceMenuItems={(item) =>
               renderMenuItems({
+                tokenStyleHint,
+                localStyleHint,
                 editText,
                 duplicateText,
                 convertText,
                 clearText,
                 removeText,
                 deleteText,
+                newTokenText,
                 selectedItemSelector: props.selectedItemSelector,
                 item,
                 states,
@@ -581,14 +592,14 @@ export const StyleSourceInput = (
                     const { key, ...itemProps } = getItemProps({ item, index });
                     return (
                       <Fragment key={index}>
-                        <ComboboxLabel>New Token</ComboboxLabel>
+                        <ComboboxLabel>{props.newTokenText}</ComboboxLabel>
                         <ComboboxListboxItem
                           {...itemProps}
                           key={key}
                           selectable={false}
                         >
                           <div>
-                            Create{" "}
+                            {createTokenText}
                             <StyleSourceBadge source="token">
                               {item.label}
                             </StyleSourceBadge>
@@ -604,7 +615,7 @@ export const StyleSourceInput = (
                     label = (
                       <>
                         {hasNewTokenItem && <ComboboxSeparator />}
-                        <ComboboxLabel>Global Tokens</ComboboxLabel>
+                        <ComboboxLabel>{globalTokenText}</ComboboxLabel>
                       </>
                     );
                   }
@@ -619,7 +630,7 @@ export const StyleSourceInput = (
                         {(hasNewTokenItem || hasGlobalTokenItem) && (
                           <ComboboxSeparator />
                         )}
-                        <ComboboxLabel>Component Tokens</ComboboxLabel>
+                        <ComboboxLabel>{componentTokenText}</ComboboxLabel>
                       </>
                     );
                   }

@@ -74,6 +74,8 @@ import {
   $dataSourceVariables,
   $publishedOrigin,
   $project,
+  $tPages,
+  $tLeftPanel,
 } from "~/shared/nano-states";
 import {
   BindingControl,
@@ -320,10 +322,14 @@ const PathField = ({
   errors,
   value,
   onChange,
+  label,
+  content,
 }: {
   errors?: string[];
   value: string;
   onChange: (value: string) => void;
+  label: string;
+  content: string;
 }) => {
   const { allowDynamicData } = useStore($userPlanFeatures);
   const id = useId();
@@ -332,11 +338,8 @@ const PathField = ({
       <Label htmlFor={id}>
         {allowDynamicData && isFeatureEnabled("cms") ? (
           <Flex align="center" gap={1}>
-            Dynamic Path
-            <Tooltip
-              content="The path can include dynamic parameters like :name, which could be made optional using :name?, or have a wildcard such as /* or /:name* to store whole remaining part at the end of the URL."
-              variant="wrapped"
-            >
+            {label}
+            <Tooltip content={content} variant="wrapped">
               <HelpIcon
                 color={rawTheme.colors.foregroundSubtle}
                 tabIndex={-1}
@@ -401,10 +404,18 @@ const StatusField = ({
   errors,
   value,
   onChange,
+  label,
+  conent1,
+  conent2,
+  conent3,
 }: {
   errors?: string[];
   value: string;
   onChange: (value: string) => void;
+  label: string;
+  conent1: string;
+  conent2: string;
+  conent3: string;
 }) => {
   const id = useId();
   const { allowDynamicData } = useStore($userPlanFeatures);
@@ -413,20 +424,19 @@ const StatusField = ({
     <Grid gap={1}>
       <Label htmlFor={id}>
         <Flex align="center" gap={1}>
-          Status Code
+          {label}
           <Tooltip
             content={
               <Text>
-                Status code value can be a{" "}
+                {conent1}
                 <Link
                   color="inherit"
                   target="_blank"
                   href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
                 >
-                  HTTP Status
-                </Link>{" "}
-                number or an expression that returns the status code dynamic
-                response handling.
+                  {conent2}
+                </Link>
+                {conent3}
               </Text>
             }
             variant="wrapped"
@@ -477,10 +487,14 @@ const RedirectField = ({
   errors,
   value,
   onChange,
+  label,
+  content,
 }: {
   errors?: string[];
   value: string;
   onChange: (value: string) => void;
+  label: string;
+  content: string;
 }) => {
   const id = useId();
   const { allowDynamicData } = useStore($userPlanFeatures);
@@ -489,11 +503,8 @@ const RedirectField = ({
     <Grid gap={1}>
       <Label htmlFor={id}>
         <Flex align="center" gap={1}>
-          Redirect
-          <Tooltip
-            content="Redirect value can be a path or an expression that returns a path for dynamic response handling."
-            variant="wrapped"
-          >
+          {label}
+          <Tooltip content={content} variant="wrapped">
             <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
           </Tooltip>
         </Flex>
@@ -532,16 +543,18 @@ const LanguageField = ({
   errors,
   value,
   onChange,
+  label,
 }: {
   errors?: string[];
   value: string;
   onChange: (value: string) => void;
+  label: string;
 }) => {
   const id = useId();
   const { variableValues, scope, aliases } = useStore($pageRootScope);
   return (
     <Grid gap={1}>
-      <Label htmlFor={id}>Language</Label>
+      <Label htmlFor={id}>{label}</Label>
       <BindingControl>
         <BindingPopover
           scope={scope}
@@ -706,6 +719,11 @@ const FormFields = ({
   values: Values;
   onChange: OnChange;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
+  const tPanel = useStore($tLeftPanel);
   const project = useStore($project);
   const fieldIds = useIds(fieldNames);
   const assets = useStore($assets);
@@ -743,7 +761,7 @@ const FormFields = ({
          */}
         <Grid gap={2} css={{ my: theme.spacing[5], mx: theme.spacing[8] }}>
           <Grid gap={1}>
-            <Label htmlFor={fieldIds.name}>Page Name</Label>
+            <Label htmlFor={fieldIds.name}>{t.pageName}</Label>
             <InputErrorsTooltip errors={errors.name}>
               <InputField
                 color={errors.name && "error"}
@@ -821,7 +839,7 @@ const FormFields = ({
                     }}
                     htmlFor={fieldIds.isHomePage}
                   >
-                    Make “{values.name}” the home page
+                    {t.makeHomePage({ name: values.name })}
                   </Label>
                 </>
               )}
@@ -830,7 +848,7 @@ const FormFields = ({
 
           {values.isHomePage === false && (
             <Grid gap={1}>
-              <Label htmlFor={fieldIds.parentFolderId}>Parent Folder</Label>
+              <Label htmlFor={fieldIds.parentFolderId}>{t.parentFolder}</Label>
               <Select
                 options={pages.folders}
                 getValue={(folder) => folder.id}
@@ -850,6 +868,8 @@ const FormFields = ({
 
           {values.isHomePage === false && (
             <PathField
+              label={t.dynamicPath}
+              content={t.dynamicPathTooltip}
               errors={errors.path}
               value={values.path}
               onChange={(value) => onChange({ field: "path", value })}
@@ -859,11 +879,17 @@ const FormFields = ({
           {isFeatureEnabled("cms") && (
             <>
               <StatusField
+                label={t.statusCode}
+                conent1={t.statusCodeContent1}
+                conent2={t.statusCodeContent2}
+                conent3={t.statusCodeContent3}
                 errors={errors.status}
                 value={values.status}
                 onChange={(value) => onChange({ field: "status", value })}
               />
               <RedirectField
+                label={t.redirect}
+                content={t.redirectTooltip}
                 errors={errors.redirect}
                 value={values.redirect}
                 onChange={(value) => onChange({ field: "redirect", value })}
@@ -889,7 +915,9 @@ const FormFields = ({
 
               {isFeatureEnabled("xmlElement") && (
                 <Grid gap={1}>
-                  <Label htmlFor={fieldIds.documentType}>Document Type</Label>
+                  <Label htmlFor={fieldIds.documentType}>
+                    {t.documentType}
+                  </Label>
                   <Select
                     options={documentTypes}
                     getValue={(docType: (typeof documentTypes)[number]) =>
@@ -924,13 +952,10 @@ const FormFields = ({
         >
           <Grid gap={2} css={{ my: theme.spacing[5], mx: theme.spacing[8] }}>
             <Grid gap={2}>
-              <Label text="title">Search</Label>
-              <Text color="subtle">
-                Optimize the way this page appears in search engine results
-                pages.
-              </Text>
+              <Label text="title">{t.search}</Label>
+              <Text color="subtle">{t.searchSubtitle}</Text>
               <Grid gap={1}>
-                <Label>Search Result Preview</Label>
+                <Label>{t.searchLabel}</Label>
                 <Box
                   css={{
                     padding: theme.spacing[5],
@@ -960,7 +985,7 @@ const FormFields = ({
             </Grid>
 
             <Grid gap={1}>
-              <Label htmlFor={fieldIds.title}>Title</Label>
+              <Label htmlFor={fieldIds.title}>{t.title}</Label>
               <BindingControl>
                 {isFeatureEnabled("cms") && (
                   <BindingPopover
@@ -1004,7 +1029,7 @@ const FormFields = ({
             </Grid>
 
             <Grid gap={1}>
-              <Label htmlFor={fieldIds.description}>Description</Label>
+              <Label htmlFor={fieldIds.description}>{t.description}</Label>
               <BindingControl>
                 {isFeatureEnabled("cms") && (
                   <BindingPopover
@@ -1098,7 +1123,7 @@ const FormFields = ({
 
                   <InputErrorsTooltip errors={errors.excludePageFromSearch}>
                     <Label htmlFor={fieldIds.excludePageFromSearch}>
-                      Exclude this page from search results
+                      {t.searchResults}
                     </Label>
                   </InputErrorsTooltip>
                 </Grid>
@@ -1107,6 +1132,7 @@ const FormFields = ({
 
             {isFeatureEnabled("cms") && (
               <LanguageField
+                label={tPanel.language}
                 errors={errors.language}
                 value={values.language}
                 onChange={(value) => onChange({ field: "language", value })}
@@ -1121,14 +1147,9 @@ const FormFields = ({
            */}
           <Grid gap={2} css={{ my: theme.spacing[5], mx: theme.spacing[8] }}>
             <Label htmlFor={fieldIds.socialImageAssetId} text="title">
-              Social Image
+              {t.socialImage}
             </Label>
-            <Text color="subtle">
-              This image appears when you share a link to this page on social
-              media sites. If no image is set here, the Social Image set in the
-              Project Settings will be used. The optimal dimensions for the
-              image are 1200x630 px or larger with a 1.91:1 aspect ratio.
-            </Text>
+            <Text color="subtle">{t.socialImageSubtitle}</Text>
             {isFeatureEnabled("cms") && (
               <BindingControl>
                 <BindingPopover
@@ -1187,7 +1208,7 @@ const FormFields = ({
                   css={{ justifySelf: "start" }}
                   color="neutral"
                 >
-                  Choose Image From Assets
+                  {tPanel.chooseImage}
                 </Button>
               </ImageControl>
             </Grid>
@@ -1205,6 +1226,7 @@ const FormFields = ({
             )}
             <div />
             <SocialPreview
+              label={t.socialSharingPreview}
               ogImageUrl={
                 socialImageAsset?.type === "image"
                   ? socialImageAsset.name
@@ -1221,6 +1243,14 @@ const FormFields = ({
           <InputErrorsTooltip errors={errors.customMetas}>
             <div>
               <CustomMetadata
+                title={t.customMetadata}
+                subtitle1={t.metadataSubtitle1}
+                subtitle2={t.metadataSubtitle2}
+                subtitle3={t.metadataSubtitle3}
+                subtitle4={t.metadataSubtitle4}
+                propertyLabel={t.metadataProperty}
+                contentLabel={t.metadataContent}
+                addLabel={t.addMetadata}
                 customMetas={values.customMetas}
                 onChange={(customMetas) => {
                   onChange({
@@ -1274,6 +1304,9 @@ const nameToPath = (pages: Pages | undefined, name: string) => {
   return `${path}${suffix}`;
 };
 
+/**
+ * Component
+ */
 export const NewPageSettings = ({
   onClose,
   onSuccess,
@@ -1281,6 +1314,11 @@ export const NewPageSettings = ({
   onClose: () => void;
   onSuccess: (pageId: Page["id"]) => void;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
+  const tPanel = useStore($tLeftPanel);
   const pages = useStore($pages);
 
   const [values, setValues] = useState<Values>({
@@ -1308,6 +1346,10 @@ export const NewPageSettings = ({
 
   return (
     <NewPageSettingsView
+      title={t.newPageSettings}
+      creatingText={t.creating}
+      createText={t.createPage}
+      cancelText={tPanel.cancel}
       onSubmit={handleSubmit}
       onClose={onClose}
       isSubmitting={false}
@@ -1341,22 +1383,30 @@ const NewPageSettingsView = ({
   isSubmitting,
   onClose,
   children,
+  title,
+  cancelText,
+  creatingText,
+  createText,
 }: {
   onSubmit: () => void;
   isSubmitting: boolean;
   onClose: () => void;
   children: JSX.Element;
+  title: string;
+  cancelText: string;
+  creatingText: string;
+  createText: string;
 }) => {
   return (
     <>
       <Header
-        title="New Page Settings"
+        title={title}
         suffix={
           <>
-            <Tooltip content="Cancel" side="bottom">
+            <Tooltip content={cancelText} side="bottom">
               <Button
                 onClick={onClose}
-                aria-label="Cancel"
+                aria-label={cancelText}
                 prefix={<ChevronDoubleLeftIcon />}
                 color="ghost"
                 // Tab should go:
@@ -1370,7 +1420,7 @@ const NewPageSettingsView = ({
               onClick={onSubmit}
               tabIndex={2}
             >
-              {isSubmitting ? "Creating" : "Create page"}
+              {isSubmitting ? creatingText : createText}
             </Button>
           </>
         }
@@ -1561,6 +1611,9 @@ const updatePage = (pageId: Page["id"], values: Partial<Values>) => {
   });
 };
 
+/**
+ * Component
+ */
 export const PageSettings = ({
   onClose,
   onDuplicate,
@@ -1572,6 +1625,10 @@ export const PageSettings = ({
   onDelete: () => void;
   pageId: string;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPages);
   const pages = useStore($pages);
   const page = pages && findPageByIdOrPath(pageId, pages);
 
@@ -1654,6 +1711,10 @@ export const PageSettings = ({
 
   return (
     <PageSettingsView
+      title={t.pageSettings}
+      deleteText={t.deletePage}
+      duplicateText={t.duplicatePage}
+      closeText={t.closePageSettings}
       onClose={onClose}
       onDelete={values.isHomePage === false ? hanldeDelete : undefined}
       onDuplicate={() => {
@@ -1678,44 +1739,52 @@ const PageSettingsView = ({
   onDuplicate,
   onClose,
   children,
+  title,
+  deleteText,
+  duplicateText,
+  closeText,
 }: {
   onDelete?: () => void;
   onDuplicate: () => void;
   onClose: () => void;
   children: JSX.Element;
+  title: string;
+  deleteText: string;
+  duplicateText: string;
+  closeText: string;
 }) => {
   return (
     <>
       <Header
-        title="Page Settings"
+        title={title}
         suffix={
           <>
             {onDelete && (
-              <Tooltip content="Delete page" side="bottom">
+              <Tooltip content={deleteText} side="bottom">
                 <Button
                   color="ghost"
                   prefix={<TrashIcon />}
                   onClick={onDelete}
-                  aria-label="Delete page"
+                  aria-label={deleteText}
                   tabIndex={2}
                 />
               </Tooltip>
             )}
-            <Tooltip content="Duplicate page" side="bottom">
+            <Tooltip content={duplicateText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<CopyIcon />}
                 onClick={onDuplicate}
-                aria-label="Duplicate page"
+                aria-label={duplicateText}
                 tabIndex={2}
               />
             </Tooltip>
-            <Tooltip content="Close page settings" side="bottom">
+            <Tooltip content={closeText} side="bottom">
               <Button
                 color="ghost"
                 prefix={<ChevronDoubleLeftIcon />}
                 onClick={onClose}
-                aria-label="Close page settings"
+                aria-label={closeText}
                 tabIndex={2}
               />
             </Tooltip>

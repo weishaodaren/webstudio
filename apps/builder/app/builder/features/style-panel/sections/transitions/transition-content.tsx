@@ -43,6 +43,20 @@ type TransitionContentProps = {
   index: number;
   currentStyle: StyleInfo;
   createBatchUpdate: CreateBatchUpdate;
+  commonLabel: string;
+  propertyLabel: string;
+  propertDescription: string;
+  easingLabel: string;
+  easingDescription: string;
+  defaultLabel: string;
+  customLabel: string;
+  easeInLabel: string;
+  easeOutLabel: string;
+  easeInOutLabel: string;
+  delayLable: string;
+  delayDescription: string;
+  durationLabel: string;
+  durationDescription: string;
 };
 
 // We are allowing users to add/edit layers as shorthand from the style-panel
@@ -57,6 +71,20 @@ export const TransitionContent = ({
   index,
   createBatchUpdate,
   currentStyle,
+  commonLabel,
+  propertyLabel,
+  propertDescription,
+  easingLabel,
+  easingDescription,
+  defaultLabel,
+  customLabel,
+  easeInLabel,
+  easeOutLabel,
+  easeInOutLabel,
+  delayLable,
+  delayDescription,
+  durationLabel,
+  durationDescription,
 }: TransitionContentProps) => {
   const onEditLayer = (
     index: number,
@@ -174,6 +202,9 @@ export const TransitionContent = ({
         }}
       >
         <TransitionProperty
+          commonLabel={commonLabel}
+          propertyLabel={propertyLabel}
+          propertDescription={propertDescription}
           property={property ?? properties.transitionProperty.initial}
           onPropertySelection={handlePropertyUpdate}
         />
@@ -183,18 +214,15 @@ export const TransitionContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Duration</Text>
+                <Text variant="regularBold">{durationLabel}</Text>
                 <Text variant="monoBold" color="moreSubtle">
                   transition-duration
                 </Text>
-                <Text>
-                  Sets the length of time a transition animation should take to
-                  complete.
-                </Text>
+                <Text>{durationDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ display: "inline" }}>Duration</Label>
+            <Label css={{ display: "inline" }}>{durationLabel}</Label>
           </Tooltip>
         </Flex>
         <CssValueInputContainer
@@ -225,17 +253,15 @@ export const TransitionContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Delay</Text>
+                <Text variant="regularBold">{delayLable}</Text>
                 <Text variant="monoBold" color="moreSubtle">
                   transition-delay
                 </Text>
-                <Text>
-                  Specify the duration to wait before the transition begins.
-                </Text>
+                <Text>{delayDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ display: "inline" }}>Delay</Label>
+            <Label css={{ display: "inline" }}>{delayLable}</Label>
           </Tooltip>
         </Flex>
         <CssValueInputContainer
@@ -262,6 +288,13 @@ export const TransitionContent = ({
         />
 
         <TransitionTiming
+          easingLabel={easingLabel}
+          easingDescription={easingDescription}
+          defaultLabel={defaultLabel}
+          customLabel={customLabel}
+          easeInLabel={easeInLabel}
+          easeOutLabel={easeOutLabel}
+          easeInOutLabel={easeInOutLabel}
           timing={timingFunction ?? properties.transitionTimingFunction.initial}
           onTimingSelection={handlePropertyUpdate}
         />

@@ -18,7 +18,8 @@ import { $selectedInstanceRenderState } from "~/shared/nano-states";
 import {
   $selectedInstanceIntanceToTag,
   $selectedInstanceSelector,
-  $tStylePanle,
+  $tStylePanel,
+  $tInspector,
 } from "~/shared/nano-states";
 import { sections } from "./sections";
 import { useParentStyle } from "./parent-style";
@@ -64,7 +65,8 @@ export const StylePanel = ({ selectedInstance }: StylePanelProps) => {
   /**
    * Store
    */
-  const t = useStore($tStylePanle);
+  const t = useStore($tStylePanel);
+  const tInspector = useStore($tInspector);
   const selectedInstanceRenderState = useStore($selectedInstanceRenderState);
   const selectedInstanceTag = useStore($selectedInstanceTag);
 
@@ -75,7 +77,7 @@ export const StylePanel = ({ selectedInstance }: StylePanelProps) => {
     return (
       <Box css={{ p: theme.spacing[5] }}>
         <Card css={{ p: theme.spacing[9], width: "100%" }}>
-          <Text>Select an instance on the canvas</Text>
+          <Text>{tInspector.selectInstance}</Text>
         </Card>
       </Box>
     );

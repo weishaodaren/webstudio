@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tSize } from "~/shared/nano-states";
 import { Grid, Select, theme } from "@webstudio-is/design-system";
 import { toValue } from "@webstudio-is/css-engine";
 import { styleConfigByName } from "../../shared/configs";
@@ -35,6 +37,11 @@ const toTuple = (
 export const BackgroundSize = (
   props: Omit<ControlProps, "property" | "items">
 ) => {
+  /**
+   * Store
+   */
+  const t = useStore($tSize);
+
   const property = "backgroundSize";
 
   const styleInfo = props.currentStyle[property];
@@ -77,7 +84,7 @@ export const BackgroundSize = (
         <NonResetablePropertyName
           style={props.currentStyle}
           properties={[property]}
-          label="Size"
+          label={t.size}
         />
 
         <Select

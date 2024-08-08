@@ -19,8 +19,14 @@ import type { StyleUpdateOptions } from "../../shared/use-style-data";
 import { parseCssValue } from "@webstudio-is/css-data";
 import { extractRotatePropertiesFromTransform } from "./transform-utils";
 
+/**
+ * Component
+ */
 export const RotatePanelContent = (props: TransformPanelProps) => {
-  const { propertyValue, setProperty, currentStyle } = props;
+  /**
+   * Props
+   */
+  const { propertyValue, setProperty, currentStyle, labels } = props;
   const { rotateX, rotateY, rotateZ } =
     extractRotatePropertiesFromTransform(propertyValue);
 
@@ -69,7 +75,7 @@ export const RotatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <XAxisRotateIcon />
-        <Label> Rotate X</Label>
+        <Label>{labels?.xLable}</Label>
         <CssValueInputContainer
           key="rotateX"
           styleSource="local"
@@ -91,7 +97,7 @@ export const RotatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <YAxisRotateIcon />
-        <Label> Rotate Y</Label>
+        <Label>{labels?.yLabel}</Label>
         <CssValueInputContainer
           key="rotateY"
           styleSource="local"
@@ -113,7 +119,7 @@ export const RotatePanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <ZAxisRotateIcon />
-        <Label> Rotate Z</Label>
+        <Label>{labels?.zLabel}</Label>
         <CssValueInputContainer
           key="rotateZ"
           styleSource="local"

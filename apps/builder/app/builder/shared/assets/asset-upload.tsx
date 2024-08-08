@@ -80,9 +80,10 @@ export const acceptUploadType = (
 type AssetUploadProps = {
   type: AssetType;
   accept?: string;
+  label: string;
 };
 
-const EnabledAssetUpload = ({ accept, type }: AssetUploadProps) => {
+const EnabledAssetUpload = ({ accept, type, label }: AssetUploadProps) => {
   const { inputRef, onChange } = useUpload(type);
 
   return (
@@ -102,27 +103,27 @@ const EnabledAssetUpload = ({ accept, type }: AssetUploadProps) => {
           css={{ flexGrow: 1 }}
           prefix={<UploadIcon />}
         >
-          Upload
+          {label}
         </Button>
       </Flex>
     </form>
   );
 };
 
-export const AssetUpload = ({ type }: AssetUploadProps) => {
+export const AssetUpload = ({ type, label }: AssetUploadProps) => {
   const authPermit = useStore($authPermit);
 
   if (authPermit !== "view") {
     // Split into a separate component to avoid using `useUpload` hook unnecessarily
     // (It's hard to mock this hook in storybook)
-    return <EnabledAssetUpload type={type} />;
+    return <EnabledAssetUpload label={label} type={type} />;
   }
 
   return (
     <Flex>
       <Tooltip side="bottom" content="View mode. You can't upload assets.">
         <Button css={{ flexGrow: 1 }} prefix={<UploadIcon />} disabled={true}>
-          Upload
+          {label}
         </Button>
       </Tooltip>
     </Flex>

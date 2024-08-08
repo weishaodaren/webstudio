@@ -25,8 +25,13 @@ const borderColorProperty = properties[0];
 
 const { items } = styleConfigByName("borderTopColor");
 
-export const BorderColor = (props: SectionProps) => {
-  const { currentStyle, createBatchUpdate } = props;
+/**
+ * Component
+ */
+export const BorderColor = (
+  props: SectionProps & { label: string; description: string }
+) => {
+  const { currentStyle, createBatchUpdate, label, description } = props;
   const deleteColorProperties = deleteAllProperties(
     properties,
     createBatchUpdate
@@ -39,8 +44,8 @@ export const BorderColor = (props: SectionProps) => {
       <PropertyName
         style={currentStyle}
         properties={properties}
-        label={"Color"}
-        description="Sets the color of the border"
+        label={label}
+        description={description}
         onReset={() => deleteColorProperties(borderColorProperty)}
       />
 

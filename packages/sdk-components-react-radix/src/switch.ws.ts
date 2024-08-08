@@ -13,6 +13,7 @@ export const metaSwitch: WsComponentMeta = {
   category: "radix",
   order: 11,
   type: "container",
+  label: "Switch",
   description:
     "A control that allows the user to toggle between checked and not checked.",
   icon: SwitchIcon,

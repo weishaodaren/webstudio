@@ -1,4 +1,6 @@
 import { forwardRef, type ComponentProps } from "react";
+import { useStore } from "@nanostores/react";
+import { $tTypography, $tOutline, $tDeclarations } from "~/shared/nano-states";
 import {
   Flex,
   Grid,
@@ -59,29 +61,57 @@ export const properties = [
 ] satisfies Array<StyleProperty>;
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tTypography);
+  const tOutline = useStore($tOutline);
   return (
     <CollapsibleSection
-      label="Typography"
+      label={t.typography}
       currentStyle={props.currentStyle}
       properties={properties}
     >
       <Flex gap="2" direction="column">
-        <TypographySectionFont {...props} />
-        <TypographySectionSizing {...props} />
+        <TypographySectionFont
+          {...props}
+          familyLabel={t.family}
+          weightLabel={t.weight}
+          colorLabel={tOutline.color}
+        />
+        <TypographySectionSizing
+          {...props}
+          widthLabel={tOutline.width}
+          heightLabel={tOutline.height}
+          spacingLabel={t.spacing}
+        />
         <TypographySectionAdvanced {...props} />
       </Flex>
     </CollapsibleSection>
   );
 };
 
-export const TypographySectionFont = (props: SectionProps) => {
-  const { currentStyle, setProperty, deleteProperty } = props;
+export const TypographySectionFont = (
+  props: SectionProps & {
+    familyLabel: string;
+    weightLabel: string;
+    colorLabel: string;
+  }
+) => {
+  const {
+    currentStyle,
+    setProperty,
+    deleteProperty,
+    familyLabel,
+    weightLabel,
+    colorLabel,
+  } = props;
 
   return (
     <Grid css={{ gridTemplateColumns: "4fr 6fr" }} gap={2}>
       <PropertyName
         style={currentStyle}
-        label="Family"
+        label={familyLabel}
         properties={["fontFamily"]}
         onReset={() => deleteProperty("fontFamily")}
       />
@@ -93,7 +123,7 @@ export const TypographySectionFont = (props: SectionProps) => {
       />
       <PropertyName
         style={currentStyle}
-        label="Weight"
+        label={weightLabel}
         properties={["fontWeight"]}
         onReset={() => deleteProperty("fontWeight")}
       />
@@ -105,7 +135,7 @@ export const TypographySectionFont = (props: SectionProps) => {
       />
       <PropertyName
         style={currentStyle}
-        label="Color"
+        label={colorLabel}
         properties={["color"]}
         onReset={() => deleteProperty("color")}
       />
@@ -119,8 +149,21 @@ export const TypographySectionFont = (props: SectionProps) => {
   );
 };
 
-export const TypographySectionSizing = (props: SectionProps) => {
-  const { currentStyle, setProperty, deleteProperty } = props;
+export const TypographySectionSizing = (
+  props: SectionProps & {
+    widthLabel: string;
+    heightLabel: string;
+    spacingLabel: string;
+  }
+) => {
+  const {
+    currentStyle,
+    setProperty,
+    deleteProperty,
+    widthLabel,
+    heightLabel,
+    spacingLabel,
+  } = props;
 
   return (
     <Grid gap="2" css={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
@@ -128,7 +171,7 @@ export const TypographySectionSizing = (props: SectionProps) => {
         <PropertyName
           style={currentStyle}
           properties={["fontSize"]}
-          label="Size"
+          label={widthLabel}
           onReset={() => deleteProperty("fontSize")}
         />
         <TextControl
@@ -142,7 +185,7 @@ export const TypographySectionSizing = (props: SectionProps) => {
         <PropertyName
           style={currentStyle}
           properties={["lineHeight"]}
-          label="Height"
+          label={heightLabel}
           onReset={() => deleteProperty("lineHeight")}
         />
         <TextControl
@@ -156,7 +199,7 @@ export const TypographySectionSizing = (props: SectionProps) => {
         <PropertyName
           style={currentStyle}
           properties={["letterSpacing"]}
-          label="Spacing"
+          label={spacingLabel}
           onReset={() => deleteProperty("letterSpacing")}
         />
         <TextControl
@@ -172,6 +215,11 @@ export const TypographySectionSizing = (props: SectionProps) => {
 
 export const TypographySectionAdvanced = (props: SectionProps) => {
   const { currentStyle } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tTypography);
   const textAlignValue = toValue(currentStyle.textAlign?.value);
   return (
     <Grid gap="2" columns="2" align="end">
@@ -189,30 +237,29 @@ export const TypographySectionAdvanced = (props: SectionProps) => {
         items={[
           {
             child: <TextAlignLeftIcon />,
-            title: "Text Align",
-            description: "Aligns the text based on the writing direction.",
+            title: t.textAlign,
+            description: t.textAlignStartDesc,
             value: "start",
             propertyValues: "text-align: start;",
           },
           {
             child: <TextAlignCenterIcon />,
-            title: "Text Align",
-            description: "Centers the text horizontally within its container.",
+            title: t.textAlign,
+            description: t.textAlignCenterDesc,
             value: "center",
             propertyValues: "text-align: center;",
           },
           {
             child: <TextAlignRightIcon />,
-            title: "Text Align",
-            description: "Aligns the text based on the writing direction.",
+            title: t.textAlign,
+            description: t.textAlignEndDesc,
             value: "end",
             propertyValues: "text-align: end;",
           },
           {
             child: <TextAlignJustifyIcon />,
-            title: "Text Align",
-            description:
-              "Adjusts word spacing to align text to both the left and right edges of the container",
+            title: t.textAlign,
+            description: t.textAlignJustifyDesc,
             value: "justify",
             propertyValues: "text-align: justify;",
           },
@@ -224,23 +271,22 @@ export const TypographySectionAdvanced = (props: SectionProps) => {
         items={[
           {
             child: <CrossSmallIcon />,
-            title: "Text Decoration Line",
-            description: "No decoration is applied to the text.",
+            title: t.textDecoration,
+            description: t.textDecorationNoneDesc,
             value: "none",
             propertyValues: "text-decoration-line: none;",
           },
           {
-            title: "Text Decoration Line",
+            title: t.textDecoration,
             child: <TextUnderlineIcon />,
-            description: " Adds a horizontal line underneath the text.",
+            description: t.textDecorationUnderlineDesc,
             value: "underline",
             propertyValues: "text-decoration-line: underline;",
           },
           {
-            title: "Text Decoration Line",
+            title: t.textDecoration,
             child: <TextStrikethroughIcon />,
-            description:
-              "Draws a horizontal line through the middle of the text.",
+            description: t.textDecorationLinethroughDesc,
             value: "line-through",
             propertyValues: "text-decoration-line: line-through;",
           },
@@ -252,33 +298,29 @@ export const TypographySectionAdvanced = (props: SectionProps) => {
         items={[
           {
             child: <CrossSmallIcon />,
-            title: "Text Transform",
-            description:
-              "No transformation is applied to the text. The text appears as it is.",
+            title: t.textTransform,
+            description: t.textTransformNoneDesc,
             value: "none",
             propertyValues: "text-transform: none;",
           },
           {
             child: <TextUppercaseIcon />,
-            title: "Text Transform",
-            description:
-              "Transforms the text to appear in all uppercase letters.",
+            title: t.textTransform,
+            description: t.textTransformUpperDesc,
             value: "uppercase",
             propertyValues: "text-transform: uppercase;",
           },
           {
             child: <TextCapitalizeIcon />,
-            title: "Text Transform",
-            description:
-              "Transforms the first character of each word to uppercase, while the remaining characters are in lowercase.",
+            title: t.textTransform,
+            description: t.textTransformCapsDesc,
             value: "capitalize",
             propertyValues: "text-transform: capitalize;",
           },
           {
             child: <TextLowercaseIcon />,
-            title: "Text Transform",
-            description:
-              " Transforms the text to appear in all lowercase letters.",
+            title: t.textTransform,
+            description: t.textTransformLowerDesc,
             value: "lowercase",
             propertyValues: "text-transform: lowercase;",
           },
@@ -291,23 +333,39 @@ export const TypographySectionAdvanced = (props: SectionProps) => {
           items={[
             {
               child: <CrossSmallIcon />,
-              title: "Font Style",
-              description:
-                "The default value. The text appears in a normal, upright style.",
+              title: t.fontStyle,
+              description: t.normalDesc,
               value: "normal",
               propertyValues: "font-style: normal;",
             },
             {
               child: <TextItalicIcon />,
-              title: "Font Style",
-              description:
-                "The text appears in italic style, where it is slanted to the right.",
+              title: t.fontStyle,
+              description: t.italicDesc,
               value: "italic",
               propertyValues: "font-style: italic;",
             },
           ]}
         />
-        <TypographySectionAdvancedPopover {...props} />
+        <TypographySectionAdvancedPopover
+          {...props}
+          title={t.advanced}
+          tooltip={t.advancedTooltip}
+          labels={{
+            whiteSpace: t.whiteSpace,
+            wrapMode: t.wrapMode,
+            wrapStyle: t.wrapStyle,
+            direction: t.direction,
+            directionLTRDesc: t.directionLTRDesc,
+            directionRTLDesc: t.directionRTLDesc,
+            hyphens: t.hyphens,
+            hyphensNoneDesc: t.hyphensNoneDesc,
+            hyphensAutoDesc: t.hyphensAutoDesc,
+            overflow: t.overflow,
+            overflowClipDesc: t.overflowClipDesc,
+            overflowEllipsisDesc: t.overflowEllipsisDesc,
+          }}
+        />
       </Grid>
     </Grid>
   );
@@ -321,15 +379,16 @@ const AdvancedOptionsButton = forwardRef<
     onReset: () => void;
     /** https://www.radix-ui.com/docs/primitives/components/collapsible#trigger */
     "data-state"?: "open" | "closed";
+    tooltip: string;
   }
->(({ currentStyle, properties, onReset, onClick, ...rest }, ref) => {
+>(({ currentStyle, properties, onReset, onClick, tooltip, ...rest }, ref) => {
   const styleSourceColor = getStyleSourceColor({
     properties,
     currentStyle,
   });
   return (
     <Flex>
-      <EnhancedTooltip content="More typography options">
+      <EnhancedTooltip content={tooltip}>
         <IconButton
           {...rest}
           onClick={(event) => {
@@ -350,9 +409,35 @@ const AdvancedOptionsButton = forwardRef<
 });
 AdvancedOptionsButton.displayName = "AdvancedOptionsButton";
 
-export const TypographySectionAdvancedPopover = (props: SectionProps) => {
-  const { deleteProperty, setProperty, createBatchUpdate, currentStyle } =
-    props;
+export const TypographySectionAdvancedPopover = (
+  props: SectionProps & {
+    title: string;
+    tooltip: string;
+    labels: {
+      whiteSpace: string;
+      wrapMode: string;
+      wrapStyle: string;
+      direction: string;
+      directionLTRDesc: string;
+      directionRTLDesc: string;
+      hyphens: string;
+      hyphensNoneDesc: string;
+      hyphensAutoDesc: string;
+      overflow: string;
+      overflowClipDesc: string;
+      overflowEllipsisDesc: string;
+    };
+  }
+) => {
+  const {
+    deleteProperty,
+    setProperty,
+    createBatchUpdate,
+    currentStyle,
+    title,
+    tooltip,
+    labels,
+  } = props;
   const properties = {
     whiteSpaceCollapse: "whiteSpaceCollapse",
     textWrapMode: "textWrapMode",
@@ -364,7 +449,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
 
   return (
     <FloatingPanel
-      title="Advanced Typography"
+      title={title}
       content={
         <Grid
           css={{
@@ -377,7 +462,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.whiteSpaceCollapse]}
-              label="White Space"
+              label={labels.whiteSpace}
               onReset={() => deleteProperty(properties.whiteSpaceCollapse)}
             />
             <SelectControl
@@ -392,7 +477,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.textWrapMode]}
-              label="Wrap Mode"
+              label={labels.wrapMode}
               onReset={() => deleteProperty(properties.textWrapMode)}
             />
             <SelectControl
@@ -406,7 +491,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.textWrapStyle]}
-              label="Wrap Style"
+              label={labels.wrapStyle}
               onReset={() => deleteProperty(properties.textWrapStyle)}
             />
             <SelectControl
@@ -420,7 +505,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.direction]}
-              label="Direction"
+              label={labels.direction}
               onReset={() => deleteProperty(properties.direction)}
             />
             <ToggleGroupControl
@@ -429,17 +514,15 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
               items={[
                 {
                   child: <TextDirectionLTRIcon />,
-                  title: "Direction",
-                  description:
-                    "Sets the text direction to left-to-right, which is the default for most languages.",
+                  title: labels.direction,
+                  description: labels.directionLTRDesc,
                   value: "ltr",
                   propertyValues: "direction: ltr;",
                 },
                 {
                   child: <TextDirectionRTLIcon />,
-                  title: "Direction",
-                  description:
-                    "Sets the text direction to right-to-left, typically used for languages such as Arabic or Hebrew.",
+                  title: labels.direction,
+                  description: labels.directionRTLDesc,
                   value: "rtl",
                   propertyValues: "direction: rtl;",
                 },
@@ -450,7 +533,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.hyphens]}
-              label="Hyphens"
+              label={labels.hyphens}
               onReset={() => deleteProperty(properties.hyphens)}
             />
             <ToggleGroupControl
@@ -459,17 +542,15 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
               items={[
                 {
                   child: <CrossSmallIcon />,
-                  title: "Hyphens",
-                  description:
-                    "Disables hyphenation of words. Words will not be hyphenated even if they exceed the width of their container.",
+                  title: labels.hyphens,
+                  description: labels.hyphensNoneDesc,
                   value: "manual",
                   propertyValues: "hyphens: none;",
                 },
                 {
                   child: <TextHyphenIcon />,
-                  title: "Hyphens",
-                  description:
-                    "Enables automatic hyphenation of words. The browser will hyphenate long words at appropriate points to fit within the width of their container.",
+                  title: labels.hyphens,
+                  description: labels.hyphensAutoDesc,
                   value: "auto",
                   propertyValues: "hyphens: auto;",
                 },
@@ -480,7 +561,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
             <PropertyName
               style={currentStyle}
               properties={[properties.textOverflow]}
-              label="Text Overflow"
+              label={labels.overflow}
               onReset={() => deleteProperty(properties.textOverflow)}
             />
             <ToggleGroupControl
@@ -489,17 +570,15 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
               items={[
                 {
                   child: <CrossSmallIcon />,
-                  title: "Text Overflow",
-                  description:
-                    "The overflowing text is clipped and hidden without any indication.",
+                  title: labels.overflow,
+                  description: labels.overflowClipDesc,
                   value: "clip",
                   propertyValues: "text-overflow: clip;",
                 },
                 {
                   child: <TextTruncateIcon />,
-                  title: "Text Overflow",
-                  description:
-                    "The overflowing text is truncated with an ellipsis (...) to indicate that there is more content. To make the text-overflow: ellipsis property work, you need to set the following CSS properties: white-space: nowrap; overflow: hidden;",
+                  title: labels.overflow,
+                  description: labels.overflowEllipsisDesc,
                   value: "ellipsis",
                   propertyValues: "text-overflow: ellipsis;",
                 },
@@ -510,6 +589,7 @@ export const TypographySectionAdvancedPopover = (props: SectionProps) => {
       }
     >
       <AdvancedOptionsButton
+        tooltip={tooltip}
         currentStyle={currentStyle}
         properties={Object.values(properties)}
         onReset={() => {

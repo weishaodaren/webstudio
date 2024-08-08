@@ -11,6 +11,8 @@ import { useStore } from "@nanostores/react";
 import {
   $registeredComponentMetas,
   $registeredComponentPropsMetas,
+  $tLeftPanel,
+  $tInspector,
 } from "~/shared/nano-states";
 
 type PropOrName = { prop?: Prop; propName: string };
@@ -129,22 +131,6 @@ const getAndDelete = <Value>(map: Map<string, Value>, key: string) => {
   return value;
 };
 
-const systemPropsMeta: { name: string; meta: PropMeta }[] = [
-  {
-    name: showAttribute,
-    meta: {
-      label: "Show",
-      required: false,
-      control: "boolean",
-      type: "boolean",
-      defaultValue: true,
-      // If you are changing it, change the other one too
-      description:
-        "Removes the instance from the DOM. Breakpoints have no effect on this setting.",
-    },
-  },
-];
-
 /** usePropsLogic expects that key={instanceId} is used on the ancestor component */
 export const usePropsLogic = ({
   instance,
@@ -152,6 +138,11 @@ export const usePropsLogic = ({
   updateProp,
   deleteProp,
 }: UsePropsLogicInput) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanel);
+  const tInspector = useStore($tInspector);
   const instanceMeta = useStore($registeredComponentMetas).get(
     instance.component
   );
@@ -171,6 +162,20 @@ export const usePropsLogic = ({
   );
 
   const initialPropsNames = new Set(meta.initialProps ?? []);
+
+  const systemPropsMeta: { name: string; meta: PropMeta }[] = [
+    {
+      name: showAttribute,
+      meta: {
+        label: t.show,
+        required: false,
+        control: "boolean",
+        type: "boolean",
+        defaultValue: true,
+        description: t.removeTooltip,
+      },
+    },
+  ];
 
   const systemProps: PropAndMeta[] = systemPropsMeta.map(({ name, meta }) => {
     let saved = getAndDelete<Prop>(unprocessedSaved, name);
@@ -201,7 +206,7 @@ export const usePropsLogic = ({
     systemProps.push({
       propName: textContentAttribute,
       meta: {
-        label: "Text Content",
+        label: tInspector.textContent,
         required: false,
         control: "textContent",
         type: "string",

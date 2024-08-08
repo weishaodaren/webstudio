@@ -1,4 +1,6 @@
-import { declarationDescriptions, parseCssValue } from "@webstudio-is/css-data";
+import { useStore } from "@nanostores/react";
+import { $tDeclarations } from "~/shared/nano-states";
+import { parseCssValue } from "@webstudio-is/css-data";
 import { toValue } from "@webstudio-is/css-engine";
 import { Box, Select, theme } from "@webstudio-is/design-system";
 import { styleConfigByName } from "../../shared/configs";
@@ -13,6 +15,11 @@ export const SelectControl = ({
   items,
   isAdvanced,
 }: ControlProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tDeclarations);
+
   const { items: defaultItems } = styleConfigByName(property);
   const styleValue = currentStyle[property]?.value;
   const setValue = setProperty(property);
@@ -58,10 +65,7 @@ export const SelectControl = ({
         }
       }}
       getDescription={(option) => {
-        const description =
-          declarationDescriptions[
-            `${property}:${option}` as keyof typeof declarationDescriptions
-          ];
+        const description = t[`${property}:${option}` as keyof typeof t];
 
         if (description === undefined) {
           return;

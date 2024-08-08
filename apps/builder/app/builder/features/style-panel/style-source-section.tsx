@@ -36,7 +36,7 @@ import {
   $styleSourceSelections,
   $styleSources,
   $styles,
-  $tStylePanle,
+  $tStylePanel,
 } from "~/shared/nano-states";
 import { removeByMutable } from "~/shared/array-utils";
 import { cloneStyles } from "~/shared/tree-utils";
@@ -476,7 +476,7 @@ export const StyleSourcesSection = () => {
   /**
    * Store
    */
-  const t = useStore($tStylePanle);
+  const t = useStore($tStylePanel);
   const componentStates = useStore($componentStates);
   const availableStyleSources = useStore($availableStyleSources);
   const selectedInstanceStyleSources = useStore($selectedInstanceStyleSources);
@@ -512,6 +512,12 @@ export const StyleSourcesSection = () => {
         clearText={t.clear}
         removeText={t.remove}
         deleteText={t.delete}
+        tokenStyleHint={t.tokenStyleHint}
+        localStyleHint={t.localStyleHint}
+        newTokenText={t.newToken}
+        createTokenText={t.create}
+        globalTokenText={t.globalTokens}
+        componentTokenText={t.componentTokens}
         items={availableStyleSources}
         value={value}
         selectedItemSelector={selectedOrLastStyleSourceSelector}

@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tSize, $tPosition } from "~/shared/nano-states";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import {
   Flex,
@@ -6,7 +8,6 @@ import {
   Separator,
   styled,
 } from "@webstudio-is/design-system";
-import { styleConfigByName } from "../../shared/configs";
 import type { SectionProps } from "../shared/section";
 import { PropertyName } from "../../shared/property-name";
 import {
@@ -29,12 +30,12 @@ import { getStyleSourceColor } from "../../shared/style-info";
 import { FloatingPanel } from "~/builder/shared/floating-panel";
 
 const SizeProperty = ({
+  label,
   property,
   currentStyle,
   setProperty,
   deleteProperty,
-}: ControlProps) => {
-  const { label } = styleConfigByName(property);
+}: ControlProps & { label: string }) => {
   return (
     <Grid gap={1}>
       <PropertyName
@@ -59,7 +60,18 @@ const ObjectPosition = ({
   setProperty,
   deleteProperty,
   isAdvanced,
-}: ControlProps) => {
+  title,
+  labels,
+}: ControlProps & {
+  title: string;
+  labels: {
+    leftText: string;
+    topText: string;
+    leftDesc: string;
+    topDesc: string;
+    positionText: string;
+  };
+}) => {
   const styleSourceColor = getStyleSourceColor({
     properties: [property],
     currentStyle,
@@ -68,7 +80,7 @@ const ObjectPosition = ({
   return (
     <Flex justify="end">
       <FloatingPanel
-        title="Object Position"
+        title={title}
         content={
           <Flex css={{ px: theme.spacing[9], py: theme.spacing[5] }}>
             <PositionControl
@@ -77,6 +89,7 @@ const ObjectPosition = ({
               setProperty={setProperty}
               deleteProperty={deleteProperty}
               isAdvanced={isAdvanced}
+              labels={labels}
             />
           </Flex>
         }
@@ -123,52 +136,63 @@ export const Section = ({
   deleteProperty,
   createBatchUpdate,
 }: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tSize);
+  const tPosition = useStore($tPosition);
   return (
     <CollapsibleSection
-      label="Size"
+      label={t.size}
       currentStyle={currentStyle}
       properties={properties}
       fullWidth
     >
       <SectionLayout columns={2}>
         <SizeProperty
+          label={t.width}
           property="width"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <SizeProperty
+          label={t.height}
           property="height"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <SizeProperty
+          label={t.minWidth}
           property="minWidth"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <SizeProperty
+          label={t.minHeight}
           property="minHeight"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <SizeProperty
+          label={t.maxWidth}
           property="maxWidth"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <SizeProperty
+          label={t.maxHeight}
           property="maxHeight"
           currentStyle={currentStyle}
           setProperty={setProperty}
           deleteProperty={deleteProperty}
         />
         <PropertyName
-          label={styleConfigByName("aspectRatio").label}
+          label={t.aspectRatio}
           properties={["aspectRatio"]}
           style={currentStyle}
           onReset={() => deleteProperty("aspectRatio")}
@@ -183,7 +207,7 @@ export const Section = ({
       <Separator />
       <SectionLayout columns={2}>
         <PropertyName
-          label="Overflow"
+          label={t.overflow}
           properties={["overflowX", "overflowY"]}
           style={currentStyle}
           onReset={() => {
@@ -211,41 +235,37 @@ export const Section = ({
           items={[
             {
               child: <EyeconOpenIcon />,
-              title: "Overflow",
-              description:
-                "Content is fully visible and extends beyond the container if it exceeds its size.",
+              title: t.overflow,
+              description: t.overflowVisibleDesc,
               value: "visible",
               propertyValues: "overflow-x: visible;\noverflow-y: visible;",
             },
             {
               child: <EyeconClosedIcon />,
-              title: "Overflow",
-              description:
-                "Content that exceeds the container's size is clipped and hidden without scrollbars.",
+              title: t.overflow,
+              description: t.overflowHiddenDesc,
               value: "hidden",
               propertyValues: "overflow-x: hidden;\noverflow-y: hidden;",
             },
             {
               child: <ScrollIcon />,
-              title: "Overflow",
-              description:
-                "Scrollbars are added to the container, allowing users to scroll and view the exceeding content.",
+              title: t.overflow,
+              description: t.overflowScrollDesc,
               value: "scroll",
               propertyValues: "overflow-x: scroll;\noverflow-y: scroll;",
             },
 
             {
               child: <AutoScrollIcon />,
-              title: "Overflow",
-              description:
-                "Scrollbars are added to the container only when necessary, based on the content size.",
+              title: t.overflow,
+              description: t.overflowAutoDesc,
               value: "auto",
               propertyValues: "overflow-x: auto;\noverflow-y: auto;",
             },
           ]}
         />
         <PropertyName
-          label={styleConfigByName("objectFit").label}
+          label={t.objectFit}
           properties={["objectFit"]}
           style={currentStyle}
           onReset={() => deleteProperty("objectFit")}
@@ -257,12 +277,20 @@ export const Section = ({
           deleteProperty={deleteProperty}
         />
         <PropertyName
-          label={styleConfigByName("objectPosition").label}
+          label={t.objectPosition}
           properties={["objectPosition"]}
           style={currentStyle}
           onReset={() => deleteProperty("objectPosition")}
         />
         <ObjectPosition
+          title={t.objectPosition}
+          labels={{
+            leftDesc: t.leftDesc,
+            leftText: t.left,
+            topDesc: t.topDesc,
+            topText: t.top,
+            positionText: tPosition.position,
+          }}
           property="objectPosition"
           currentStyle={currentStyle}
           setProperty={setProperty}

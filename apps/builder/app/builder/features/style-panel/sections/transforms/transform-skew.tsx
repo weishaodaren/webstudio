@@ -20,8 +20,14 @@ import { parseCssValue } from "@webstudio-is/css-data";
 // angle
 const fakeProperty = "rotate";
 
+/**
+ * Component
+ */
 export const SkewPanelContent = (props: TransformPanelProps) => {
-  const { propertyValue, setProperty, currentStyle } = props;
+  /**
+   * Props
+   */
+  const { propertyValue, setProperty, currentStyle, labels } = props;
   const { skewX, skewY } = extractSkewPropertiesFromTransform(propertyValue);
 
   const handlePropertyUpdate = (
@@ -69,7 +75,7 @@ export const SkewPanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <XAxisIcon />
-        <Label> Skew X</Label>
+        <Label>{labels?.xLable}</Label>
         <CssValueInputContainer
           key="skewX"
           styleSource="local"
@@ -91,7 +97,7 @@ export const SkewPanelContent = (props: TransformPanelProps) => {
         css={{ alignItems: "center", gridTemplateColumns: "auto 1fr 1fr" }}
       >
         <YAxisIcon />
-        <Label> Skew Y</Label>
+        <Label>{labels?.yLabel}</Label>
         <CssValueInputContainer
           key="skewY"
           styleSource="local"

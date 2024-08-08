@@ -89,6 +89,11 @@ type FilterContentProps = {
     options: StyleUpdateOptions
   ) => void;
   deleteProperty: DeleteProperty;
+  labels: {
+    fn: string;
+    value: string;
+    code: string;
+  };
 };
 
 type FilterFunction = keyof typeof filterFunctions;
@@ -96,6 +101,9 @@ type FilterFunction = keyof typeof filterFunctions;
 const isFilterFunction = (value: string): value is FilterFunction =>
   Object.keys(filterFunctions).includes(value);
 
+/**
+ * Component
+ */
 export const FilterSectionContent = ({
   index,
   property,
@@ -104,7 +112,11 @@ export const FilterSectionContent = ({
   deleteProperty,
   tooltip,
   layer,
+  labels,
 }: FilterContentProps) => {
+  /**
+   * State
+   */
   const [intermediateValue, setIntermediateValue] = useState<
     IntermediateStyleValue | InvalidValue | undefined
   >();
@@ -115,6 +127,9 @@ export const FilterSectionContent = ({
     StyleValue | undefined
   >(undefined);
 
+  /**
+   * Effect
+   */
   useEffect(() => {
     if (isFilterFunction(layer.name) === false || layer.args.type !== "tuple") {
       return;
@@ -177,7 +192,7 @@ export const FilterSectionContent = ({
           }}
         >
           <Flex align="center">
-            <Label>Function</Label>
+            <Label>{labels.fn}</Label>
           </Flex>
           <Select
             name="filterFunction"
@@ -198,7 +213,7 @@ export const FilterSectionContent = ({
             }}
           >
             <Flex align="center">
-              <Label>Value</Label>
+              <Label>{labels.value}</Label>
             </Flex>
             <CssValueInputContainer
               key="functionValue"
@@ -254,7 +269,7 @@ export const FilterSectionContent = ({
       >
         <Label>
           <Flex align={"center"} gap={1}>
-            Code
+            {labels.code}
             {tooltip}
           </Flex>
         </Label>

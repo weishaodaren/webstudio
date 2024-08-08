@@ -28,6 +28,13 @@ import {
 
 type TransitionTimingProps = {
   timing: StyleValue;
+  easingLabel: string;
+  easingDescription: string;
+  defaultLabel: string;
+  customLabel: string;
+  easeInLabel: string;
+  easeOutLabel: string;
+  easeInOutLabel: string;
   onTimingSelection: (params: { timing: KeywordValue | FunctionValue }) => void;
 };
 
@@ -36,14 +43,30 @@ const options: TimingFunctions[] = [
   "custom",
 ] as TimingFunctions[] & "custom";
 
+/**
+ * Component
+ */
 export const TransitionTiming = ({
   timing,
+  easingLabel,
+  easingDescription,
+  defaultLabel,
+  customLabel,
+  easeInLabel,
+  easeOutLabel,
+  easeInOutLabel,
   onTimingSelection,
 }: TransitionTimingProps) => {
+  /**
+   * State
+   */
   const [value, setValue] = useState<TimingFunctions | "custom">(
     findTimingFunctionFromValue(toValue(timing)) ?? "custom"
   );
 
+  /**
+   * Effect
+   */
   useEffect(
     () => setValue(findTimingFunctionFromValue(toValue(timing)) ?? "custom"),
     [timing]
@@ -81,23 +104,20 @@ export const TransitionTiming = ({
           variant="wrapped"
           content={
             <Flex gap="2" direction="column">
-              <Text variant="regularBold">Easing</Text>
+              <Text variant="regularBold">{easingLabel}</Text>
               <Text variant="monoBold" color="moreSubtle">
                 transition-timing-function
               </Text>
-              <Text>
-                Affects the look and feel of the animation by varying the speed
-                of the transition at different points in its duration.
-              </Text>
+              <Text>{easingDescription}</Text>
             </Flex>
           }
         >
-          <Label css={{ display: "inline" }}>Easing</Label>
+          <Label css={{ display: "inline" }}>{easingLabel}</Label>
         </Tooltip>
       </Flex>
       <Select options={options} value={value} onChange={handleTimingChange}>
         <SelectGroup>
-          <SelectLabel>Default</SelectLabel>
+          <SelectLabel>{defaultLabel}</SelectLabel>
           {Object.keys(defaultFunctions).map((defaultFunc) => {
             return (
               <SelectItem key={defaultFunc} value={defaultFunc} text="sentence">
@@ -106,11 +126,11 @@ export const TransitionTiming = ({
             );
           })}
           <SelectItem key="custom" value="custom">
-            Custom
+            {customLabel}
           </SelectItem>
         </SelectGroup>
         <SelectGroup>
-          <SelectLabel>Ease In</SelectLabel>
+          <SelectLabel>{easeInLabel}</SelectLabel>
           {Object.keys(easeInFunctions).map((easeIn) => {
             return (
               <SelectItem key={easeIn} value={easeIn} text="sentence">
@@ -120,7 +140,7 @@ export const TransitionTiming = ({
           })}
         </SelectGroup>
         <SelectGroup>
-          <SelectLabel>Ease Out</SelectLabel>
+          <SelectLabel>{easeOutLabel}</SelectLabel>
           {Object.keys(easeOutFunctions).map((easeOut) => {
             return (
               <SelectItem key={easeOut} value={easeOut} text="sentence">
@@ -130,7 +150,7 @@ export const TransitionTiming = ({
           })}
         </SelectGroup>
         <SelectGroup>
-          <SelectLabel>Ease In Out</SelectLabel>
+          <SelectLabel>{easeInOutLabel}</SelectLabel>
           {Object.keys(easeInOutFunctions).map((easeInOut) => {
             return (
               <SelectItem key={easeInOut} value={easeInOut} text="sentence">
