@@ -21,6 +21,7 @@ export const meta: WsComponentMeta = {
   invalidAncestors: ["Button", "Label"],
   type: "container",
   label: "Input Label",
+  description: "????????????????",
   icon: LabelIcon,
   states: defaultStates,
   presetStyle,

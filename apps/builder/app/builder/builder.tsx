@@ -82,6 +82,9 @@ type SidePanelProps = {
   gridArea: "inspector" | "sidebar" | "navigator";
 };
 
+/**
+ * Component
+ */
 const SidePanel = ({
   children,
   isPreviewMode = false,

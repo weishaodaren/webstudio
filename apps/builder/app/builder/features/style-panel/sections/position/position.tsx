@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tPosition } from "~/shared/nano-states";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import type { SectionProps } from "../shared/section";
 import { CollapsibleSection } from "../../shared/collapsible-section";
@@ -32,6 +34,11 @@ export const Section = ({
   currentStyle,
   createBatchUpdate,
 }: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tPosition);
+
   const parentStyle = useParentStyle();
 
   const positionValue = currentStyle.position?.value;
@@ -55,7 +62,7 @@ export const Section = ({
 
   return (
     <CollapsibleSection
-      label="Position"
+      label={t.position}
       currentStyle={currentStyle}
       properties={properties}
     >

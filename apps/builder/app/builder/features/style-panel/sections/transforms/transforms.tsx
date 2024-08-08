@@ -2,6 +2,8 @@ import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
 import type { SectionProps } from "../shared/section";
 import type { StyleProperty } from "@webstudio-is/css-engine";
 import { useMemo, useState } from "react";
+import { useStore } from "@nanostores/react";
+import { $tTransforms } from "~/shared/nano-states";
 import {
   CssValueListArrowFocus,
   CssValueListItem,
@@ -38,7 +40,6 @@ import { TranslatePanelContent } from "./transform-translate";
 import { ScalePanelContent } from "./transform-scale";
 import { RotatePanelContent } from "./transform-rotate";
 import { SkewPanelContent } from "./transform-skew";
-import { humanizeString } from "~/shared/string-utils";
 import { getStyleSource } from "../../shared/style-info";
 import { PropertyName } from "../../shared/property-name";
 import { getDots } from "../../shared/collapsible-section";
@@ -53,14 +54,24 @@ export const transformPanels = [
 
 export type TransformPanel = (typeof transformPanels)[number];
 
-const label = "Transforms";
 export const properties = [
   "translate",
   "scale",
   "transform",
 ] satisfies Array<StyleProperty>;
 
+/**
+ * Component
+ */
 export const Section = (props: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tTransforms);
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
 
   if (isFeatureEnabled("transforms") === false) {
@@ -90,7 +101,7 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.transforms}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
@@ -125,7 +136,7 @@ export const Section = (props: SectionProps) => {
                           setIsOpen(true);
                         }}
                       >
-                        {humanizeString(panel)}
+                        {t[panel]}
                       </DropdownMenuItem>
                     );
                   })}
@@ -135,7 +146,7 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.transforms}
             style={currentStyle}
             properties={properties}
             label={
@@ -146,7 +157,7 @@ export const Section = (props: SectionProps) => {
                   rotateAndSkewStyleSrouce
                 }
               >
-                {label}
+                {t.transforms}
               </SectionTitleLabel>
             }
             onReset={handleResetForAllTransformProperties}
@@ -170,10 +181,22 @@ export const Section = (props: SectionProps) => {
   );
 };
 
+/**
+ * Compoennt
+ */
 const TransformSection = (
   props: SectionProps & { index: number; panel: TransformPanel }
 ) => {
+  /**
+   * Props
+   */
   const { currentStyle, setProperty, deleteProperty, panel, index } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tTransforms);
+
   const properties = useMemo(() => {
     const property =
       panel === "rotate" || panel === "skew" ? "transform" : panel;
@@ -196,17 +219,52 @@ const TransformSection = (
     propertyValue: properties.value,
   };
 
+  const translatePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.translateX,
+      yLabel: t.translateY,
+      zLabel: t.translateZ,
+    },
+  };
+
+  const scalePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+      zLabel: t.scaleZ,
+    },
+  };
+
+  const rotatePanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+      zLabel: t.scaleZ,
+    },
+  };
+
+  const skewPanelProps: TransformPanelProps = {
+    ...contentPanelProps,
+    labels: {
+      xLable: t.scaleX,
+      yLabel: t.scaleY,
+    },
+  };
+
   return (
     <FloatingPanel
-      title={humanizeString(panel)}
+      title={t[panel]}
       content={
         <Flex direction="column" css={{ p: theme.spacing[9] }}>
           {panel === "translate" && (
-            <TranslatePanelContent {...contentPanelProps} />
+            <TranslatePanelContent {...translatePanelProps} />
           )}
-          {panel === "scale" && <ScalePanelContent {...contentPanelProps} />}
-          {panel === "rotate" && <RotatePanelContent {...contentPanelProps} />}
-          {panel === "skew" && <SkewPanelContent {...contentPanelProps} />}
+          {panel === "scale" && <ScalePanelContent {...scalePanelProps} />}
+          {panel === "rotate" && <RotatePanelContent {...rotatePanelProps} />}
+          {panel === "skew" && <SkewPanelContent {...skewPanelProps} />}
         </Flex>
       }
     >

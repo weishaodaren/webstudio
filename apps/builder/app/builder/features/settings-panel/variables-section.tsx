@@ -32,6 +32,7 @@ import {
   $resources,
   $selectedInstanceSelector,
   $selectedPage,
+  $tInspector,
   $variableValuesByInstanceSelector,
 } from "~/shared/nano-states";
 import { serverSyncStore } from "~/shared/sync";
@@ -160,18 +161,26 @@ const deleteVariable = (variableId: DataSource["id"]) => {
   );
 };
 
-const EmptyVariables = () => {
+const EmptyVariables = ({
+  emptyText1,
+  emptyText2,
+  createText,
+}: {
+  emptyText1: string;
+  emptyText2: string;
+  createText: string;
+}) => {
   return (
     <Flex direction="column" css={{ gap: theme.spacing[5] }}>
       <Flex justify="center" align="center" css={{ height: theme.spacing[13] }}>
         <Text variant="labelsSentenceCase" align="center">
-          No variables created
-          <br /> on this instance
+          {emptyText1}
+          <br /> {emptyText2}
         </Text>
       </Flex>
       <Flex justify="center" align="center" css={{ height: theme.spacing[13] }}>
         <VariablePopoverTrigger>
-          <Button prefix={<PlusIcon />}>Create variable</Button>
+          <Button prefix={<PlusIcon />}>{createText}</Button>
         </VariablePopoverTrigger>
       </Flex>
     </Flex>
@@ -251,12 +260,19 @@ const VariablesItem = ({
 };
 
 const VariablesList = () => {
+  const t = useStore($tInspector);
   const availableVariables = useStore($instanceVariables);
   const variableValues = useStore($instanceVariableValues);
   const usedVariables = useStore($usedVariables);
 
   if (availableVariables.length === 0) {
-    return <EmptyVariables />;
+    return (
+      <EmptyVariables
+        emptyText1={t.emptyVariable1}
+        emptyText2={t.emptyVariable2}
+        createText={t.createVariable}
+      />
+    );
   }
 
   return (
@@ -277,7 +293,7 @@ const VariablesList = () => {
   );
 };
 
-export const VariablesSection = () => {
+export const VariablesSection = ({ label }: { label: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useOpenState({
     label: "variables",
@@ -286,7 +302,7 @@ export const VariablesSection = () => {
   return (
     <VariablePopoverProvider value={{ containerRef }}>
       <CollapsibleSectionRoot
-        label="Variables"
+        label={label}
         fullWidth={true}
         isOpen={isOpen}
         onOpenChange={setIsOpen}
@@ -306,7 +322,7 @@ export const VariablesSection = () => {
               </VariablePopoverTrigger>
             }
           >
-            <SectionTitleLabel>Variables</SectionTitleLabel>
+            <SectionTitleLabel>{label}</SectionTitleLabel>
           </SectionTitle>
         }
       >

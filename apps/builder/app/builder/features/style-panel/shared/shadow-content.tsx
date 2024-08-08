@@ -1,3 +1,9 @@
+import { useStore } from "@nanostores/react";
+import {
+  $tBoxShadows,
+  $tOutline,
+  $tBackdropFilters,
+} from "~/shared/nano-states";
 import {
   toValue,
   type InvalidValue,
@@ -103,6 +109,16 @@ export const ShadowContent = ({
   onEditLayer,
   deleteProperty,
 }: ShadowContentProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tBoxShadows);
+  const tOutline = useStore($tOutline);
+  const tBackdropFilters = useStore($tBackdropFilters);
+
+  /**
+   * State
+   */
   const [intermediateValue, setIntermediateValue] = useState<
     IntermediateStyleValue | InvalidValue | undefined
   >();
@@ -177,16 +193,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">X Offset</Text>
+                <Text variant="regularBold">{t.xOffset}</Text>
                 <Text variant="monoBold">offset-x</Text>
-                <Text>
-                  Sets the horizontal offset of the shadow. Negative values
-                  place the shadow to the left.
-                </Text>
+                <Text>{t.xOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>X</Label>
+            <Label css={{ width: "fit-content" }}>{t.x}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetX"
@@ -211,16 +224,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Y Offset</Text>
+                <Text variant="regularBold">{t.yOffset}</Text>
                 <Text variant="monoBold">offset-y</Text>
-                <Text>
-                  Sets the vertical offset of the shadow. Negative values place
-                  the shadow above.
-                </Text>
+                <Text>{t.yOffsetDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Y</Label>
+            <Label css={{ width: "fit-content" }}>{t.y}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowOffsetY"
@@ -245,16 +255,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Blur Radius</Text>
+                <Text variant="regularBold">{t.blurRadius}</Text>
                 <Text variant="monoBold">blur-radius</Text>
-                <Text>
-                  The larger this value, the bigger the blur, so the shadow
-                  becomes bigger and lighter.
-                </Text>
+                <Text>{t.blurRadiusDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Blur</Label>
+            <Label css={{ width: "fit-content" }}>{t.blur}</Label>
           </Tooltip>
           <CssValueInputContainer
             key="boxShadowBlur"
@@ -280,16 +287,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">Spread Radius</Text>
+                  <Text variant="regularBold">{t.spreadRadius}</Text>
                   <Text variant="monoBold">spread-radius</Text>
-                  <Text>
-                    Positive values will cause the shadow to expand and grow
-                    bigger, negative values will cause the shadow to shrink.
-                  </Text>
+                  <Text>{t.blurRadiusDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ width: "fit-content" }}>Spread</Label>
+              <Label css={{ width: "fit-content" }}>{t.spread}</Label>
             </Tooltip>
             <CssValueInputContainer
               key="boxShadowSpread"
@@ -325,13 +329,13 @@ export const ShadowContent = ({
             variant="wrapped"
             content={
               <Flex gap="2" direction="column">
-                <Text variant="regularBold">Color</Text>
+                <Text variant="regularBold">{tOutline.color}</Text>
                 <Text variant="monoBold">color</Text>
-                <Text>Sets the shadow color and opacity.</Text>
+                <Text>{t.colorDescription}</Text>
               </Flex>
             }
           >
-            <Label css={{ width: "fit-content" }}>Color</Label>
+            <Label css={{ width: "fit-content" }}>{tOutline.color}</Label>
           </Tooltip>
           <ColorControl
             property="color"
@@ -354,16 +358,13 @@ export const ShadowContent = ({
               variant="wrapped"
               content={
                 <Flex gap="2" direction="column">
-                  <Text variant="regularBold">Inset</Text>
+                  <Text variant="regularBold">{t.insetLabel}</Text>
                   <Text variant="monoBold">inset</Text>
-                  <Text>
-                    Changes the shadow from an outer shadow (outset) to an inner
-                    shadow (inset).
-                  </Text>
+                  <Text>{t.insetDescription}</Text>
                 </Flex>
               }
             >
-              <Label css={{ display: "inline" }}>Inset</Label>
+              <Label css={{ display: "inline" }}>{t.insetLabel}</Label>
             </Tooltip>
             <ToggleGroup
               type="single"
@@ -406,7 +407,7 @@ export const ShadowContent = ({
           >
             <Label>
               <Flex align={"center"} gap={1}>
-                Code
+                {tBackdropFilters.code}
                 {tooltip}
               </Flex>
             </Label>

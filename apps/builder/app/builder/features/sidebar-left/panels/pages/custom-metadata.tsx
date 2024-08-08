@@ -28,6 +28,14 @@ type Meta = {
 type CustomMetadataProps = {
   customMetas: Meta[];
   onChange: (value: Meta[]) => void;
+  title: string;
+  subtitle1: string;
+  subtitle2: string;
+  subtitle3: string;
+  subtitle4: string;
+  propertyLabel: string;
+  contentLabel: string;
+  addLabel: string;
 };
 
 const MetadataItem = (props: {
@@ -35,6 +43,8 @@ const MetadataItem = (props: {
   content: string;
   onDelete: () => void;
   onChange: (property: string, content: string) => void;
+  propertyLabel: string;
+  contentLabel: string;
 }) => {
   const propertyId = useId();
   const contentId = useId();
@@ -55,7 +65,7 @@ const MetadataItem = (props: {
       align={"center"}
     >
       <Label htmlFor={propertyId} css={{ gridArea: "property" }}>
-        Property
+        {props.propertyLabel}
       </Label>
       <InputErrorsTooltip errors={undefined}>
         <InputField
@@ -69,7 +79,7 @@ const MetadataItem = (props: {
         />
       </InputErrorsTooltip>
       <Label htmlFor={contentId} css={{ gridArea: "content" }}>
-        Content
+        {props.contentLabel}
       </Label>
       <BindingControl>
         {isFeatureEnabled("cms") && (
@@ -146,28 +156,29 @@ const MetadataItem = (props: {
 export const CustomMetadata = (props: CustomMetadataProps) => {
   return (
     <Grid gap={2} css={{ my: theme.spacing[5], mx: theme.spacing[8] }}>
-      <Label text="title">Custom Metadata</Label>
+      <Label text="title">{props.title}</Label>
       <Text color="subtle">
-        Use this section to input metadata for the document, which will be used
-        to generate{" "}
+        {props.subtitle1}{" "}
         <Text as="b" variant={"regularBold"}>
           &lt;meta&gt;
         </Text>{" "}
-        tags. Each pair consists of a{" "}
+        {props.subtitle2}{" "}
         <Text as="b" variant={"regularBold"}>
-          property
+          {props.propertyLabel}
         </Text>{" "}
-        attribute, indicating the type of metadata, and a{" "}
+        {props.subtitle3}{" "}
         <Text as="b" variant={"regularBold"}>
-          content
+          {props.contentLabel}
         </Text>{" "}
-        attribute, specifying its value.
+        {props.subtitle4}
       </Text>
       <div />
       <Grid gap={3}>
         {props.customMetas.map((meta, index) => (
           <MetadataItem
             key={index}
+            propertyLabel={props.propertyLabel}
+            contentLabel={props.contentLabel}
             property={meta.property}
             content={meta.content}
             onChange={(property, content) => {
@@ -198,7 +209,7 @@ export const CustomMetadata = (props: CustomMetadataProps) => {
             props.onChange(newCustomMetas);
           }}
         >
-          Add another metadata pair
+          {props.addLabel}
         </Button>
       </Grid>
     </Grid>

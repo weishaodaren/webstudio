@@ -1,3 +1,5 @@
+import { useStore } from "@nanostores/react";
+import { $tBackdropFilters } from "~/shared/nano-states";
 import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
 import type { SectionProps } from "../shared/section";
 import type { LayersValue, StyleProperty } from "@webstudio-is/css-engine";
@@ -22,11 +24,22 @@ import { FilterSectionContent } from "../../shared/filter-content";
 export const properties = ["backdropFilter"] satisfies Array<StyleProperty>;
 
 const property: StyleProperty = properties[0];
-const label = "Backdrop Filters";
 const initialBackdropFilter = "blur(0px)";
 
 export const Section = (props: SectionProps) => {
+  /**
+   * Props
+   */
   const { currentStyle, deleteProperty } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tBackdropFilters);
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
   const value = currentStyle[property]?.value;
   const sectionStyleSource =
@@ -37,14 +50,14 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.backdropFilters}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
         <SectionTitle
           dots={getDots(currentStyle, properties)}
           suffix={
-            <Tooltip content={"Add a backdrop-filter"}>
+            <Tooltip content={t.tooltip}>
               <SectionTitleButton
                 prefix={<PlusIcon />}
                 onClick={() => {
@@ -64,13 +77,13 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.backdropFilters}
             style={currentStyle}
             properties={properties}
-            description="Backdrop filters are similar to filters, but are applied to the area behind an element. This can be useful for creating frosted glass effects."
+            description={t.description}
             label={
               <SectionTitleLabel color={sectionStyleSource}>
-                {label}
+                {t.backdropFilters}
               </SectionTitleLabel>
             }
             onReset={() => deleteProperty(property)}
@@ -83,7 +96,7 @@ export const Section = (props: SectionProps) => {
           {...props}
           property={property}
           value={value}
-          label={label}
+          label={t.backdropFilters}
           deleteProperty={deleteProperty}
           renderContent={(layerProps) => {
             if (layerProps.layer.type !== "function") {
@@ -95,16 +108,20 @@ export const Section = (props: SectionProps) => {
                 {...layerProps}
                 property={property}
                 layer={layerProps.layer}
+                labels={{
+                  fn: t.function,
+                  value: t.value,
+                  code: t.code,
+                }}
                 tooltip={
                   <Tooltip
                     variant="wrapped"
                     content={
                       <Flex gap="2" direction="column">
-                        <Text variant="regularBold">{label}</Text>
+                        <Text variant="regularBold">{t.backdropFilters}</Text>
                         <Text variant="monoBold">backdrop-filter</Text>
                         <Text>
-                          Applies graphical effects like blur or color shift to
-                          the area behind an element
+                          {t.tooltipDescription}
                           <br /> <br />
                           <Text variant="mono">{initialBackdropFilter}</Text>
                         </Text>

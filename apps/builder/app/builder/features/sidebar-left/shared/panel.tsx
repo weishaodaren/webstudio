@@ -1,3 +1,4 @@
+import { useStore } from "@nanostores/react";
 import {
   Button,
   Tooltip,
@@ -9,6 +10,7 @@ import {
 } from "@webstudio-is/design-system";
 import { CrossIcon } from "@webstudio-is/icons";
 import { forwardRef, type ComponentProps } from "react";
+import { $tLeftPanel } from "~/shared/nano-states";
 
 type HeaderProps = {
   title: string;
@@ -28,20 +30,27 @@ export { TitleSuffixSpacer as HeaderSuffixSpacer };
 
 export const CloseButton = ({
   onClick,
-  label = "Close panel",
+  label,
 }: {
   onClick: () => void;
   label?: string;
-}) => (
-  <Tooltip content={label} side="bottom">
-    <Button
-      onClick={onClick}
-      color="ghost"
-      prefix={<CrossIcon />}
-      aria-label={label}
-    />
-  </Tooltip>
-);
+}) => {
+  /**
+   * Store
+   */
+  const t = useStore($tLeftPanel);
+
+  return (
+    <Tooltip content={label || t.closePanel} side="bottom">
+      <Button
+        onClick={onClick}
+        color="ghost"
+        prefix={<CrossIcon />}
+        aria-label={label}
+      />
+    </Tooltip>
+  );
+};
 
 export const Root = forwardRef<HTMLDivElement, ComponentProps<typeof Flex>>(
   (props, ref) => {

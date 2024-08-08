@@ -31,11 +31,14 @@ const borderPropertyOptions = {
   },
 } as const satisfies Partial<{ [property in StyleProperty]: unknown }>;
 
+/**
+ * Component
+ */
 export const BorderRadius = (
   props: Pick<
     SectionProps,
     "currentStyle" | "setProperty" | "deleteProperty" | "createBatchUpdate"
-  >
+  > & { label: string; description: string }
 ) => {
   return (
     <BorderProperty
@@ -43,8 +46,8 @@ export const BorderRadius = (
       setProperty={props.setProperty}
       deleteProperty={props.deleteProperty}
       createBatchUpdate={props.createBatchUpdate}
-      label="Radius"
-      description="Sets the radius of border"
+      label={props.label}
+      description={props.description}
       borderPropertyOptions={borderPropertyOptions}
       individualModeIcon={<BorderRadiusIndividualIcon />}
     />

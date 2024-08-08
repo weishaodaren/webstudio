@@ -6,6 +6,7 @@ import type { StyleProperty } from "@webstudio-is/css-engine";
 import {
   $selectedInstanceSelector,
   useInstanceStyles,
+  $tAdvanced,
 } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
 import { CssValueInputContainer } from "../../shared/css-value-input";
@@ -82,11 +83,22 @@ const usePropertyNames = (currentStyle: StyleInfo) => {
 // Only here to keep the same section module interface
 export const properties = [];
 
+/**
+ * Component
+ */
 export const Section = ({
   currentStyle,
   setProperty,
   ...props
 }: SectionProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tAdvanced);
+
+  /**
+   * State
+   */
   const [addingProp, setAddingProp] = useState<StyleProperty | "">();
   const { propertyNames, recentProperties } = usePropertyNames(currentStyle);
   const deleteProperty: DeleteProperty = (property, options) => {
@@ -98,7 +110,7 @@ export const Section = ({
 
   return (
     <CollapsibleSection
-      label="Advanced"
+      label={t.advanced}
       currentStyle={currentStyle}
       properties={propertyNames}
       onAdd={() => {

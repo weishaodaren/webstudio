@@ -22,22 +22,169 @@ import {
   useDraggable,
 } from "./use-draggable";
 import { MetaIcon } from "~/builder/shared/meta-icon";
-import { $registeredComponentMetas, $selectedPage } from "~/shared/nano-states";
-import { getMetaMaps } from "./get-meta-maps";
+import {
+  $registeredComponentMetas,
+  $selectedPage,
+  $tComponents,
+  $tComponentsCategory,
+} from "~/shared/nano-states";
+import { getMetaMaps, type ComponentsInfo } from "./get-meta-maps";
 import { getInstanceLabel } from "~/shared/instance-utils";
 import { isFeatureEnabled } from "@webstudio-is/feature-flags";
 import { insert } from "./insert";
 
+/**
+ * Component
+ */
 export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tComponents);
+  const tComponentsCategory = useStore($tComponentsCategory);
   const metaByComponentName = useStore($registeredComponentMetas);
   const selectedPage = useStore($selectedPage);
 
   const documentType = selectedPage?.meta.documentType ?? "html";
 
+  /**
+   * Memo
+   * @description 组件国际化映射
+   * @returns { ComponentsInfo }
+   */
+  const mapping: ComponentsInfo = useMemo(() => {
+    const {
+      box,
+      boxDescription,
+      link,
+      linkDescription,
+      list,
+      listDescription,
+      listItem,
+      listItemDescription,
+      separator,
+      separatorDescription,
+      slot,
+      slotDescription,
+      html,
+      htmlDescription,
+      code,
+      codeDescription,
+      text,
+      textDescription,
+      heading,
+      headingDescription,
+      paragraph,
+      paragraphDescription,
+      blockquote,
+      blockquoteDescription,
+      webhook,
+      webhookDescription,
+      contentEmbed,
+      contentEmbedDescription,
+      image,
+      imageDescription,
+      vimeo,
+      vimeoDescription,
+      form,
+      formDescription,
+      button,
+      buttonDescription,
+      inputLabel,
+      inputLabelDescription,
+      textInput,
+      textInputDescription,
+      select,
+      selectDescription,
+      textarea,
+      textareaDescription,
+      radio,
+      radioDescription,
+      checkbox,
+      checkboxDescription,
+      collection,
+      collectionDescription,
+      time,
+      timeDescription,
+      sheet,
+      sheetDescription,
+      navigationMenu,
+      navigationMenuDescription,
+      tabs,
+      tabsDescription,
+      accordion,
+      accordionDescription,
+      dialog,
+      dialogDescription,
+      collapsible,
+      collapsibleDescription,
+      popover,
+      popoverDescription,
+      tooltip,
+      tooltipDescription,
+      selectComponent,
+      switchDescription,
+      radioGroup,
+      radioGroupDescription,
+      labelComponent,
+      labelDescription,
+    } = t;
+    return {
+      Box: { label: box, description: boxDescription },
+      Link: { label: link, description: linkDescription },
+      List: { label: list, description: listDescription },
+      "List Item": { label: listItem, description: listItemDescription },
+      Separator: { label: separator, description: separatorDescription },
+      Slot: { label: slot, description: slotDescription },
+      "HTML Embed": { label: html, description: htmlDescription },
+      "Code Text": { label: code, description: codeDescription },
+      Text: { label: text, description: textDescription },
+      Heading: { label: heading, description: headingDescription },
+      Paragraph: { label: paragraph, description: paragraphDescription },
+      Blockquote: { label: blockquote, description: blockquoteDescription },
+      "Webhook Form": { label: webhook, description: webhookDescription },
+      "Content Embed": {
+        label: contentEmbed,
+        description: contentEmbedDescription,
+      },
+      Image: { label: image, description: imageDescription },
+      Vimeo: { label: vimeo, description: vimeoDescription },
+      Form: { label: form, description: formDescription },
+      Button: { label: button, description: buttonDescription },
+      "Input Label": { label: inputLabel, description: inputLabelDescription },
+      "Text Input": { label: textInput, description: textInputDescription },
+      Select: { label: select, description: selectDescription },
+      "Text Area": { label: textarea, description: textareaDescription },
+      Radio: { label: radio, description: radioDescription },
+      Checkbox: { label: checkbox, description: checkboxDescription },
+      Collection: { label: collection, description: collectionDescription },
+      Time: { label: time, description: timeDescription },
+      Sheet: { label: sheet, description: sheetDescription },
+      "Navigation Menu": {
+        label: navigationMenu,
+        description: navigationMenuDescription,
+      },
+      Tabs: { label: tabs, description: tabsDescription },
+      Accordion: { label: accordion, description: accordionDescription },
+      Dialog: { label: dialog, description: dialogDescription },
+      Collapsible: { label: collapsible, description: collapsibleDescription },
+      Popover: { label: popover, description: popoverDescription },
+      Tooltip: { label: tooltip, description: tooltipDescription },
+      Switch: { label: selectComponent, description: switchDescription },
+      "Radio Group": { label: radioGroup, description: radioGroupDescription },
+      Label: { label: labelComponent, description: labelDescription },
+    };
+  }, [t]);
+
+  /**
+   * Memo
+   * @description 组件分类
+   */
   const { metaByCategory, componentNamesByMeta } = useMemo(
-    () => getMetaMaps(metaByComponentName),
-    [metaByComponentName]
+    () => getMetaMaps(metaByComponentName, mapping),
+    [mapping, metaByComponentName]
   );
+
   const { dragCard, draggableContainerRef } = useDraggable({
     publish,
     metaByComponentName,
@@ -46,10 +193,11 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
   return (
     <Root ref={draggableContainerRef}>
       <Header
-        title="Components"
+        title={t.components}
         suffix={<CloseButton onClick={() => onSetActiveTab("none")} />}
       />
       <ScrollArea>
+        {/* 分类 */}
         {componentCategories
           .filter((category) => {
             if (category === "hidden") {
@@ -75,13 +223,18 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
             return true;
           })
           .map((category) => (
-            <CollapsibleSection label={category} key={category} fullWidth>
+            <CollapsibleSection
+              label={tComponentsCategory[category]}
+              key={category}
+              fullWidth
+            >
               <List asChild>
                 <Flex
                   gap="2"
                   wrap="wrap"
                   css={{ px: theme.spacing[9], overflow: "auto" }}
                 >
+                  {/* 组件 */}
                   {(metaByCategory.get(category) ?? [])
                     .filter((meta: WsComponentMeta) => {
                       if (documentType === "xml" && meta.category === "data") {

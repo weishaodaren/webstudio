@@ -242,6 +242,21 @@ const TextFieldBase: ForwardRefRenderFunction<
 const TextField = forwardRef(TextFieldBase);
 TextField.displayName = "TextField";
 
+type StyleSourceInputText = {
+  editText: string;
+  duplicateText: string;
+  convertText: string;
+  clearText: string;
+  removeText: string;
+  deleteText: string;
+  localStyleHint: string;
+  tokenStyleHint: string;
+  newTokenText: string;
+  createTokenText?: string;
+  globalTokenText?: string;
+  componentTokenText?: string;
+};
+
 type StyleSourceInputProps<Item extends IntermediateItem> = {
   error?: StyleSourceError;
   items?: Array<Item>;
@@ -263,7 +278,7 @@ type StyleSourceInputProps<Item extends IntermediateItem> = {
   onEnableItem?: (id: Item["id"]) => void;
   onSort?: (items: Array<Item>) => void;
   css?: CSS;
-};
+} & StyleSourceInputText;
 
 const newItemId = "__NEW__";
 
@@ -313,38 +328,40 @@ const markAddedValues = <Item extends IntermediateItem>(
   return items.map((item) => ({ ...item, isAdded: valueIds.has(item.id) }));
 };
 
-const renderMenuItems = (props: {
-  selectedItemSelector: undefined | ItemSelector;
-  item: IntermediateItem;
-  states: ComponentState[];
-  onSelect?: (itemSelector: ItemSelector) => void;
-  onEdit?: (itemId: IntermediateItem["id"]) => void;
-  onDuplicate?: (itemId: IntermediateItem["id"]) => void;
-  onConvertToToken?: (itemId: IntermediateItem["id"]) => void;
-  onDisable?: (itemId: IntermediateItem["id"]) => void;
-  onEnable?: (itemId: IntermediateItem["id"]) => void;
-  onRemove?: (itemId: IntermediateItem["id"]) => void;
-  onDelete?: (itemId: IntermediateItem["id"]) => void;
-  onClearStyles?: (itemId: IntermediateItem["id"]) => void;
-}) => {
+const renderMenuItems = (
+  props: {
+    selectedItemSelector: undefined | ItemSelector;
+    item: IntermediateItem;
+    states: ComponentState[];
+    onSelect?: (itemSelector: ItemSelector) => void;
+    onEdit?: (itemId: IntermediateItem["id"]) => void;
+    onDuplicate?: (itemId: IntermediateItem["id"]) => void;
+    onConvertToToken?: (itemId: IntermediateItem["id"]) => void;
+    onDisable?: (itemId: IntermediateItem["id"]) => void;
+    onEnable?: (itemId: IntermediateItem["id"]) => void;
+    onRemove?: (itemId: IntermediateItem["id"]) => void;
+    onDelete?: (itemId: IntermediateItem["id"]) => void;
+    onClearStyles?: (itemId: IntermediateItem["id"]) => void;
+  } & StyleSourceInputText
+) => {
   return (
     <>
       <DropdownMenuLabel>{props.item.label}</DropdownMenuLabel>
       {props.item.source !== "local" && (
         <DropdownMenuItem onSelect={() => props.onEdit?.(props.item.id)}>
-          Rename
+          {props.editText}
         </DropdownMenuItem>
       )}
       {props.item.source !== "local" && (
         <DropdownMenuItem onSelect={() => props.onDuplicate?.(props.item.id)}>
-          Duplicate
+          {props.duplicateText}
         </DropdownMenuItem>
       )}
       {props.item.source === "local" && (
         <DropdownMenuItem
           onSelect={() => props.onConvertToToken?.(props.item.id)}
         >
-          Convert to token
+          {props.convertText}
         </DropdownMenuItem>
       )}
       {props.item.source === "local" && (
@@ -352,7 +369,7 @@ const renderMenuItems = (props: {
           destructive={true}
           onSelect={() => props.onClearStyles?.(props.item.id)}
         >
-          Clear styles
+          {props.clearText}
         </DropdownMenuItem>
       )}
       {/* @todo implement disabling
@@ -368,7 +385,7 @@ const renderMenuItems = (props: {
     */}
       {props.item.source !== "local" && (
         <DropdownMenuItem onSelect={() => props.onRemove?.(props.item.id)}>
-          Remove
+          {props.removeText}
         </DropdownMenuItem>
       )}
       {props.item.source !== "local" && (
@@ -376,7 +393,7 @@ const renderMenuItems = (props: {
           destructive={true}
           onSelect={() => props.onDelete?.(props.item.id)}
         >
-          Delete
+          {props.deleteText}
         </DropdownMenuItem>
       )}
 
@@ -432,23 +449,43 @@ const renderMenuItems = (props: {
 
       <DropdownMenuSeparator />
       {props.item.source === "local" && (
-        <DropdownMenuItem hint>
-          Style instances without creating a token or override a token locally.
-        </DropdownMenuItem>
+        <DropdownMenuItem hint>{props.localStyleHint}</DropdownMenuItem>
       )}
       {props.item.source === "token" && (
-        <DropdownMenuItem hint>
-          Reuse styles across multiple instances by creating a token.
-        </DropdownMenuItem>
+        <DropdownMenuItem hint>{props.tokenStyleHint}</DropdownMenuItem>
       )}
     </>
   );
 };
 
+/**
+ * Component
+ */
 export const StyleSourceInput = (
   props: StyleSourceInputProps<IntermediateItem>
 ) => {
+  /**
+   * Props
+   */
   const value = props.value ?? [];
+  const {
+    editText,
+    duplicateText,
+    convertText,
+    clearText,
+    removeText,
+    deleteText,
+    tokenStyleHint,
+    localStyleHint,
+    newTokenText,
+    createTokenText,
+    globalTokenText,
+    componentTokenText,
+  } = props;
+
+  /**
+   * State
+   */
   const [label, setLabel] = useState("");
 
   const {
@@ -517,6 +554,15 @@ export const StyleSourceInput = (
             error={props.error}
             renderStyleSourceMenuItems={(item) =>
               renderMenuItems({
+                tokenStyleHint,
+                localStyleHint,
+                editText,
+                duplicateText,
+                convertText,
+                clearText,
+                removeText,
+                deleteText,
+                newTokenText,
                 selectedItemSelector: props.selectedItemSelector,
                 item,
                 states,
@@ -557,14 +603,14 @@ export const StyleSourceInput = (
                     const { key, ...itemProps } = getItemProps({ item, index });
                     return (
                       <Fragment key={index}>
-                        <ComboboxLabel>New Token</ComboboxLabel>
+                        <ComboboxLabel>{props.newTokenText}</ComboboxLabel>
                         <ComboboxListboxItem
                           {...itemProps}
                           key={key}
                           selectable={false}
                         >
                           <div>
-                            Create{" "}
+                            {createTokenText}
                             <StyleSourceBadge source="token">
                               {item.label}
                             </StyleSourceBadge>
@@ -580,7 +626,7 @@ export const StyleSourceInput = (
                     label = (
                       <>
                         {hasNewTokenItem && <ComboboxSeparator />}
-                        <ComboboxLabel>Global Tokens</ComboboxLabel>
+                        <ComboboxLabel>{globalTokenText}</ComboboxLabel>
                       </>
                     );
                   }
@@ -595,7 +641,7 @@ export const StyleSourceInput = (
                         {(hasNewTokenItem || hasGlobalTokenItem) && (
                           <ComboboxSeparator />
                         )}
-                        <ComboboxLabel>Component Tokens</ComboboxLabel>
+                        <ComboboxLabel>{componentTokenText}</ComboboxLabel>
                       </>
                     );
                   }

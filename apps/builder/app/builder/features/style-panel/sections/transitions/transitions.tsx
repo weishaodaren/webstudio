@@ -15,7 +15,10 @@ import { CollapsibleSectionRoot } from "~/builder/shared/collapsible-section";
 import type { SectionProps } from "../shared/section";
 import { getDots } from "../../shared/collapsible-section";
 import { PropertyName } from "../../shared/property-name";
-import { $selectedOrLastStyleSourceSelector } from "~/shared/nano-states";
+import {
+  $selectedOrLastStyleSourceSelector,
+  $tTransitions,
+} from "~/shared/nano-states";
 import { TransitionContent } from "./transition-content";
 import {
   deleteTransitionProperties,
@@ -29,8 +32,6 @@ import { getStyleSource, type StyleInfo } from "../../shared/style-info";
 import { repeatUntil } from "~/shared/array-utils";
 
 export { transitionLongHandProperties as properties };
-
-const label = "Transitions";
 
 const getTransitionLayers = (
   style: StyleInfo,
@@ -84,8 +85,26 @@ const defaultTransitionLayers: Record<TransitionProperty, LayerValueItem> = {
   transitionBehavior: { type: "keyword", value: "normal" },
 };
 
+/**
+ * Component
+ */
 export const Section = (props: SectionProps) => {
+  /**
+   * Props
+   */
   const { currentStyle, createBatchUpdate } = props;
+
+  /**
+   * Store
+   */
+  const t = useStore($tTransitions);
+  const selectedOrLastStyleSourceSelector = useStore(
+    $selectedOrLastStyleSourceSelector
+  );
+
+  /**
+   * State
+   */
   const [isOpen, setIsOpen] = useState(true);
   const propertyValue = currentStyle?.["transitionProperty"]?.value;
   const sectionStyleSource =
@@ -94,10 +113,6 @@ export const Section = (props: SectionProps) => {
       ? undefined
       : getStyleSource(currentStyle["transitionProperty"]);
 
-  const selectedOrLastStyleSourceSelector = useStore(
-    $selectedOrLastStyleSourceSelector
-  );
-
   const isStyleInLocalState =
     selectedOrLastStyleSourceSelector &&
     selectedOrLastStyleSourceSelector.state === undefined;
@@ -105,7 +120,7 @@ export const Section = (props: SectionProps) => {
   return (
     <CollapsibleSectionRoot
       fullWidth
-      label={label}
+      label={t.transitions}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       trigger={
@@ -114,9 +129,7 @@ export const Section = (props: SectionProps) => {
           suffix={
             <Tooltip
               content={
-                isStyleInLocalState === false
-                  ? "Transitions can only be added in local state"
-                  : "Add a transition"
+                isStyleInLocalState === false ? t.localTooltip : t.addTooltip
               }
             >
               <SectionTitleButton
@@ -140,13 +153,13 @@ export const Section = (props: SectionProps) => {
           }
         >
           <PropertyName
-            title={label}
+            title={t.transitions}
             style={currentStyle}
-            description="Animate the transition between states on this instance."
+            description={t.description}
             properties={transitionLongHandProperties}
             label={
               <SectionTitleLabel color={sectionStyleSource}>
-                {label}
+                {t.transitions}
               </SectionTitleLabel>
             }
             onReset={() =>
@@ -159,7 +172,7 @@ export const Section = (props: SectionProps) => {
       }
     >
       <RepeatedStyle
-        label={label}
+        label={t.transitions}
         properties={[
           "transitionProperty",
           "transitionDuration",
@@ -175,6 +188,20 @@ export const Section = (props: SectionProps) => {
         renderItemContent={(index) => (
           <TransitionContent
             index={index}
+            commonLabel={t.common}
+            propertyLabel={t.property}
+            propertDescription={t.description}
+            easingLabel={t.easing}
+            easingDescription={t.easingDescription}
+            defaultLabel={t.easingDefault}
+            customLabel={t.custom}
+            easeInLabel={t.easeIn}
+            easeOutLabel={t.easeOut}
+            easeInOutLabel={t.easeInOut}
+            delayLable={t.delay}
+            delayDescription={t.delayDescription}
+            durationLabel={t.duration}
+            durationDescription={t.durationDescription}
             currentStyle={currentStyle}
             createBatchUpdate={createBatchUpdate}
           />

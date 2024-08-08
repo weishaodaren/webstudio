@@ -28,6 +28,8 @@ import {
   $styles,
   $selectedBreakpointId,
   $selectedBreakpoint,
+  $tInspector,
+  $tSize,
 } from "~/shared/nano-states";
 import {
   $breakpointsMenuView,
@@ -40,6 +42,11 @@ import { setCanvasWidth } from "./use-set-initial-canvas-width";
 import { serverSyncStore } from "~/shared/sync";
 
 export const BreakpointsPopover = () => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
+  const tSize = useStore($tSize);
   const view = useStore($breakpointsMenuView);
   const [breakpointToDelete, setBreakpointToDelete] = useState<
     Breakpoint | undefined
@@ -87,14 +94,20 @@ export const BreakpointsPopover = () => {
         $breakpointsMenuView.set(isOpen ? "initial" : undefined);
       }}
     >
-      <Tooltip content="Breakpoints">
-        <PopoverTrigger aria-label="Breakpoints" asChild>
+      <Tooltip content={t.breakpoints}>
+        <PopoverTrigger aria-label={t.breakpoints} asChild>
           <BreakpointsPopoverToolbarButton css={{ gap: theme.spacing[5] }} />
         </PopoverTrigger>
       </Tooltip>
       <PopoverContent sideOffset={0} collisionPadding={4} align="start">
         {view === "confirmation" && breakpointToDelete && (
           <ConfirmationDialog
+            labels={{
+              deleteBreakpoints: t.deleteBreakpoints,
+              deleteBreakpointsContent: t.deleteBreakpointsContent,
+              deleteText: t.deleteText,
+              abortText: t.abortText,
+            }}
             breakpoint={breakpointToDelete}
             onAbort={() => {
               setBreakpointToDelete(undefined);
@@ -114,9 +127,9 @@ export const BreakpointsPopover = () => {
         {view === "initial" && (
           <>
             <Flex css={{ px: theme.spacing[7], py: theme.spacing[5] }} gap="3">
-              <WidthInput min={minCanvasWidth} />
+              <WidthInput label={tSize.width} min={minCanvasWidth} />
               <Flex align="center" gap="2">
-                <Label>Scale</Label>
+                <Label>{t.scale}</Label>
                 <Button
                   color="neutral"
                   css={{ width: theme.spacing[17] }}
@@ -163,7 +176,7 @@ export const BreakpointsPopover = () => {
                               ? `≥ ${breakpoint.minWidth} PX`
                               : breakpoint.maxWidth !== undefined
                                 ? `≤ ${breakpoint.maxWidth} PX`
-                                : "All Sizes"}
+                                : t.allSizes}
                           </PopoverMenuItemRightSlot>
                         </MenuItemButton>
                       </ListItem>
@@ -193,7 +206,7 @@ export const BreakpointsPopover = () => {
                   );
                 }}
               >
-                {view === "editor" ? "Done" : "Edit breakpoints"}
+                {view === "editor" ? t.done : t.editBreakpoints}
               </Button>
             </Flex>
           </>

@@ -86,6 +86,7 @@ export const metaRadioGroup: WsComponentMeta = {
   category: "radix",
   order: 100,
   type: "container",
+  label: "Radio Group",
   description:
     "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.",
   icon: RadioCheckedIcon,

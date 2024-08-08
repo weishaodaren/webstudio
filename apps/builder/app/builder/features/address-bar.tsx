@@ -39,6 +39,7 @@ import {
   $publishedOrigin,
   $selectedPage,
   $selectedPageDefaultSystem,
+  $tInspector,
   updateSystem,
 } from "~/shared/nano-states";
 import {
@@ -80,7 +81,13 @@ const $selectedPageHistory = computed(
   (page) => page?.history ?? []
 );
 
-const useCopyUrl = (pageUrl: string) => {
+const useCopyUrl = (
+  pageUrl: string,
+  transitions: {
+    copied: string;
+    copy: ({ url }: { url: string }) => string;
+  }
+) => {
   const [copyState, setCopyState] = useState<"copy" | "copied">("copy");
   // reset copied state after 2 seconds
   useEffect(() => {
@@ -105,7 +112,11 @@ const useCopyUrl = (pageUrl: string) => {
     tooltipProps: {
       // keep tooltip open when user just copied
       open: copyState === "copied" ? true : undefined,
-      content: copyState === "copied" ? "Copied" : `Copy ${pageUrl}`,
+      // content: copyState === "copied" ? transitions.copied : `Copy ${pageUrl}`,
+      content:
+        copyState === "copied"
+          ? transitions.copied
+          : transitions.copy({ url: pageUrl }),
     } satisfies Partial<ComponentProps<typeof Tooltip>>,
     buttonProps: {
       onClick,
@@ -271,6 +282,10 @@ const AddressBar = forwardRef<
     onSubmit: () => void;
   }
 >(({ onSubmit }, ref) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const publishedOrigin = useStore($publishedOrigin);
   const path = useStore($selectedPagePath);
   let history = useStore($selectedPageHistory);
@@ -283,7 +298,8 @@ const AddressBar = forwardRef<
   const tokens = tokenizePathnamePattern(path);
   const compiledPath = compilePathnamePattern(tokens, pathParams);
   const { tooltipProps, buttonProps } = useCopyUrl(
-    `${publishedOrigin}${compiledPath}`
+    `${publishedOrigin}${compiledPath}`,
+    { copied: t.copied, copy: t.copyUrl }
   );
 
   const errors = new Map<string, string>();
@@ -389,9 +405,13 @@ const AddressBar = forwardRef<
 
 export const AddressBarPopover = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useStore($tInspector);
   const path = useStore($selectedPagePath);
   const publishedOrigin = useStore($publishedOrigin);
-  const { tooltipProps, buttonProps } = useCopyUrl(`${publishedOrigin}${path}`);
+  const { tooltipProps, buttonProps } = useCopyUrl(
+    `${publishedOrigin}${path}`,
+    { copied: t.copied, copy: t.copyUrl }
+  );
   const formRef = useRef<HTMLFormElement>(null);
 
   // show only copy button when path is static

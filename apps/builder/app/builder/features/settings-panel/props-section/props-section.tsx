@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { matchSorter } from "match-sorter";
 import type { Instance } from "@webstudio-is/sdk";
@@ -8,6 +8,7 @@ import {
   Separator,
   Flex,
   Box,
+  type Match,
 } from "@webstudio-is/design-system";
 import { descendantComponent } from "@webstudio-is/react-sdk";
 import {
@@ -15,6 +16,7 @@ import {
   $propsIndex,
   $props,
   $selectedInstanceSelector,
+  $tInspector,
 } from "~/shared/nano-states";
 import { CollapsibleSectionWithAddButton } from "~/builder/shared/collapsible-section";
 import { renderControl } from "../controls/combined";
@@ -30,28 +32,6 @@ type Item = {
 };
 
 const itemToString = (item: Item | null) => item?.label || item?.name || "";
-
-const matchOrSuggestToCreate = (
-  search: string,
-  items: Array<Item>,
-  itemToString: (item: Item) => string
-): Array<Item> => {
-  const matched = matchSorter(items, search, {
-    keys: [itemToString],
-  });
-
-  if (
-    search.trim() !== "" &&
-    itemToString(matched[0]).toLocaleLowerCase() !==
-      search.toLocaleLowerCase().trim()
-  ) {
-    matched.unshift({
-      name: search.trim(),
-      label: `Create attribute: "${search.trim()}"`,
-    });
-  }
-  return matched;
-};
 
 const renderProperty = (
   { propsLogic: logic, propValues, component, instanceId }: PropsSectionProps,
@@ -95,9 +75,15 @@ const forbiddenProperties = new Set(["style", "class", "className"]);
 const AddPropertyOrAttribute = ({
   availableProps,
   onPropSelected,
+  placeholder,
+  emptyText,
+  matchOrSuggestToCreate,
 }: {
   availableProps: Item[];
   onPropSelected: (propName: string) => void;
+  placeholder: string;
+  emptyText: string;
+  matchOrSuggestToCreate: Match<Item>;
 }) => {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -111,7 +97,7 @@ const AddPropertyOrAttribute = ({
         defaultHighlightedIndex={0}
         autoFocus
         color={isValid ? undefined : "error"}
-        placeholder="Select or create"
+        placeholder={placeholder}
         items={availableProps}
         itemToString={itemToString}
         onItemSelect={(item) => {
@@ -133,7 +119,7 @@ const AddPropertyOrAttribute = ({
         getDescription={(item) => {
           return (
             <Box css={{ width: theme.spacing[28] }}>
-              {item?.description ?? "No description available"}
+              {item?.description ?? emptyText}
             </Box>
           );
         }}
@@ -150,10 +136,61 @@ type PropsSectionProps = {
 };
 
 // A UI componet with minimum logic that can be demoed in Storybook etc.
-export const PropsSection = (props: PropsSectionProps) => {
-  const { propsLogic: logic } = props;
+export const PropsSection = (
+  props: PropsSectionProps & {
+    label: string;
+    placeholder: string;
+    emptyText: string;
+    createLabelFunction: ({ search }: { search: string }) => string;
+  }
+) => {
+  /**
+   * Props
+   */
+  const {
+    propsLogic: logic,
+    label,
+    placeholder,
+    emptyText,
+    createLabelFunction,
+  } = props;
 
+  /**
+   * State
+   */
   const [addingProp, setAddingProp] = useState(false);
+
+  /**
+   * Callback
+   * @description 添加属性
+   * @returns {void}
+   */
+  const matchOrSuggestToCreate = useCallback(
+    (
+      search: string,
+      items: Array<Item>,
+      itemToString: (item: Item) => string
+    ): Array<Item> => {
+      const matched = matchSorter(items, search, {
+        keys: [itemToString],
+      });
+
+      const searchValue = search.trim();
+      if (
+        searchValue !== "" &&
+        itemToString(matched[0]).toLocaleLowerCase() !==
+          search.toLocaleLowerCase().trim()
+      ) {
+        matched.unshift({
+          name: searchValue,
+          // label: `Create attribute: "${search.trim()}"`,
+          label: createLabelFunction({ search: searchValue }),
+        });
+      }
+      return matched;
+    },
+    [createLabelFunction]
+  );
 
   const hasItems =
     logic.addedProps.length > 0 || addingProp || logic.initialProps.length > 0;
@@ -167,18 +204,21 @@ export const PropsSection = (props: PropsSectionProps) => {
       <Separator />
 
       <CollapsibleSectionWithAddButton
-        label="Properties & Attributes"
+        label={label}
         onAdd={() => setAddingProp(true)}
         hasItems={hasItems}
       >
         <Flex gap="1" direction="column">
           {addingProp && (
             <AddPropertyOrAttribute
+              placeholder={placeholder}
+              emptyText={emptyText}
               availableProps={logic.availableProps}
               onPropSelected={(propName) => {
                 setAddingProp(false);
                 logic.handleAdd(propName);
               }}
+              matchOrSuggestToCreate={matchOrSuggestToCreate}
             />
           )}
           {logic.addedProps.map((item, index) =>
@@ -199,6 +239,10 @@ export const PropsSectionContainer = ({
 }: {
   selectedInstance: Instance;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const { propsByInstanceId } = useStore($propsIndex);
   const propValuesByInstanceSelector = useStore($propValuesByInstanceSelector);
   const instanceSelector = useStore($selectedInstanceSelector);
@@ -245,6 +289,10 @@ export const PropsSectionContainer = ({
       disabled={instance.component === descendantComponent}
     >
       <PropsSection
+        label={t.propertiesAttributes}
+        placeholder={t.selectORCreate}
+        emptyText={t.noDescription}
+        createLabelFunction={t.createAttribute}
         propsLogic={logic}
         propValues={propValues ?? new Map()}
         component={instance.component}

@@ -1,0 +1,21 @@
+{
+  "leftPanel": {
+    "closePanel": "关闭面板",
+    "removeTooltip": "从DOM中删除实例。断点对此设置没有影响。",
+    "show": "显示",
+    "cancel": "取消",
+    "untitled": "未命名",
+    "language": "语言",
+    "chooseImage": "从资源中选择图像",
+    "upload": "上传",
+    "search": "搜索",
+    "cssPreview": "CSS 预览"
+  },
+  "leftPanel/category": {
+    "components": "组件",
+    "pages": "页面",
+    "navigator": "导航器",
+    "assets": "资源",
+    "marketplace": "市场"
+  }
+}

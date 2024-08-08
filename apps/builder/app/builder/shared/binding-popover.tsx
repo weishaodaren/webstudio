@@ -46,7 +46,12 @@ import {
   type EditorApi,
 } from "./expression-editor";
 import { useSideOffset } from "./floating-panel";
-import { $dataSourceVariables } from "~/shared/nano-states";
+import {
+  $dataSourceVariables,
+  $tInspector,
+  $tStylePanel,
+} from "~/shared/nano-states";
+import { useStore } from "@nanostores/react";
 
 export const evaluateExpressionWithinScope = (
   expression: string,
@@ -65,7 +70,14 @@ export const evaluateExpressionWithinScope = (
   }
 };
 
+/**
+ * Component
+ */
 const BindingPanel = ({
+  editorTexts: { label, tooltip1, tooltip2, tooltip3 },
+  emptyLabel,
+  variableLabel,
+  variableTooltip,
   scope,
   aliases,
   valueError,
@@ -73,6 +85,15 @@ const BindingPanel = ({
   onChange,
   onSave,
 }: {
+  editorTexts: {
+    label: string;
+    tooltip1: string;
+    tooltip2: string;
+    tooltip3: string;
+  };
+  emptyLabel: string;
+  variableLabel: string;
+  variableTooltip: string;
   scope: Record<string, unknown>;
   aliases: Map<string, string>;
   valueError?: string;
@@ -114,20 +135,15 @@ const BindingPanel = ({
     >
       <Box css={{ paddingBottom: theme.spacing[5] }}>
         <Flex gap="1" css={{ px: theme.spacing[9], py: theme.spacing[5] }}>
-          <Text variant="labelsSentenceCase">Variables</Text>
-          <Tooltip
-            variant="wrapped"
-            content={
-              "Click on the available variables in this scope to insert them into the Expression Editor."
-            }
-          >
+          <Text variant="labelsSentenceCase">{variableLabel}</Text>
+          <Tooltip variant="wrapped" content={variableTooltip}>
             <InfoCircleIcon tabIndex={0} />
           </Tooltip>
         </Flex>
         {scopeEntries.length === 0 && (
           <Flex justify="center" align="center" css={{ py: theme.spacing[5] }}>
             <Text variant="labelsSentenceCase" align="center">
-              No variables available
+              {emptyLabel}
             </Text>
           </Flex>
         )}
@@ -162,16 +178,15 @@ const BindingPanel = ({
         </CssValueListArrowFocus>
       </Box>
       <Flex gap="1" css={{ px: theme.spacing[9], py: theme.spacing[5] }}>
-        <Text variant="labelsSentenceCase">Expression Editor</Text>
+        <Text variant="labelsSentenceCase">{label}</Text>
         <Tooltip
           variant="wrapped"
           content={
             <Text>
-              Use JavaScript syntax to access variables along with comparison
-              and arithmetic operators.
+              {tooltip1}
               <br />
-              Use the dot notation to access nested object values:
-              <Text variant="mono">Variable.nested.value</Text>
+              {tooltip2}
+              <Text variant="mono">{tooltip3}</Text>
             </Text>
           }
         >
@@ -259,7 +274,8 @@ const BindingButton = forwardRef<
             }
           }}
         >
-          Reset value
+          {/* Reset value */}
+          {$tStylePanel.get().resetValue}
         </Button>
       </Flex>
     ) : undefined;
@@ -366,6 +382,11 @@ export const BindingPopover = ({
   onChange: (newValue: string) => void;
   onRemove: (evaluatedValue: unknown) => void;
 }) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
+
   const { side = "left", containerRef } = useContext(BindingPopoverContext);
   const [isOpen, onOpenChange] = useState(false);
   const [triggerRef, sideOffset] = useSideOffset({
@@ -404,6 +425,15 @@ export const BindingPopover = ({
         align="start"
       >
         <BindingPanel
+          editorTexts={{
+            label: t.expressionEditor,
+            tooltip1: t.expressionEditorTooltip1,
+            tooltip2: t.expressionEditorTooltip2,
+            tooltip3: t.expressionEditorTooltip3,
+          }}
+          emptyLabel={t.noVariables}
+          variableLabel={t.variables}
+          variableTooltip={t.variablesTooltip}
           scope={scope}
           aliases={aliases}
           valueError={valueError}
@@ -432,11 +462,11 @@ export const BindingPopover = ({
         {/* put after content to avoid auto focusing heading buttons */}
         <FloatingPanelPopoverTitle
           actions={
-            <Tooltip content="Reset binding" side="bottom">
+            <Tooltip content={t.resetBinding} side="bottom">
               {/* automatically close popover when remove expression */}
               <FloatingPanelPopoverClose asChild>
                 <Button
-                  aria-label="Reset binding"
+                  aria-label={t.resetBinding}
                   prefix={<TrashIcon />}
                   color="ghost"
                   disabled={variant === "default"}
@@ -457,7 +487,7 @@ export const BindingPopover = ({
             </Tooltip>
           }
         >
-          Binding
+          {t.binding}
         </FloatingPanelPopoverTitle>
       </FloatingPanelPopoverContent>
     </FloatingPanelPopover>
