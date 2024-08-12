@@ -258,7 +258,6 @@ export const $propValuesByInstanceSelector = computed(
     uploadingFilesDataStore
   ) => {
     const variableValues = new Map<string, unknown>(unscopedVariableValues);
-
     let propsList = Array.from(props.values());
 
     // ignore asset and page props when params is not provided
@@ -594,6 +593,54 @@ export const $areResourcesLoading = computed(
   (resourcesLoadingCount) => resourcesLoadingCount > 0
 );
 
+/**
+ * 判断是否是JSON格式
+ * @param {String} str
+ * @returns {Boolean}
+ */
+const isJSON = (str: string) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+interface JSONValue {
+  [key: string]: JSONValue | JSONValue[];
+}
+
+/**
+ * 递归解析函数
+ * @param {unknown} obj
+ * @returns {JSONValue}
+ */
+const parseJSON = (obj: unknown): JSONValue => {
+  if (typeof obj === "object" && obj !== null) {
+    if (Array.isArray(obj)) {
+      // 如果是数组,递归解析数组元素
+      return obj.map(parseJSON) as JSONValue[];
+    } else {
+      // 如果是对象,递归解析对象属性
+      const parsedObj: JSONValue = {};
+      for (const key in obj) {
+        parsedObj[key] = parseJSON((obj as JSONValue)[key]);
+      }
+      return parsedObj;
+    }
+  } else if (typeof obj === "string" && isJSON(obj)) {
+    // 如果是 JSON 字符串,解析为 JavaScript 对象
+    return JSON.parse(obj);
+  } else {
+    // 其他情况,直接返回
+    return obj as JSONValue;
+  }
+};
+
+/**
+ * 获取资源数据
+ */
 const loadResources = async (resourceRequests: ResourceRequest[]) => {
   $resourcesLoadingCount.set($resourcesLoadingCount.get() + 1);
   const response = await fetch(restResourcesLoader(), {
@@ -604,7 +651,19 @@ const loadResources = async (resourceRequests: ResourceRequest[]) => {
   if (response.ok === false) {
     return new Map<Resource["id"], unknown>();
   }
-  return new Map<Resource["id"], unknown>(await response.json());
+
+  /**
+   * 明道云端返回的数据格式
+   * 可能存在嵌套json的情况
+   * 需要递归解析
+   */
+  const data = await response.json();
+  const _data = new Map();
+  for (const [resourceId, sourceValue] of data) {
+    _data.set(resourceId, parseJSON(sourceValue));
+  }
+
+  return new Map<Resource["id"], unknown>(_data);
 };
 
 const cacheByKeys = new Map<string, unknown>();

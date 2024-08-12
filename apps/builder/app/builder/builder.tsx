@@ -407,6 +407,11 @@ export const Builder = ({
 
   useToastErrors();
   useEffect(subscribeCommands, []);
+
+  /**
+   * Effect
+   * @description 订阅资源获取
+   */
   useEffect(subscribeResources, []);
 
   useUnmount(() => {
