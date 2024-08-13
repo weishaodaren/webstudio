@@ -67,6 +67,17 @@
     "share": "分享",
     "shareTooltip": "分享项目链接",
     "publish": "发布",
-    "publishTooltip": "发布到云端"
+    "publishTooltip": "发布到云端",
+    "dashboard": "仪表盘",
+    "projectSettings": "项目设置",
+    "breakpointsAction": "断点",
+    "undo": "撤销",
+    "redo": "重做",
+    "deleteAction": "删除",
+    "previewAction": "预览",
+    "clone": "克隆",
+    "cloneDesc": "克隆功能已被项目所有者禁用",
+    "view": "视图",
+    "viewAction": "打开导航面板"
   }
 }

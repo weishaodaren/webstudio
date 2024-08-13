@@ -133,6 +133,17 @@ export const $tInspector = i18n("inspector", {
   shareTooltip: "Share a project link",
   publish: "Publish",
   publishTooltip: "Publish to Cloud",
+  dashboard: "Dashboard",
+  projectSettings: "Project Settings",
+  breakpointsAction: "Breakpoints",
+  undo: "Undo",
+  redo: "Redo",
+  deleteAction: "Delete",
+  previewAction: "Preview",
+  clone: "Clone",
+  cloneDesc: "Cloning has been disabled by the project owner",
+  view: "View",
+  viewAction: "Undock navigator",
 });
 
 export const $tStylePanel = i18n("stylePanel", {
