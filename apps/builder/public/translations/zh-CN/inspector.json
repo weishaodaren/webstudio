@@ -63,6 +63,10 @@
     "breakpointMaxWidth": "使用 {maxWidth}px 及更小视口宽度",
     "breakpointMaxWidthDesc": "这个断点的样式应用于视口宽度 {maxWidth} px 及更小,除非被更小的断点覆盖。",
     "breakpointMinWidth": "使用 {minWidth}px 及更大视口宽度",
-    "breakpointMinWidthDesc": "这个断点的样式应用于视口宽度 {minWidth} px 及更大,除非被更大的断点覆盖。"
+    "breakpointMinWidthDesc": "这个断点的样式应用于视口宽度 {minWidth} px 及更大,除非被更大的断点覆盖。",
+    "share": "分享",
+    "shareTooltip": "分享项目链接",
+    "publish": "发布",
+    "publishTooltip": "发布到云端"
   }
 }

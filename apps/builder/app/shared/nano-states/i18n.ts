@@ -11,6 +11,7 @@ import {
   params,
 } from "@nanostores/i18n";
 import { persistentAtom } from "@nanostores/persistent";
+import { publish } from "~/shared/pubsub";
 
 export const setting = persistentAtom<string | undefined>("locale", undefined);
 
@@ -128,6 +129,10 @@ export const $tInspector = i18n("inspector", {
   breakpointMinWidthDesc: params(
     "Styles on this breakpoint apply to viewport widths {minWidth}px and up, unless overwritten by a larger breakpoint."
   ),
+  share: "Share",
+  shareTooltip: "Share a project link",
+  publish: "Publish",
+  publishTooltip: "Publish to Cloud",
 });
 
 export const $tStylePanel = i18n("stylePanel", {
