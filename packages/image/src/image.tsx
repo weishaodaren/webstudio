@@ -31,11 +31,22 @@ export const Image = forwardRef<ElementRef<typeof defaultTag>, ImageProps>(
       optimize,
     }) ?? { src: imagePlaceholderDataUrl };
 
+    // TODO: 保证图片正常展示
+    // 先不使用webp格式转换
+
+    const _props = {
+      ...imageAttributes,
+      ...imageProps,
+    };
+
+    delete _props.srcSet;
+
     return (
       <img
         alt=""
-        {...imageProps}
-        {...imageAttributes}
+        // {...imageProps}
+        // {...imageAttributes}
+        {..._props}
         decoding={decoding}
         loading={loading}
         ref={ref}
