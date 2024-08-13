@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Breakpoint, Breakpoints } from "@webstudio-is/sdk";
+import { useStore } from "@nanostores/react";
 import {
   EnhancedTooltip,
   Flex,
@@ -15,40 +16,55 @@ import { CascadeIndicator } from "./cascade-indicator";
 import {
   $selectedBreakpoint,
   $selectedBreakpointId,
+  $tInspector,
 } from "~/shared/nano-states";
 import { groupBreakpoints, isBaseBreakpoint } from "~/shared/breakpoints";
 import { setCanvasWidth } from "./use-set-initial-canvas-width";
 import { $canvasWidth } from "~/builder/shared/nano-states";
 import { useDebouncedCallback } from "use-debounce";
 
-const getTooltipContent = (breakpoint: Breakpoint) => {
+const getTooltipContent = ({
+  breakpoint,
+  labels,
+}: {
+  breakpoint: Breakpoint;
+  labels: {
+    base: string;
+    baseDesc: string;
+    maxWidth: ({ maxWidth }: { maxWidth: number }) => string;
+    maxWidthDesc: ({ maxWidth }: { maxWidth: number }) => string;
+    minWidth: ({ minWidth }: { minWidth: number }) => string;
+    minWidthDesc: ({ minWidth }: { minWidth: number }) => string;
+  };
+}) => {
   if (isBaseBreakpoint(breakpoint)) {
     return (
       <Text>
-        <Text variant="regularBold">Base</Text>
+        <Text variant="regularBold">{labels.base}</Text>
         <br />
-        Styles on Base apply to all viewport sizes unless overwritten by another
-        breakpoint. Start your styling here.
+        {labels.baseDesc}
       </Text>
     );
   }
   if (breakpoint.maxWidth !== undefined) {
     return (
       <Text>
-        <Text variant="regularBold">{breakpoint.maxWidth}px and down</Text>
+        <Text variant="regularBold">
+          {labels.maxWidth({ maxWidth: breakpoint.maxWidth })}
+        </Text>
         <br />
-        Styles on this breakpoint apply to viewport widths {breakpoint.maxWidth}
-        px and down, unless overwritten by a smaller breakpoint.
+        {labels.maxWidthDesc({ maxWidth: breakpoint.maxWidth })}
       </Text>
     );
   }
   if (breakpoint.minWidth !== undefined) {
     return (
       <Text>
-        <Text variant="regularBold">{breakpoint.minWidth}px and up</Text>
+        <Text variant="regularBold">
+          {labels.minWidth({ minWidth: breakpoint.minWidth })}
+        </Text>
         <br />
-        Styles on this breakpoint apply to viewport widths {breakpoint.minWidth}
-        px and up, unless overwritten by a larger breakpoint.
+        {labels.minWidthDesc({ minWidth: breakpoint.minWidth })}
       </Text>
     );
   }
@@ -134,6 +150,7 @@ export const BreakpointsSelector = ({
   breakpoints,
   selectedBreakpoint,
 }: BreakpointsSelector) => {
+  const t = useStore($tInspector);
   const refs = useRef(new Map<string, HTMLButtonElement>());
   const getButtonById = useCallback((id: string) => refs.current.get(id), []);
 
@@ -158,7 +175,17 @@ export const BreakpointsSelector = ({
             return (
               <EnhancedTooltip
                 key={breakpoint.id}
-                content={getTooltipContent(breakpoint)}
+                content={getTooltipContent({
+                  breakpoint,
+                  labels: {
+                    base: t.breakpointBase,
+                    baseDesc: t.breakpointBaseDesc,
+                    maxWidth: t.breakpointMaxWidth,
+                    maxWidthDesc: t.breakpointMaxWidthDesc,
+                    minWidth: t.breakpointMinWidth,
+                    minWidthDesc: t.breakpointMinWidthDesc,
+                  },
+                })}
                 variant="wrapped"
               >
                 <ToolbarToggleItem

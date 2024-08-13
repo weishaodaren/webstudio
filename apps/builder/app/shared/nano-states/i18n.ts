@@ -32,7 +32,6 @@ export const i18n = createI18n(locale, {
     try {
       const prefixes = components.map((name) => name.split("/")[0]);
       const unique = Array.from(new Set(prefixes));
-      //   const resp = await (await fetch(`/translations/${code}.json`)).json();
       const resp = await Promise.all(
         unique.map(async (chunk) =>
           (await fetch(`/translations/${code}/${chunk}.json`)).json()
@@ -118,6 +117,17 @@ export const $tInspector = i18n("inspector", {
     "Deleting a breakpoint will also delete all styles associated with this breakpoint.",
   deleteText: "Delete",
   abortText: "Abort",
+  breakpointBase: "Base",
+  breakpointBaseDesc: `Styles on Base apply to all viewport sizes unless overwritten by another
+        breakpoint. Start your styling here.`,
+  breakpointMaxWidth: params("{maxWidth}px and down"),
+  breakpointMaxWidthDesc: params(
+    "Styles on this breakpoint apply to viewport widths {maxWidth}px and down, unless overwritten by a smaller breakpoint."
+  ),
+  breakpointMinWidth: params("{minWidth}px and up"),
+  breakpointMinWidthDesc: params(
+    "Styles on this breakpoint apply to viewport widths {minWidth}px and up, unless overwritten by a larger breakpoint."
+  ),
 });
 
 export const $tStylePanel = i18n("stylePanel", {

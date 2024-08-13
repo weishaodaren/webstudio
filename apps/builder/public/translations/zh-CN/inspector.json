@@ -57,6 +57,12 @@
     "deleteBreakpoints": "确定要删除“{label}”吗?",
     "deleteBreakpointsContent": "删除断点同时也会删除与此断点相关的所有样式。",
     "deleteText": "删除",
-    "abortText": "取消"
+    "abortText": "取消",
+    "breakpointBase": "基础",
+    "breakpointBaseDesc": "应用于所有视口尺寸的样式,除非被其他断点覆盖。从这里开始您的样式设置。",
+    "breakpointMaxWidth": "使用 {maxWidth}px 及更小视口宽度",
+    "breakpointMaxWidthDesc": "这个断点的样式应用于视口宽度 {maxWidth} px 及更小,除非被更小的断点覆盖。",
+    "breakpointMinWidth": "使用 {minWidth}px 及更大视口宽度",
+    "breakpointMinWidthDesc": "这个断点的样式应用于视口宽度 {minWidth} px 及更大,除非被更大的断点覆盖。"
   }
 }
