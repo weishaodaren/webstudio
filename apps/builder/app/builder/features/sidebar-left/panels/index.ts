@@ -18,5 +18,6 @@ export const panels = new Map<TabName, PanelExports>([
   ["pages", pages],
   ["navigator", navigator],
   ["assets", assets],
-  ["marketplace", marketplace],
+  // 暂时隐藏
+  // ["marketplace", marketplace],
 ]);

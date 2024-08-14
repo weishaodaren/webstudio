@@ -545,6 +545,7 @@ export const $tLeftPanel = i18n("leftPanel", {
   upload: "Upload",
   search: "Search",
   cssPreview: "CSS Preview",
+  noMatchingAssets: "No matching assets",
 });
 
 export const $tLeftPanelCategory = i18n("leftPanel/category", {
