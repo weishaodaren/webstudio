@@ -40,7 +40,12 @@ import {
   $userPlanFeatures,
 } from "../../shared/nano-states";
 import { validateProjectDomain, type Project } from "@webstudio-is/project";
-import { $authPermit, $project, $publishedOrigin } from "~/shared/nano-states";
+import {
+  $authPermit,
+  $project,
+  $publishedOrigin,
+  $tInspector,
+} from "~/shared/nano-states";
 import {
   Domains,
   getPublishStatusAndText,
@@ -946,7 +951,14 @@ type PublishProps = {
   projectId: Project["id"];
 };
 
+/**
+ * Component
+ */
 export const PublishButton = ({ projectId }: PublishProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const isPublishDialogOpen = useStore($isPublishDialogOpen);
   const authPermit = useStore($authPermit);
   const [dialogContentType, setDialogContentType] = useState<
@@ -979,12 +991,12 @@ export const PublishButton = ({ projectId }: PublishProps) => {
       <FloatingPanelAnchor>
         <Tooltip
           side="bottom"
-          content={tooltipContent ?? "Publish to Webstudio Cloud"}
+          content={tooltipContent ?? t.publishTooltip}
           sideOffset={Number.parseFloat(rawTheme.spacing[5])}
         >
           <FloatingPanelPopoverTrigger asChild>
             <Button disabled={isPublishEnabled === false} color="positive">
-              Publish
+              {t.publish}
             </Button>
           </FloatingPanelPopoverTrigger>
         </Tooltip>
@@ -1007,7 +1019,7 @@ export const PublishButton = ({ projectId }: PublishProps) => {
 
         {dialogContentType === "publish" && (
           <>
-            <FloatingPanelPopoverTitle>Publish</FloatingPanelPopoverTitle>
+            <FloatingPanelPopoverTitle>{t.publish}</FloatingPanelPopoverTitle>
             <Content projectId={projectId} onExportClick={handleExportClick} />
           </>
         )}

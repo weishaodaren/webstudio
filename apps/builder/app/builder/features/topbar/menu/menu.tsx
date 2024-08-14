@@ -23,18 +23,28 @@ import {
 } from "~/builder/shared/nano-states";
 import { useClientSettings } from "~/builder/shared/client-settings";
 import { dashboardPath } from "~/shared/router-utils";
-import { $authPermit, $authTokenPermissions } from "~/shared/nano-states";
+import {
+  $authPermit,
+  $authTokenPermissions,
+  $tInspector,
+} from "~/shared/nano-states";
 import { emitCommand } from "~/builder/shared/commands";
 import { MenuButton } from "./menu-button";
 import { $isProjectSettingsOpen } from "~/shared/nano-states/seo";
 import { UpgradeIcon } from "@webstudio-is/icons";
 
-const ViewMenuItem = () => {
+const ViewMenuItem = ({
+  label,
+  labelItem,
+}: {
+  label: string;
+  labelItem: string;
+}) => {
   const [clientSettings, setClientSetting] = useClientSettings();
 
   return (
     <DropdownMenuSub>
-      <DropdownMenuSubTrigger>View</DropdownMenuSubTrigger>
+      <DropdownMenuSubTrigger>{label}</DropdownMenuSubTrigger>
       <DropdownMenuSubContent width="regular">
         <DropdownMenuCheckboxItem
           checked={clientSettings.navigatorLayout === "undocked"}
@@ -46,15 +56,26 @@ const ViewMenuItem = () => {
             setClientSetting("navigatorLayout", setting);
           }}
         >
-          Undock navigator
+          {labelItem}
         </DropdownMenuCheckboxItem>
       </DropdownMenuSubContent>
     </DropdownMenuSub>
   );
 };
 
+/**
+ * Component
+ */
 export const Menu = () => {
+  /**
+   * Router
+   */
   const navigate = useNavigate();
+
+  /**
+   * Store
+   */
+  const t = useStore($tInspector);
   const { hasProPlan } = useStore($userPlanFeatures);
   const authPermit = useStore($authPermit);
   const authTokenPermission = useStore($authTokenPermissions);
@@ -85,7 +106,7 @@ export const Menu = () => {
               navigate(dashboardPath());
             }}
           >
-            Dashboard
+            {t.dashboard}
           </DropdownMenuItem>
           <Tooltip side="right" content={undefined}>
             <DropdownMenuItem
@@ -93,22 +114,22 @@ export const Menu = () => {
                 $isProjectSettingsOpen.set(true);
               }}
             >
-              Project Settings
+              {t.projectSettings}
             </DropdownMenuItem>
           </Tooltip>
           <DropdownMenuItem onSelect={() => emitCommand("openBreakpointsMenu")}>
-            Breakpoints
+            {t.breakpointsAction}
           </DropdownMenuItem>
-          <ViewMenuItem />
+          <ViewMenuItem label={t.view} labelItem={t.viewAction} />
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => emitCommand("undo")}>
-            Undo
+            {t.undo}
             <DropdownMenuItemRightSlot>
               <Kbd value={["cmd", "z"]} />
             </DropdownMenuItemRightSlot>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => emitCommand("redo")}>
-            Redo
+            {t.redo}
             <DropdownMenuItemRightSlot>
               <Kbd value={["shift", "cmd", "z"]} />
             </DropdownMenuItemRightSlot>
@@ -134,14 +155,14 @@ export const Menu = () => {
 
           */}
           <DropdownMenuItem onSelect={() => emitCommand("deleteInstance")}>
-            Delete
+            {t.deleteAction}
             <DropdownMenuItemRightSlot>
               <Kbd value={["backspace"]} />
             </DropdownMenuItemRightSlot>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => emitCommand("togglePreview")}>
-            Preview
+            {t.previewAction}
             <DropdownMenuItemRightSlot>
               <Kbd value={["cmd", "shift", "p"]} />
             </DropdownMenuItemRightSlot>
@@ -158,7 +179,7 @@ export const Menu = () => {
               }}
               disabled={isShareEnabled === false}
             >
-              Share
+              {t.share}
             </DropdownMenuItem>
           </Tooltip>
 
@@ -173,7 +194,7 @@ export const Menu = () => {
               }}
               disabled={isPublishEnabled === false}
             >
-              Publish
+              {t.publish}
             </DropdownMenuItem>
           </Tooltip>
 
@@ -181,9 +202,7 @@ export const Menu = () => {
             side="right"
             sideOffset={10}
             content={
-              authTokenPermission.canClone === false
-                ? "Cloning has been disabled by the project owner"
-                : undefined
+              authTokenPermission.canClone === false ? t.clone : undefined
             }
           >
             <DropdownMenuItem
@@ -192,7 +211,7 @@ export const Menu = () => {
               }}
               disabled={authTokenPermission.canClone === false}
             >
-              Clone
+              {t.clone}
             </DropdownMenuItem>
           </Tooltip>
 
