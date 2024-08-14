@@ -10,7 +10,7 @@ import { Header } from "./header";
 import { Projects } from "./projects";
 import type { User } from "~/shared/db/user.server";
 import type { UserPlanFeatures } from "~/shared/db/user-plan-features.server";
-import { Resources } from "./resources";
+// import { Resources } from "./resources";
 
 const globalStyles = globalCss({
   body: {
@@ -64,9 +64,8 @@ export const Dashboard = ({
     <TooltipProvider>
       <Header user={user} userPlanFeatures={userPlanFeatures} />
       <Main>
-        <Section>
-          <Resources />
-        </Section>
+        {/* 暂时隐藏 */}
+        <Section>{/* <Resources /> */}</Section>
         <Section>
           <Projects
             projects={projects}

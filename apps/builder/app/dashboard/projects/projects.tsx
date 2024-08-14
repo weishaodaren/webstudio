@@ -6,6 +6,8 @@ import { EmptyState } from "./empty-state";
 import { Panel } from "../shared/panel";
 import { ProjectCard, ProjectTemplateCard } from "./project-card";
 import { CreateProject } from "./project-dialogs";
+import { useStore } from "@nanostores/react";
+import { $tProject } from "~/shared/nano-states";
 
 type ProjectsProps = {
   projects: Array<DashboardProject>;
@@ -22,6 +24,15 @@ export const Projects = ({
   publisherHost,
   imageBaseUrl,
 }: ProjectsProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tProject);
+
+  /**
+   * Memo
+   * @description 图像加载器
+   */
   const imageLoader = useMemo(
     () => createImageLoader({ imageBaseUrl }),
     [imageBaseUrl]
@@ -31,9 +42,18 @@ export const Projects = ({
       <Flex direction="column" gap="3">
         <Flex justify="between">
           <Text variant="brandSectionTitle" as="h2">
-            Projects
+            {t.project}
           </Text>
-          <Flex gap="2">{projects.length !== 0 && <CreateProject />}</Flex>
+          <Flex gap="2">
+            {projects.length !== 0 && (
+              <CreateProject
+                confirmText={t.create}
+                cancelText={t.cancel}
+                title={t.title}
+                buttonText={t.newProject}
+              />
+            )}
+          </Flex>
         </Flex>
         {projects.length === 0 && <EmptyState />}
         <Grid

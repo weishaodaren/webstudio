@@ -60,6 +60,7 @@ const DialogContent = ({
   description,
   label,
   width,
+  cancelText,
 }: {
   onSubmit: (data: { title: string }) => void;
   onChange?: (data: { title: string }) => void;
@@ -70,6 +71,7 @@ const DialogContent = ({
   description?: string;
   primaryButton: JSX.Element;
   width?: string;
+  cancelText?: string;
 }) => {
   return (
     <form
@@ -111,7 +113,7 @@ const DialogContent = ({
       <DialogActions>
         {primaryButton}
         <DialogClose asChild>
-          <Button color="ghost">Cancel</Button>
+          <Button color="ghost">{cancelText}</Button>
         </DialogClose>
       </DialogActions>
     </form>
@@ -154,29 +156,36 @@ const useCreateProject = () => {
 };
 
 export const CreateProject = ({
-  buttonText = "New Project",
+  buttonText,
+  title,
+  confirmText,
+  cancelText,
 }: {
-  buttonText?: string;
+  buttonText: string;
+  title: string;
+  confirmText: string;
+  cancelText: string;
 }) => {
   const { handleSubmit, handleOpenChange, state, errors } = useCreateProject();
 
   return (
     <Dialog
-      title="New Project"
+      title={buttonText}
       trigger={<Button prefix={<PlusIcon />}>{buttonText}</Button>}
       onOpenChange={handleOpenChange}
     >
       <DialogContent
+        cancelText={cancelText}
         onSubmit={handleSubmit}
-        placeholder="New Project"
-        label="Project Title"
+        placeholder={buttonText}
+        label={title}
         errors={errors}
         primaryButton={
           <Button
             state={state === "idle" ? undefined : "pending"}
             type="submit"
           >
-            Create Project
+            {confirmText}
           </Button>
         }
       />
@@ -222,29 +231,33 @@ export const RenameProjectDialog = ({
   title,
   projectId,
   onOpenChange,
+  buttonText,
+  label,
 }: {
   isOpen: boolean;
   title: string;
   projectId: DashboardProject["id"];
   onOpenChange: (isOpen: boolean) => void;
+  buttonText: string;
+  label: string;
 }) => {
   const { handleSubmit, errors, state } = useRenameProject({
     projectId,
     onOpenChange,
   });
   return (
-    <Dialog title="Rename" isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Dialog title={buttonText} isOpen={isOpen} onOpenChange={onOpenChange}>
       <DialogContent
         onSubmit={handleSubmit}
         errors={errors}
         title={title}
-        label="Project Title"
+        label={label}
         primaryButton={
           <Button
             type="submit"
             state={state === "idle" ? undefined : "pending"}
           >
-            Rename Project
+            {buttonText}
           </Button>
         }
       />
@@ -306,12 +319,20 @@ export const DeleteProjectDialog = ({
   projectId,
   onOpenChange,
   onHiddenChange,
+  buttonText,
+  desc,
+  dialogTitle,
+  confirmTypingText,
 }: {
   isOpen: boolean;
   title: string;
   projectId: DashboardProject["id"];
   onOpenChange: (isOpen: boolean) => void;
   onHiddenChange: (isHidden: boolean) => void;
+  buttonText: string;
+  desc: string;
+  dialogTitle: string;
+  confirmTypingText: string;
 }) => {
   const { handleSubmit, handleChange, errors, isMatch, state } =
     useDeleteProject({
@@ -321,18 +342,14 @@ export const DeleteProjectDialog = ({
       onHiddenChange,
     });
   return (
-    <Dialog
-      title="Delete Confirmation"
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-    >
+    <Dialog title={dialogTitle} isOpen={isOpen} onOpenChange={onOpenChange}>
       <DialogContent
         onSubmit={handleSubmit}
         onChange={handleChange}
         errors={errors}
         label={
           <Label css={{ userSelect: "text" }}>
-            Confirm by typing
+            {confirmTypingText}
             <Text
               as="span"
               color="destructive"
@@ -341,10 +358,9 @@ export const DeleteProjectDialog = ({
             >
               {` ${title} `}
             </Text>
-            below.
           </Label>
         }
-        description="This project and its styles, pages and images will be deleted permanently."
+        description={desc}
         primaryButton={
           <Button
             type="submit"
@@ -352,7 +368,7 @@ export const DeleteProjectDialog = ({
             disabled={isMatch === false}
             state={state === "idle" ? undefined : "pending"}
           >
-            Delete Forever
+            {buttonText}
           </Button>
         }
         width={theme.spacing["33"]}

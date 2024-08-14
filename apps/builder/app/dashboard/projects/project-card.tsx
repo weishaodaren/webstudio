@@ -35,6 +35,8 @@ import { Spinner } from "../shared/spinner";
 import type { DashboardProject } from "@webstudio-is/dashboard";
 import { Card, CardContent, CardFooter } from "../shared/card";
 import { CloneProjectDialog } from "~/shared/clone-project";
+import { useStore } from "@nanostores/react";
+import { $tProject } from "~/shared/nano-states";
 
 const titleStyle = css({
   userSelect: "text",
@@ -74,12 +76,19 @@ const Menu = ({
   onRename,
   onDuplicate,
   onShare,
+  labels: { deleteAction, duplicate, rename, share },
 }: {
   tabIndex: number;
   onDelete: () => void;
   onRename: () => void;
   onDuplicate: () => void;
   onShare: () => void;
+  labels: {
+    deleteAction: string;
+    duplicate: string;
+    rename: string;
+    share: string;
+  };
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -95,10 +104,14 @@ const Menu = ({
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={onDuplicate}>Duplicate</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onRename}>Rename</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onShare}>Share</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onDelete}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onDuplicate}>
+            {duplicate}
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={onRename}>{rename}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onShare}>{share}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onDelete}>
+            {deleteAction}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenu>
@@ -160,6 +173,9 @@ type ProjectCardProps = {
   imageLoader: ImageLoader;
 };
 
+/**
+ * Component
+ */
 export const ProjectCard = ({
   project: {
     id,
@@ -174,10 +190,19 @@ export const ProjectCard = ({
   publisherHost,
   imageLoader,
 }: ProjectCardProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tProject);
+
+  /**
+   * State
+   */
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+
   const { thumbnailRef, handleKeyDown } = useProjectCard();
   const handleCloneProject = useCloneProject(id);
   const { state, location } = useNavigation();
@@ -239,10 +264,16 @@ export const ProjectCard = ({
               tabIndex={-1}
             />
           ) : (
-            <Text color="subtle">Not Published</Text>
+            <Text color="subtle">{t.notPublished}</Text>
           )}
         </Flex>
         <Menu
+          labels={{
+            duplicate: t.duplicate,
+            rename: t.rename,
+            share: t.share,
+            deleteAction: t.delete,
+          }}
           tabIndex={-1}
           onDelete={() => {
             setIsDeleteDialogOpen(true);
@@ -257,12 +288,18 @@ export const ProjectCard = ({
         />
       </CardFooter>
       <RenameProjectDialog
+        buttonText={t.rename}
+        label={t.title}
         isOpen={isRenameDialogOpen}
         onOpenChange={setIsRenameDialogOpen}
         title={title}
         projectId={id}
       />
       <DeleteProjectDialog
+        buttonText={t.deleteAction}
+        desc={t.deleteDesc}
+        dialogTitle={t.deleteConfirmation}
+        confirmTypingText={t.confirmTyping}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onHiddenChange={setIsHidden}
