@@ -8,10 +8,11 @@ import {
   Text,
   theme,
 } from "@webstudio-is/design-system";
-import { GithubIcon, GoogleIcon, WebstudioIcon } from "@webstudio-is/icons";
-import { BrandButton } from "./brand-button";
-import { Form } from "@remix-run/react";
-import { authPath } from "~/shared/router-utils";
+// import { GithubIcon, GoogleIcon, WebstudioIcon } from "@webstudio-is/icons";
+import { WebstudioIcon } from "@webstudio-is/icons";
+// import { BrandButton } from "./brand-button";
+// import { Form } from "@remix-run/react";
+// import { authPath } from "~/shared/router-utils";
 import { SecretLogin } from "./secret-login";
 
 const globalStyles = globalCss({
@@ -84,12 +85,13 @@ export const Login = ({
         }}
       >
         <Text variant="brandMediumTitle" color="main" as="h1">
-          Sign In
+          登录
         </Text>
         <Flex direction="column" gap="4">
           <TooltipProvider>
             <Flex gap="3" direction="column">
-              <Form action={authPath({ provider: "google" })} method="post">
+              {/* 暂时隐藏 */}
+              {/* <Form action={authPath({ provider: "google" })} method="post">
                 <BrandButton
                   disabled={isGoogleEnabled === false}
                   icon={<GoogleIcon size={22} />}
@@ -104,7 +106,7 @@ export const Login = ({
                 >
                   Sign in with GitHub
                 </BrandButton>
-              </Form>
+              </Form> */}
               {isSecretLoginEnabled && <SecretLogin />}
             </Flex>
           </TooltipProvider>

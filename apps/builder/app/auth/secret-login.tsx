@@ -24,10 +24,10 @@ export const SecretLogin = () => {
           minLength={2}
           required
           autoFocus
-          placeholder="Auth secret"
+          placeholder="4位密码"
           css={{ flexGrow: 1 }}
         />
-        <Button>Login</Button>
+        <Button>登录</Button>
       </Flex>
     );
   }
@@ -37,7 +37,7 @@ export const SecretLogin = () => {
       onClick={() => setIsSecretLoginOpen(true)}
       icon={<CommitIcon size={22} />}
     >
-      Login with Secret
+      密码登录
     </BrandButton>
   );
 };
