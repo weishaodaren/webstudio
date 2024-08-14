@@ -24,6 +24,8 @@ import { useNavigate } from "@remix-run/react";
 import { logoutPath, userPlanSubscriptionPath } from "~/shared/router-utils";
 import type { User } from "~/shared/db/user.server";
 import type { UserPlanFeatures } from "~/shared/db/user-plan-features.server";
+import { useStore } from "@nanostores/react";
+import { $tProject } from "~/shared/nano-states";
 
 const containerStyle = css({
   px: theme.spacing[13],
@@ -36,7 +38,7 @@ const getAvatarLetter = (title?: string) => {
   return (title || "X").charAt(0).toLocaleUpperCase();
 };
 
-const defaultUserName = "James Bond";
+const defaultUserName = "007";
 
 const Menu = ({
   user,
@@ -45,6 +47,7 @@ const Menu = ({
   user: User;
   userPlanFeatures: UserPlanFeatures;
 }) => {
+  const t = useStore($tProject);
   const navigate = useNavigate();
   const nameOrEmail = user.username ?? user.email ?? defaultUserName;
   return (
@@ -79,13 +82,14 @@ const Menu = ({
             {user.username ?? defaultUserName}
             <Text>{user.email}</Text>
           </DropdownMenuLabel>
-          {userPlanFeatures.hasSubscription && (
+          {/* 暂时隐藏 */}
+          {/* {userPlanFeatures.hasSubscription && (
             <DropdownMenuItem
               onSelect={() => navigate(userPlanSubscriptionPath())}
             >
               Manage Subscription
             </DropdownMenuItem>
-          )}
+          )} */}
           {userPlanFeatures.hasProPlan === false && (
             <DropdownMenuItem
               onSelect={() => {
@@ -101,7 +105,7 @@ const Menu = ({
           )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => navigate(logoutPath())}>
-            Sign Out
+            {t.signOut}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenuPortal>

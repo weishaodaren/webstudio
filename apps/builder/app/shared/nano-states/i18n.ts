@@ -161,6 +161,8 @@ export const $tProject = i18n("project", {
   deleteAction: "Delete Forever",
   confirmTyping: "Confirm by typing",
   notPublished: "Not Published",
+  signOut: "Sign Out",
+  createdTime: params("Created on {createdAt}"),
 });
 
 export const $tStylePanel = i18n("stylePanel", {

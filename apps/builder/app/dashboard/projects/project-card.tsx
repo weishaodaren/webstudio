@@ -15,7 +15,7 @@ import {
   Link,
 } from "@webstudio-is/design-system";
 import { InfoCircleIcon, EllipsesIcon } from "@webstudio-is/icons";
-import { type KeyboardEvent, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 import type { ImageLoader } from "@webstudio-is/image";
 import { builderPath } from "~/shared/router-utils";
 import {
@@ -36,7 +36,7 @@ import type { DashboardProject } from "@webstudio-is/dashboard";
 import { Card, CardContent, CardFooter } from "../shared/card";
 import { CloneProjectDialog } from "~/shared/clone-project";
 import { useStore } from "@nanostores/react";
-import { $tProject } from "~/shared/nano-states";
+import { $tProject, locale } from "~/shared/nano-states";
 
 const titleStyle = css({
   userSelect: "text",
@@ -159,7 +159,8 @@ const useProjectCard = () => {
 };
 
 const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
+  // return new Date(date).toLocaleDateString("en-US", {
+  return new Date(date).toLocaleDateString("zh-CN", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -209,6 +210,23 @@ export const ProjectCard = ({
   const linkPath = builderPath({ projectId: id });
   // Transition to the project has started, we may need to show a spinner
   const isTransitioning = state !== "idle" && linkPath === location.pathname;
+
+  /**
+   * Callback
+   * @description 格式化日期
+   * @param {String} data
+   * @returns {String}
+   */
+  const formatDate = useCallback(
+    (date: string) =>
+      new Date(date).toLocaleDateString(locale.value, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    []
+  );
+
   return (
     <Card hidden={isHidden} tabIndex={0} onKeyDown={handleKeyDown}>
       <CardContent
@@ -240,7 +258,8 @@ export const ProjectCard = ({
               variant="wrapped"
               content={
                 <Text variant="small">
-                  Created on {formatDate(createdAt)}
+                  {t.createdTime({ createdAt: formatDate(createdAt) })}
+                  {/* Created on {formatDate(createdAt)} */}
                   {latestBuild?.publishStatus === "PUBLISHED" && (
                     <>
                       <br />
