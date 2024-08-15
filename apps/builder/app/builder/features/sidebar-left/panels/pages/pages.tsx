@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   SmallIconButton,
+  Text,
 } from "@webstudio-is/design-system";
 import {
   ChevronRightIcon,
@@ -25,7 +26,12 @@ import type { TabContentProps } from "../../types";
 import { CloseButton, Header, Root } from "../../shared/panel";
 import { ExtendedPanel } from "../../shared/extended-panel";
 import { NewPageSettings, PageSettings } from "./page-settings";
-import { $pages, $selectedPageId, $tPages } from "~/shared/nano-states";
+import {
+  $pages,
+  $selectedPageId,
+  $tLeftPanelCategory,
+  $tPages,
+} from "~/shared/nano-states";
 import { switchPage } from "~/shared/pages";
 import {
   $editingPagesItemId,

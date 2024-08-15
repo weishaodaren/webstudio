@@ -194,17 +194,15 @@ const FormFields = ({
           </Grid>
 
           <Grid gap={1}>
-            <Label htmlFor={fieldIds.slug}>
-              <Flex align="center" css={{ gap: theme.spacing[3] }}>
-                {slugText}
-                <Tooltip content={slugContent} variant="wrapped">
-                  <HelpIcon
-                    color={rawTheme.colors.foregroundSubtle}
-                    tabIndex={0}
-                  />
-                </Tooltip>
-              </Flex>
-            </Label>
+            <Flex align="center" css={{ gap: theme.spacing[3] }}>
+              <Label htmlFor={fieldIds.slug}>{slugText}</Label>
+              <Tooltip content={slugContent} variant="wrapped">
+                <HelpIcon
+                  color={rawTheme.colors.foregroundSubtle}
+                  tabIndex={0}
+                />
+              </Tooltip>
+            </Flex>
             <InputErrorsTooltip errors={errors.slug}>
               <InputField
                 tabIndex={1}

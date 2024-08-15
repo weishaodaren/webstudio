@@ -20,8 +20,6 @@ export const meta: WsComponentMeta = {
   category: "forms",
   invalidAncestors: ["Button", "Label"],
   type: "container",
-  label: "Input Label",
-  description: "????????????????",
   icon: LabelIcon,
   states: defaultStates,
   presetStyle,

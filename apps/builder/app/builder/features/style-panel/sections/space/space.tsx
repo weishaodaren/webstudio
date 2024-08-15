@@ -1,4 +1,4 @@
-import { type ComponentProps, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useStore } from "@nanostores/react";
 import { $tSpace } from "~/shared/nano-states";
 import type { SectionProps } from "../shared/section";
@@ -12,13 +12,11 @@ import { SpaceTooltip } from "./tooltip";
 import { getStyleSource } from "../../shared/style-info";
 import { CollapsibleSection } from "../../shared/collapsible-section";
 import { movementMapSpace, useKeyboardNavigation } from "../shared/keyboard";
-
 import type { CreateBatchUpdate } from "../../shared/use-style-data";
 
 const Cell = ({
   isPopoverOpen,
   onPopoverClose,
-  onChange,
   onHover,
   property,
   scrubStatus,
@@ -27,7 +25,6 @@ const Cell = ({
 }: {
   isPopoverOpen: boolean;
   onPopoverClose: () => void;
-  onChange: ComponentProps<typeof InputPopover>["onChange"];
   onHover: (target: HoverTarget | undefined) => void;
   property: SpaceStyleProperty;
   scrubStatus: ReturnType<typeof useScrub>;
@@ -41,7 +38,7 @@ const Cell = ({
 
   // for TypeScript
   if (finalValue === undefined) {
-    return null;
+    return;
   }
 
   return (
@@ -51,8 +48,8 @@ const Cell = ({
         value={finalValue}
         isOpen={isPopoverOpen}
         property={property}
-        onChange={onChange}
         onClose={onPopoverClose}
+        createBatchUpdate={createBatchUpdate}
       />
       <SpaceTooltip
         property={property}
@@ -85,7 +82,6 @@ const Cell = ({
 export { spaceProperties as properties };
 
 export const Section = ({
-  setProperty,
   deleteProperty,
   createBatchUpdate,
   currentStyle,
@@ -176,13 +172,6 @@ export const Section = ({
               if (openProperty === property) {
                 setOpenProperty(undefined);
                 layoutRef.current?.focus();
-              }
-            }}
-            onChange={(update, options) => {
-              if (update.operation === "set") {
-                setProperty(update.property)(update.value, options);
-              } else {
-                deleteProperty(update.property, options);
               }
             }}
             onHover={handleHover}

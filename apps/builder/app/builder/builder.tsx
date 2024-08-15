@@ -40,8 +40,6 @@ import {
   $publisherHost,
   $imageLoader,
   $textEditingInstanceSelector,
-  $selectedInstanceRenderState,
-  $canvasIframeState,
 } from "~/shared/nano-states";
 import { type Settings } from "./shared/client-settings";
 import { getBuildUrl } from "~/shared/router-utils";
@@ -53,18 +51,22 @@ import { subscribeCommands } from "~/builder/shared/commands";
 import { AiCommandBar } from "./features/ai/ai-command-bar";
 import { ProjectSettings } from "./features/project-settings";
 import type { UserPlanFeatures } from "~/shared/db/user-plan-features.server";
-import { $isCloneDialogOpen, $userPlanFeatures } from "./shared/nano-states";
+import {
+  $dataLoadingState,
+  $isCloneDialogOpen,
+  $loadingState,
+  $userPlanFeatures,
+} from "./shared/nano-states";
 import { CloneProjectDialog } from "~/shared/clone-project";
 import type { TokenPermissions } from "@webstudio-is/authorization-token";
 import { useToastErrors } from "~/shared/error/toast-error";
 import { canvasApi } from "~/shared/canvas-api";
 import { loadBuilderData, setBuilderData } from "~/shared/builder-data";
 import { WebstudioIcon } from "@webstudio-is/icons";
-import { computed } from "nanostores";
-import { $dataLoadingState } from "~/shared/nano-states/builder";
 import { initBuilderApi } from "~/shared/builder-api";
 import { updateWebstudioData } from "~/shared/instance-utils";
 import { migrateWebstudioDataMutable } from "~/shared/webstudio-data-migrator";
+import { useInterval } from "~/shared/hook-utils/use-interval";
 
 registerContainers();
 
@@ -187,7 +189,6 @@ const ChromeWrapper = ({ children, isPreviewMode }: ChromeWrapperProps) => {
     <Grid
       css={{
         height: "100vh",
-        minWidth: 530, // Enough space to show left sidebars before it becomes broken or unusable
         overflow: "hidden",
         display: "grid",
         gridTemplateRows: "auto 1fr auto",
@@ -251,55 +252,25 @@ const revealAnimation = ({
   },
 });
 
-const $loadingState = computed(
-  [
-    $dataLoadingState,
-    $selectedInstanceRenderState,
-    $canvasIframeState,
-    $isPreviewMode,
-  ],
-  (
-    dataLoadingState,
-    selectedInstanceRenderState,
-    canvasIframeState,
-    isPreviewMode
-  ) => {
-    const readyStates = new Map<
-      "dataLoadingState" | "selectedInstanceRenderState" | "canvasIframeState",
-      boolean
-    >([
-      ["dataLoadingState", dataLoadingState === "loaded"],
-      [
-        "selectedInstanceRenderState",
-        selectedInstanceRenderState === "mounted" || isPreviewMode,
-      ],
-      ["canvasIframeState", canvasIframeState === "ready"],
-    ]);
-
-    const readyCount = Array.from(readyStates.values()).filter(Boolean).length;
-    const progress = Math.round((readyCount / readyStates.size) * 100);
-    const state: "ready" | "loading" =
-      readyCount === readyStates.size ? "ready" : "loading";
-
-    return { state, progress, readyStates };
-  }
-);
-
 const ProgressIndicator = ({ value }: { value: number }) => {
-  const [isDone, setIsDone] = useState(false);
   const [fakeValue, setFakeValue] = useState(value);
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      setFakeValue((_fakeValue) => {
-        // Fetching data is the slowest part and we don't want to get stuck at 0% visually
-        return Math.max(value, 50);
-      });
-    }, 300);
-    return () => clearTimeout(id);
-  }, [value]);
+  useInterval((intervalId) => {
+    setFakeValue((previousFakeValue) => {
+      // Makeing sure fake value is not higher than real value to prevent jumping back
+      let nextFakeValue = Math.max(previousFakeValue + 1, value);
+      // Make sure fake value is not lower than 10 to avoid showing empty progress.
+      nextFakeValue = Math.max(nextFakeValue, 10);
+      // Making sure fake value can't get bigger than 100, now that it reached 100 we can stop faking it.
+      if (nextFakeValue >= 100) {
+        clearInterval(intervalId);
+        return previousFakeValue;
+      }
+      return nextFakeValue;
+    });
+  }, 100);
 
-  if (isDone) {
+  if (value >= 100) {
     return;
   }
 
@@ -317,24 +288,9 @@ const ProgressIndicator = ({ value }: { value: number }) => {
     >
       <WebstudioIcon
         size={60}
-        style={{
-          filter: `
-            drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.7))
-            brightness(${fakeValue}%)
-          `,
-          transitionProperty: "filter",
-          transitionDuration: "500ms",
-        }}
+        style={{ filter: "drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.7))" }}
       />
-      <Progress
-        value={fakeValue}
-        transitionDuration="500ms"
-        onTransitionEnd={() => {
-          if (value === 100) {
-            setIsDone(true);
-          }
-        }}
-      />
+      <Progress value={fakeValue} />
     </Flex>
   );
 };
@@ -542,14 +498,14 @@ export const Builder = ({
             navigatorLayout={navigatorLayout}
             css={revealAnimation({
               show: loadingState.state === "ready",
-              backgroundColor: theme.colors.backgroundPanel,
+              backgroundColor: theme.colors.backgroundCanvas,
             })}
           />
           <SidePanel
             gridArea="sidebar"
             css={revealAnimation({
               show: loadingState.state === "ready",
-              backgroundColor: theme.colors.backgroundPanel,
+              backgroundColor: theme.colors.backgroundCanvas,
             })}
           >
             <SidebarLeft publish={publish} />
@@ -561,14 +517,13 @@ export const Builder = ({
               overflow: "hidden",
               ...revealAnimation({
                 show: loadingState.state === "ready",
-                backgroundColor: theme.colors.backgroundPanel,
+                backgroundColor: theme.colors.backgroundCanvas,
               }),
             }}
           >
             <Inspector navigatorLayout={navigatorLayout} />
           </SidePanel>
           {isPreviewMode === false && <Footer />}
-          <BlockingAlerts />
           <CloneProjectDialog
             isOpen={isCloneDialogOpen}
             onOpenChange={$isCloneDialogOpen.set}
@@ -576,6 +531,7 @@ export const Builder = ({
           />
         </ChromeWrapper>
         <ProgressIndicator value={loadingState.progress} />
+        <BlockingAlerts />
       </div>
     </TooltipProvider>
   );

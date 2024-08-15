@@ -20,9 +20,6 @@ export const meta: WsComponentMeta = {
   icon: LabelIcon,
   presetStyle,
   states: defaultStates,
-  label: "Label",
-  description:
-    "An accessible label to describe the purpose of an input. Match the “For” property on the label with the “ID” of the input to connect them.",
   template: [
     {
       type: "instance",

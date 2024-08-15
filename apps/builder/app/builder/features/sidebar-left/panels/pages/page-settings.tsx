@@ -335,58 +335,50 @@ const PathField = ({
   const id = useId();
   return (
     <Grid gap={1}>
-      <Label htmlFor={id}>
-        {allowDynamicData && isFeatureEnabled("cms") ? (
-          <Flex align="center" gap={1}>
-            {label}
-            <Tooltip content={content} variant="wrapped">
-              <HelpIcon
-                color={rawTheme.colors.foregroundSubtle}
-                tabIndex={-1}
-              />
-            </Tooltip>
-          </Flex>
-        ) : (
-          <Flex align="center" gap={1}>
-            Path
-            <Tooltip
-              content={
-                <>
-                  <Text>
-                    Path is a subset of the URL that looks like this:
-                    &quot;/blog&quot;.
-                  </Text>
-                  {allowDynamicData === false && isFeatureEnabled("cms") && (
-                    <>
-                      <Text>
-                        To make the path dynamic and use it with CMS, you can
-                        use parameters and other features. CMS features are part
-                        of the Pro plan.
-                      </Text>
-                      <Link
-                        className={buttonStyle({ color: "gradient" })}
-                        css={{ marginTop: theme.spacing[5], width: "100%" }}
-                        color="contrast"
-                        underline="none"
-                        target="_blank"
-                        href="https://webstudio.is/pricing"
-                      >
-                        Upgrade
-                      </Link>
-                    </>
-                  )}
-                </>
-              }
-              variant="wrapped"
-            >
-              <HelpIcon
-                color={rawTheme.colors.foregroundSubtle}
-                tabIndex={-1}
-              />
-            </Tooltip>
-          </Flex>
-        )}
-      </Label>
+      {allowDynamicData && isFeatureEnabled("cms") ? (
+        <Flex align="center" gap={1}>
+          <Label htmlFor={id}>{label}</Label>
+          <Tooltip content={content} variant="wrapped">
+            <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
+          </Tooltip>
+        </Flex>
+      ) : (
+        <Flex align="center" gap={1}>
+          <Label htmlFor={id}>Path</Label>
+          <Tooltip
+            content={
+              <>
+                <Text>
+                  Path is a subset of the URL that looks like this:
+                  &quot;/blog&quot;.
+                </Text>
+                {allowDynamicData === false && isFeatureEnabled("cms") && (
+                  <>
+                    <Text>
+                      To make the path dynamic and use it with CMS, you can use
+                      parameters and other features. CMS features are part of
+                      the Pro plan.
+                    </Text>
+                    <Link
+                      className={buttonStyle({ color: "gradient" })}
+                      css={{ marginTop: theme.spacing[5], width: "100%" }}
+                      color="contrast"
+                      underline="none"
+                      target="_blank"
+                      href="https://webstudio.is/pricing"
+                    >
+                      Upgrade
+                    </Link>
+                  </>
+                )}
+              </>
+            }
+            variant="wrapped"
+          >
+            <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
+          </Tooltip>
+        </Flex>
+      )}
       <InputErrorsTooltip errors={errors}>
         <InputField
           color={errors && "error"}
@@ -422,29 +414,27 @@ const StatusField = ({
   const { variableValues, scope, aliases } = useStore($pageRootScope);
   return (
     <Grid gap={1}>
-      <Label htmlFor={id}>
-        <Flex align="center" gap={1}>
-          {label}
-          <Tooltip
-            content={
-              <Text>
-                {conent1}
-                <Link
-                  color="inherit"
-                  target="_blank"
-                  href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
-                >
-                  {conent2}
-                </Link>
-                {conent3}
-              </Text>
-            }
-            variant="wrapped"
-          >
-            <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
-          </Tooltip>
-        </Flex>
-      </Label>
+      <Flex align="center" gap={1}>
+        <Label htmlFor={id}>{label}</Label>
+        <Tooltip
+          content={
+            <Text>
+              {conent1}
+              <Link
+                color="inherit"
+                target="_blank"
+                href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+              >
+                {conent2}
+              </Link>
+              {conent3}
+            </Text>
+          }
+          variant="wrapped"
+        >
+          <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
+        </Tooltip>
+      </Flex>
       <BindingControl>
         {allowDynamicData && (
           <BindingPopover
@@ -501,14 +491,13 @@ const RedirectField = ({
   const { variableValues, scope, aliases } = useStore($pageRootScope);
   return (
     <Grid gap={1}>
-      <Label htmlFor={id}>
-        <Flex align="center" gap={1}>
-          {label}
-          <Tooltip content={content} variant="wrapped">
-            <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
-          </Tooltip>
-        </Flex>
-      </Label>
+      <Flex align="center" gap={1}>
+        <Label htmlFor={id}>{label}</Label>
+        <Tooltip content={content} variant="wrapped">
+          <HelpIcon color={rawTheme.colors.foregroundSubtle} tabIndex={-1} />
+        </Tooltip>
+      </Flex>
+
       <BindingControl>
         {allowDynamicData && (
           <BindingPopover

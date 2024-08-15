@@ -40,6 +40,7 @@ import { TranslatePanelContent } from "./transform-translate";
 import { ScalePanelContent } from "./transform-scale";
 import { RotatePanelContent } from "./transform-rotate";
 import { SkewPanelContent } from "./transform-skew";
+import { BackfaceVisibility } from "./transform-backface-visibility";
 import { getStyleSource } from "../../shared/style-info";
 import { PropertyName } from "../../shared/property-name";
 import { getDots } from "../../shared/collapsible-section";
@@ -52,12 +53,18 @@ export const transformPanels = [
   "skew",
 ] as const;
 
+export const transformPanelDropdown = [
+  ...transformPanels,
+  "backfaceVisibility",
+] as const;
+
 export type TransformPanel = (typeof transformPanels)[number];
 
 export const properties = [
   "translate",
   "scale",
   "transform",
+  "backfaceVisibility",
 ] satisfies Array<StyleProperty>;
 
 /**
@@ -82,6 +89,9 @@ export const Section = (props: SectionProps) => {
   const translateStyleSource = getStyleSource(currentStyle["translate"]);
   const scaleStyleSource = getStyleSource(currentStyle["scale"]);
   const rotateAndSkewStyleSrouce = getStyleSource(currentStyle["transform"]);
+  const backfaceVisibilityStyleSource = getStyleSource(
+    currentStyle["backfaceVisibility"]
+  );
 
   const isAnyTransformPropertyAdded = transformPanels.some((panel) =>
     isTransformPanelPropertyUsed({
@@ -95,6 +105,7 @@ export const Section = (props: SectionProps) => {
     batch.deleteProperty("translate");
     batch.deleteProperty("scale");
     batch.deleteProperty("transform");
+    batch.deleteProperty("backfaceVisibility");
     batch.publish();
   };
 
@@ -117,7 +128,7 @@ export const Section = (props: SectionProps) => {
                   collisionPadding={16}
                   css={{ width: theme.spacing[20] }}
                 >
-                  {transformPanels.map((panel) => {
+                  {transformPanelDropdown.map((panel) => {
                     return (
                       <DropdownMenuItem
                         disabled={
@@ -154,7 +165,8 @@ export const Section = (props: SectionProps) => {
                 color={
                   translateStyleSource ||
                   scaleStyleSource ||
-                  rotateAndSkewStyleSrouce
+                  rotateAndSkewStyleSrouce ||
+                  backfaceVisibilityStyleSource
                 }
               >
                 {t.transforms}
@@ -167,16 +179,20 @@ export const Section = (props: SectionProps) => {
     >
       {isAnyTransformPropertyAdded === true ? (
         <CssValueListArrowFocus>
-          {transformPanels.map((panel, index) => (
-            <TransformSection
-              {...props}
-              key={panel}
-              index={index}
-              panel={panel}
-            />
-          ))}
+          <Flex direction="column">
+            {transformPanels.map((panel, index) => (
+              <TransformSection
+                {...props}
+                key={panel}
+                index={index}
+                panel={panel}
+              />
+            ))}
+          </Flex>
         </CssValueListArrowFocus>
       ) : undefined}
+
+      <BackfaceVisibility {...props} />
     </CollapsibleSectionRoot>
   );
 };
@@ -201,6 +217,7 @@ const TransformSection = (
     const property =
       panel === "rotate" || panel === "skew" ? "transform" : panel;
     const value = currentStyle[property]?.value;
+
     if (value === undefined || value.type !== "tuple") {
       return;
     }

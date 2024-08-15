@@ -125,9 +125,6 @@ export const metaAccordion: WsComponentMeta = {
   type: "container",
   icon: AccordionIcon,
   presetStyle,
-  label: "Accordion",
-  description:
-    "A vertically stacked set of interactive headings that each reveal an associated section of content. Clicking on the heading will open the item and close other items.",
   template: [
     {
       type: "instance",

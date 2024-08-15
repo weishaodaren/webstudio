@@ -12,7 +12,6 @@ const collectionMeta: WsComponentMeta = {
   category: "data",
   order: 2,
   type: "container",
-  label: "Collection",
   icon: ListViewIcon,
   stylable: false,
   template: [
@@ -69,7 +68,6 @@ export const descendantComponent = "ws:descendant";
 const descendantMeta: WsComponentMeta = {
   category: "internal",
   type: "control",
-  label: "Descendant",
   icon: PaintBrushIcon,
   detachable: false,
 };

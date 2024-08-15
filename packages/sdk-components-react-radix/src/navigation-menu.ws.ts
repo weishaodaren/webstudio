@@ -310,11 +310,8 @@ export const metaNavigationMenu: WsComponentMeta = {
   category: "radix",
   order: 2,
   type: "container",
-  label: "Navigation Menu",
-  description: "A collection of links for navigating websites.",
   icon: NavigationMenuIcon,
   presetStyle,
-
   template: [
     {
       type: "instance",
