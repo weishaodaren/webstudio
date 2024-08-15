@@ -195,8 +195,9 @@ export const SidebarLeft = ({ publish }: SidebarLeftProps) => {
             </div>
 
             <Box css={{ borderRight: `1px solid ${theme.colors.borderMain}` }}>
-              <AiTabTrigger />
-              <HelpTabTrigger />
+              {/* 暂时隐藏 */}
+              {/* <AiTabTrigger /> */}
+              {/* <HelpTabTrigger /> */}
             </Box>
           </>
         )}

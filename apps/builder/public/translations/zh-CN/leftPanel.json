@@ -9,7 +9,8 @@
     "chooseImage": "从资源中选择图像",
     "upload": "上传",
     "search": "搜索",
-    "cssPreview": "CSS 预览"
+    "cssPreview": "CSS 预览",
+    "noMatchingAssets": "没有匹配的资源"
   },
   "leftPanel/category": {
     "components": "组件",

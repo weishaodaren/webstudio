@@ -15,7 +15,7 @@ import {
   Link,
 } from "@webstudio-is/design-system";
 import { InfoCircleIcon, EllipsesIcon } from "@webstudio-is/icons";
-import { type KeyboardEvent, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 import type { ImageLoader } from "@webstudio-is/image";
 import { builderPath } from "~/shared/router-utils";
 import {
@@ -35,6 +35,8 @@ import { Spinner } from "../shared/spinner";
 import type { DashboardProject } from "@webstudio-is/dashboard";
 import { Card, CardContent, CardFooter } from "../shared/card";
 import { CloneProjectDialog } from "~/shared/clone-project";
+import { useStore } from "@nanostores/react";
+import { $tProject, locale } from "~/shared/nano-states";
 
 const titleStyle = css({
   userSelect: "text",
@@ -74,12 +76,19 @@ const Menu = ({
   onRename,
   onDuplicate,
   onShare,
+  labels: { deleteAction, duplicate, rename, share },
 }: {
   tabIndex: number;
   onDelete: () => void;
   onRename: () => void;
   onDuplicate: () => void;
   onShare: () => void;
+  labels: {
+    deleteAction: string;
+    duplicate: string;
+    rename: string;
+    share: string;
+  };
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -95,10 +104,14 @@ const Menu = ({
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={onDuplicate}>Duplicate</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onRename}>Rename</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onShare}>Share</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onDelete}>Delete</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onDuplicate}>
+            {duplicate}
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={onRename}>{rename}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onShare}>{share}</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onDelete}>
+            {deleteAction}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenu>
@@ -146,7 +159,8 @@ const useProjectCard = () => {
 };
 
 const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("en-US", {
+  // return new Date(date).toLocaleDateString("en-US", {
+  return new Date(date).toLocaleDateString("zh-CN", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -160,6 +174,9 @@ type ProjectCardProps = {
   imageLoader: ImageLoader;
 };
 
+/**
+ * Component
+ */
 export const ProjectCard = ({
   project: {
     id,
@@ -174,16 +191,42 @@ export const ProjectCard = ({
   publisherHost,
   imageLoader,
 }: ProjectCardProps) => {
+  /**
+   * Store
+   */
+  const t = useStore($tProject);
+
+  /**
+   * State
+   */
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+
   const { thumbnailRef, handleKeyDown } = useProjectCard();
   const handleCloneProject = useCloneProject(id);
   const { state, location } = useNavigation();
   const linkPath = builderPath({ projectId: id });
   // Transition to the project has started, we may need to show a spinner
   const isTransitioning = state !== "idle" && linkPath === location.pathname;
+
+  /**
+   * Callback
+   * @description 格式化日期
+   * @param {String} data
+   * @returns {String}
+   */
+  const formatDate = useCallback(
+    (date: string) =>
+      new Date(date).toLocaleDateString(locale.value, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    []
+  );
+
   return (
     <Card hidden={isHidden} tabIndex={0} onKeyDown={handleKeyDown}>
       <CardContent
@@ -215,7 +258,8 @@ export const ProjectCard = ({
               variant="wrapped"
               content={
                 <Text variant="small">
-                  Created on {formatDate(createdAt)}
+                  {t.createdTime({ createdAt: formatDate(createdAt) })}
+                  {/* Created on {formatDate(createdAt)} */}
                   {latestBuild?.publishStatus === "PUBLISHED" && (
                     <>
                       <br />
@@ -239,10 +283,16 @@ export const ProjectCard = ({
               tabIndex={-1}
             />
           ) : (
-            <Text color="subtle">Not Published</Text>
+            <Text color="subtle">{t.notPublished}</Text>
           )}
         </Flex>
         <Menu
+          labels={{
+            duplicate: t.duplicate,
+            rename: t.rename,
+            share: t.share,
+            deleteAction: t.delete,
+          }}
           tabIndex={-1}
           onDelete={() => {
             setIsDeleteDialogOpen(true);
@@ -257,12 +307,18 @@ export const ProjectCard = ({
         />
       </CardFooter>
       <RenameProjectDialog
+        buttonText={t.rename}
+        label={t.title}
         isOpen={isRenameDialogOpen}
         onOpenChange={setIsRenameDialogOpen}
         title={title}
         projectId={id}
       />
       <DeleteProjectDialog
+        buttonText={t.deleteAction}
+        desc={t.deleteDesc}
+        dialogTitle={t.deleteConfirmation}
+        confirmTypingText={t.confirmTyping}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onHiddenChange={setIsHidden}

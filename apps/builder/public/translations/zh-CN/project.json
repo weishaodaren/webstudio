@@ -1,0 +1,20 @@
+{
+  "project": {
+    "project": "项目",
+    "newProject": "新建项目",
+    "title": "项目标题",
+    "create": "创建项目",
+    "cancel": "取消",
+    "duplicate": "复制",
+    "rename": "重命名",
+    "share": "分享",
+    "delete": "删除",
+    "deleteConfirmation": "删除确认",
+    "deleteDesc": "此项目及其样式、页面和图像将永久删除。",
+    "deleteAction": "永久删除",
+    "confirmTyping": "再次输入",
+    "notPublished": "未发布",
+    "signOut": "登出",
+    "createdTime": "创建于 {createdAt}"
+  }
+}

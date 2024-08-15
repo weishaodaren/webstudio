@@ -215,14 +215,15 @@ export const Menu = () => {
             </DropdownMenuItem>
           </Tooltip>
 
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
+          {/* 暂时隐藏 */}
+          {/* <DropdownMenuSeparator /> */}
+          {/* <DropdownMenuItem
             onSelect={() => {
               window.open("https://docs.webstudio.is");
             }}
           >
             Learn Webstudio
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {hasProPlan === false && (
             <>
               <DropdownMenuSeparator />

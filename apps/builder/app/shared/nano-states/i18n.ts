@@ -11,7 +11,6 @@ import {
   params,
 } from "@nanostores/i18n";
 import { persistentAtom } from "@nanostores/persistent";
-import { publish } from "~/shared/pubsub";
 
 export const setting = persistentAtom<string | undefined>("locale", undefined);
 
@@ -144,6 +143,26 @@ export const $tInspector = i18n("inspector", {
   cloneDesc: "Cloning has been disabled by the project owner",
   view: "View",
   viewAction: "Undock navigator",
+});
+
+export const $tProject = i18n("project", {
+  project: "Project",
+  newProject: "New Project",
+  title: "Project Title",
+  create: "Create Project",
+  cancel: "Cancel",
+  duplicate: "Duplicate",
+  rename: "Rename",
+  share: "Share",
+  delete: "Delete",
+  deleteConfirmation: "Delete Confirmation",
+  deleteDesc:
+    "This project and its styles, pages and images will be deleted permanently.",
+  deleteAction: "Delete Forever",
+  confirmTyping: "Confirm by typing",
+  notPublished: "Not Published",
+  signOut: "Sign Out",
+  createdTime: params("Created on {createdAt}"),
 });
 
 export const $tStylePanel = i18n("stylePanel", {
@@ -528,6 +547,7 @@ export const $tLeftPanel = i18n("leftPanel", {
   upload: "Upload",
   search: "Search",
   cssPreview: "CSS Preview",
+  noMatchingAssets: "No matching assets",
 });
 
 export const $tLeftPanelCategory = i18n("leftPanel/category", {

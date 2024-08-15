@@ -182,7 +182,7 @@ export const AssetsShell = ({
         <SearchField {...searchProps} autoFocus placeholder={t.search} />
       </Flex>
       <Separator />
-      {isEmpty && <NotFound />}
+      {isEmpty && <NotFound label={t.noMatchingAssets} />}
       <ScrollArea css={{ display: "flex", flexDirection: "column" }}>
         {children}
       </ScrollArea>
