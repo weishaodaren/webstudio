@@ -516,6 +516,8 @@ export const $tComponents = i18n("components", {
   labelComponent: "Label",
   labelDescription:
     "An accessible label to describe the purpose of an input. Match the “For” property on the label with the “ID” of the input to connect them.",
+  markdownLabel: "Markdown Embed",
+  markdownDescription: "Used to add markdown code to the page",
 });
 
 /**
@@ -533,6 +535,7 @@ export const $tComponentsCategory = i18n("components/category", {
   xml: "xml",
   hidden: "hidden",
   internal: "internal",
+  found: "found",
 });
 
 export const $tLeftPanel = i18n("leftPanel", {

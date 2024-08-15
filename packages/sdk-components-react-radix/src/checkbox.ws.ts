@@ -21,9 +21,6 @@ export const metaCheckbox: WsComponentMeta = {
   order: 101,
   type: "container",
   icon: CheckboxCheckedIcon,
-  label: "Checkbox",
-  description:
-    "Use within a form to allow your users to toggle between checked and not checked. Group checkboxes by matching their “Name” properties. Unlike radios, any number of checkboxes in a group can be checked.",
   states: [
     ...defaultStates,
     {

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useStore } from "@nanostores/react";
 import {
   type WsComponentMeta,
@@ -11,16 +11,19 @@ import {
   ScrollArea,
   List,
   ListItem,
+  SearchField,
+  Separator,
+  useSearchFieldKeys,
+  findNextListItemIndex,
+  Text,
+  Box,
+  Kbd,
 } from "@webstudio-is/design-system";
 import { PlusIcon } from "@webstudio-is/icons";
 import { CollapsibleSection } from "~/builder/shared/collapsible-section";
 import type { TabContentProps } from "../../types";
 import { Header, CloseButton, Root } from "../../shared/panel";
-import {
-  dragItemAttribute,
-  elementToComponentName,
-  useDraggable,
-} from "./use-draggable";
+import { dragItemAttribute, useDraggable } from "./use-draggable";
 import { MetaIcon } from "~/builder/shared/meta-icon";
 import {
   $registeredComponentMetas,
@@ -28,14 +31,142 @@ import {
   $tComponents,
   $tComponentsCategory,
 } from "~/shared/nano-states";
-import { getMetaMaps, type ComponentsInfo } from "./get-meta-maps";
+import {
+  getMetaMaps,
+  type MetaByCategory,
+  type ComponentNamesByMeta,
+  type ComponentsInfo,
+} from "./get-meta-maps";
 import { getInstanceLabel } from "~/shared/instance-utils";
 import { isFeatureEnabled } from "@webstudio-is/feature-flags";
 import { insert } from "./insert";
+import { matchSorter } from "match-sorter";
+import { parseComponentName } from "@webstudio-is/sdk";
 
-/**
- * Component
- */
+const namespace = "@webstudio-is/sdk-components-react-radix";
+
+const matchComponents = (
+  metas: Array<WsComponentMeta>,
+  componentNamesByMeta: ComponentNamesByMeta,
+  search: string
+) => {
+  const getKey = (meta: WsComponentMeta) => {
+    if (meta.label) {
+      return meta.label.toLowerCase();
+    }
+    const component = componentNamesByMeta.get(meta);
+
+    if (component) {
+      const [_namespace, name] = parseComponentName(component);
+      return name.toLowerCase();
+    }
+    return "";
+  };
+
+  return matchSorter(metas, search, {
+    keys: [getKey],
+  });
+};
+
+type Groups = Array<{
+  category: Exclude<WsComponentMeta["category"], undefined> | "found";
+  metas: Array<WsComponentMeta>;
+}>;
+
+const filterAndGroupComponents = ({
+  documentType = "html",
+  metaByCategory,
+  componentNamesByMeta,
+  search,
+}: {
+  documentType?: "html" | "xml";
+  metaByCategory: MetaByCategory;
+  componentNamesByMeta: ComponentNamesByMeta;
+  search: string;
+}): Groups => {
+  const categories = componentCategories.filter((category) => {
+    if (category === "hidden") {
+      return false;
+    }
+
+    // Only xml category is allowed for xml document type
+    if (documentType === "xml") {
+      return category === "xml" || category === "data";
+    }
+    // Hide xml category for non-xml document types
+    if (category === "xml") {
+      return false;
+    }
+
+    if (
+      isFeatureEnabled("internalComponents") === false &&
+      category === "internal"
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+
+  let groups: Groups = categories.map((category) => {
+    const metas = (metaByCategory.get(category) ?? []).filter((meta) => {
+      const component = componentNamesByMeta.get(meta);
+
+      if (component === undefined) {
+        return false;
+      }
+
+      if (documentType === "xml" && meta.category === "data") {
+        return component === "ws:collection";
+      }
+
+      if (component === "RemixForm" && isFeatureEnabled("filters") === false) {
+        return false;
+      }
+
+      if (component === "ContentEmbed" && isFeatureEnabled("cms") === false) {
+        return false;
+      }
+
+      return true;
+    });
+
+    return { category, metas };
+  });
+
+  if (search.length !== 0) {
+    let metas = groups.map((group) => group.metas).flat();
+    metas = matchComponents(metas, componentNamesByMeta, search);
+    groups = [{ category: "found", metas }];
+  }
+
+  groups = groups.filter((group) => group.metas.length > 0);
+
+  return groups;
+};
+
+const findComponentIndex = (
+  groups: Groups,
+  componentNamesByMeta: ComponentNamesByMeta,
+  selectedComponent?: string
+) => {
+  if (selectedComponent === undefined) {
+    return { index: -1, metas: groups[0].metas };
+  }
+
+  for (const { metas } of groups) {
+    const index = metas.findIndex((meta) => {
+      return componentNamesByMeta.get(meta) === selectedComponent;
+    });
+    if (index === -1) {
+      continue;
+    }
+    return { index, metas };
+  }
+
+  return { index: -1, metas: [] };
+};
+
 export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
   /**
    * Store
@@ -43,9 +174,9 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
   const t = useStore($tComponents);
   const tComponentsCategory = useStore($tComponentsCategory);
   const metaByComponentName = useStore($registeredComponentMetas);
-  const selectedPage = useStore($selectedPage);
 
-  const documentType = selectedPage?.meta.documentType ?? "html";
+  const selectedPage = useStore($selectedPage);
+  const [selectedComponent, setSelectedComponent] = useState<string>();
 
   /**
    * Memo
@@ -128,66 +259,151 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
       radioGroupDescription,
       labelComponent,
       labelDescription,
+      markdownLabel,
+      markdownDescription,
     } = t;
     return {
       Box: { label: box, description: boxDescription },
       Link: { label: link, description: linkDescription },
       List: { label: list, description: listDescription },
-      "List Item": { label: listItem, description: listItemDescription },
+      ListItem: { label: listItem, description: listItemDescription },
       Separator: { label: separator, description: separatorDescription },
       Slot: { label: slot, description: slotDescription },
-      "HTML Embed": { label: html, description: htmlDescription },
-      "Code Text": { label: code, description: codeDescription },
+      CodeText: { label: code, description: codeDescription },
       Text: { label: text, description: textDescription },
       Heading: { label: heading, description: headingDescription },
       Paragraph: { label: paragraph, description: paragraphDescription },
       Blockquote: { label: blockquote, description: blockquoteDescription },
-      "Webhook Form": { label: webhook, description: webhookDescription },
-      "Content Embed": {
+      Form: { label: webhook, description: webhookDescription },
+      ContentEmbed: {
         label: contentEmbed,
         description: contentEmbedDescription,
       },
       Image: { label: image, description: imageDescription },
       Vimeo: { label: vimeo, description: vimeoDescription },
-      Form: { label: form, description: formDescription },
+      RemixForm: { label: form, description: formDescription },
       Button: { label: button, description: buttonDescription },
       "Input Label": { label: inputLabel, description: inputLabelDescription },
-      "Text Input": { label: textInput, description: textInputDescription },
+      Input: { label: textInput, description: textInputDescription },
       Select: { label: select, description: selectDescription },
-      "Text Area": { label: textarea, description: textareaDescription },
-      Radio: { label: radio, description: radioDescription },
-      Checkbox: { label: checkbox, description: checkboxDescription },
-      Collection: { label: collection, description: collectionDescription },
+      Textarea: { label: textarea, description: textareaDescription },
+      RadioButton: { label: radio, description: radioDescription },
+      [`${namespace}:Checkbox`]: {
+        label: checkbox,
+        description: checkboxDescription,
+      },
+      "ws:collection": {
+        label: collection,
+        description: collectionDescription,
+      },
+      "ws:descendant": {
+        label: collection,
+        description: collectionDescription,
+      },
       Time: { label: time, description: timeDescription },
-      Sheet: { label: sheet, description: sheetDescription },
-      "Navigation Menu": {
+      [`${namespace}:Sheet`]: { label: sheet, description: sheetDescription },
+      [`${namespace}:NavigationMenu`]: {
         label: navigationMenu,
         description: navigationMenuDescription,
       },
-      Tabs: { label: tabs, description: tabsDescription },
-      Accordion: { label: accordion, description: accordionDescription },
-      Dialog: { label: dialog, description: dialogDescription },
-      Collapsible: { label: collapsible, description: collapsibleDescription },
-      Popover: { label: popover, description: popoverDescription },
-      Tooltip: { label: tooltip, description: tooltipDescription },
-      Switch: { label: selectComponent, description: switchDescription },
-      "Radio Group": { label: radioGroup, description: radioGroupDescription },
-      Label: { label: labelComponent, description: labelDescription },
+      [`${namespace}:Tabs`]: { label: tabs, description: tabsDescription },
+      [`${namespace}:Accordion`]: {
+        label: accordion,
+        description: accordionDescription,
+      },
+      [`${namespace}:Dialog`]: {
+        label: dialog,
+        description: dialogDescription,
+      },
+      [`${namespace}:Collapsible`]: {
+        label: collapsible,
+        description: collapsibleDescription,
+      },
+      [`${namespace}:Popover`]: {
+        label: popover,
+        description: popoverDescription,
+      },
+      [`${namespace}:Tooltip`]: {
+        label: tooltip,
+        description: tooltipDescription,
+      },
+      [`${namespace}:Switch`]: {
+        label: selectComponent,
+        description: switchDescription,
+      },
+      [`${namespace}:RadioGroup`]: {
+        label: radioGroup,
+        description: radioGroupDescription,
+      },
+      [`${namespace}:Label`]: {
+        label: labelComponent,
+        description: labelDescription,
+      },
+      HtmlEmbed: { label: html, description: htmlDescription },
+      MarkdownEmbed: { label: markdownLabel, description: markdownDescription },
     };
   }, [t]);
 
-  /**
-   * Memo
-   * @description 组件分类
-   */
+  const handleInsert = (component: string) => {
+    onSetActiveTab("none");
+    insert(component);
+  };
+
+  const resetSelectedComponent = () => {
+    setSelectedComponent(undefined);
+  };
+
+  const getSelectedComponent = () => {
+    // When user didn't select a component but they have search input,
+    // we want to always have the first component selected, so that user can just hit enter.
+    if (selectedComponent === undefined && searchFieldProps.value) {
+      return componentNamesByMeta.get(groups[0].metas[0]);
+    }
+    return selectedComponent;
+  };
+
+  const searchFieldProps = useSearchFieldKeys({
+    onChange: resetSelectedComponent,
+    onCancel: resetSelectedComponent,
+    onMove({ direction }) {
+      if (direction === "current") {
+        const component = getSelectedComponent();
+        if (component !== undefined) {
+          handleInsert(component);
+        }
+        return;
+      }
+
+      const { index, metas } = findComponentIndex(
+        groups,
+        componentNamesByMeta,
+        selectedComponent
+      );
+
+      const nextIndex = findNextListItemIndex(index, metas.length, direction);
+      const nextComponent = componentNamesByMeta.get(metas[nextIndex]);
+
+      if (nextComponent) {
+        setSelectedComponent(nextComponent);
+      }
+    },
+  });
+
   const { metaByCategory, componentNamesByMeta } = useMemo(
     () => getMetaMaps(metaByComponentName, mapping),
-    [mapping, metaByComponentName]
+    [metaByComponentName, mapping]
   );
 
   const { dragCard, draggableContainerRef } = useDraggable({
     publish,
     metaByComponentName,
+  });
+
+  const groups = filterAndGroupComponents({
+    documentType: selectedPage?.meta.documentType,
+    metaByCategory,
+    componentNamesByMeta,
+    search: searchFieldProps.value,
   });
 
   return (
@@ -196,101 +412,73 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
         title={t.components}
         suffix={<CloseButton onClick={() => onSetActiveTab("none")} />}
       />
+      {/* 隐藏搜索功能 */}
+      {/* <Box css={{ padding: theme.spacing[9] }}>
+        <SearchField
+          {...searchFieldProps}
+          autoFocus
+          placeholder="Find components"
+        />
+      </Box> */}
+
+      {/* <Separator /> */}
+
       <ScrollArea>
-        {/* 分类 */}
-        {componentCategories
-          .filter((category) => {
-            if (category === "hidden") {
-              return false;
-            }
+        {groups.map((group) => (
+          <CollapsibleSection
+            label={tComponentsCategory[group.category]}
+            key={group.category}
+            fullWidth
+          >
+            <List asChild>
+              <Flex
+                gap="2"
+                wrap="wrap"
+                css={{ px: theme.spacing[9], overflow: "auto" }}
+              >
+                {group.metas.map((meta: WsComponentMeta, index) => {
+                  const component = componentNamesByMeta.get(meta);
 
-            // Only xml category is allowed for xml document type
-            if (documentType === "xml") {
-              return category === "xml" || category === "data";
-            }
-            // Hide xml category for non-xml document types
-            if (category === "xml") {
-              return false;
-            }
+                  if (component === undefined) {
+                    return;
+                  }
 
-            if (
-              isFeatureEnabled("internalComponents") === false &&
-              category === "internal"
-            ) {
-              return false;
-            }
-
-            return true;
-          })
-          .map((category) => (
-            <CollapsibleSection
-              label={tComponentsCategory[category]}
-              key={category}
-              fullWidth
-            >
-              <List asChild>
-                <Flex
-                  gap="2"
-                  wrap="wrap"
-                  css={{ px: theme.spacing[9], overflow: "auto" }}
-                >
-                  {/* 组件 */}
-                  {(metaByCategory.get(category) ?? [])
-                    .filter((meta: WsComponentMeta) => {
-                      if (documentType === "xml" && meta.category === "data") {
-                        return (
-                          componentNamesByMeta.get(meta) === "ws:collection"
-                        );
+                  return (
+                    <ListItem
+                      asChild
+                      state={
+                        component === getSelectedComponent()
+                          ? "selected"
+                          : undefined
                       }
-                      return true;
-                    })
-                    .map((meta: WsComponentMeta, index) => {
-                      const component = componentNamesByMeta.get(meta);
-                      if (component === undefined) {
-                        return;
-                      }
-                      if (
-                        isFeatureEnabled("filters") === false &&
-                        component === "RemixForm"
-                      ) {
-                        return;
-                      }
-                      if (
-                        isFeatureEnabled("cms") === false &&
-                        component === "ContentEmbed"
-                      ) {
-                        return;
-                      }
-                      return (
-                        <ListItem
-                          asChild
-                          index={index}
-                          key={component}
-                          onSelect={(event) => {
-                            const component = elementToComponentName(
-                              event.target as HTMLElement,
-                              metaByComponentName
-                            );
-                            if (component) {
-                              onSetActiveTab("none");
-                              insert(component);
-                            }
-                          }}
-                        >
-                          <ComponentCard
-                            {...{ [dragItemAttribute]: component }}
-                            label={getInstanceLabel({ component }, meta)}
-                            description={meta.description}
-                            icon={<MetaIcon size="auto" icon={meta.icon} />}
-                          />
-                        </ListItem>
-                      );
-                    })}
-                  {dragCard}
-                </Flex>
-              </List>
-            </CollapsibleSection>
-          ))}
+                      index={index}
+                      key={component}
+                      onSelect={() => {
+                        handleInsert(component);
+                      }}
+                      onFocus={() => {
+                        setSelectedComponent(component);
+                      }}
+                    >
+                      <ComponentCard
+                        {...{ [dragItemAttribute]: component }}
+                        label={getInstanceLabel({ component }, meta)}
+                        description={meta.description}
+                        icon={<MetaIcon size="auto" icon={meta.icon} />}
+                      />
+                    </ListItem>
+                  );
+                })}
+                {dragCard}
+                {group.metas.length === 0 && (
+                  <Flex grow justify="center" css={{ py: theme.spacing[10] }}>
+                    <Text>No matching component</Text>
+                  </Flex>
+                )}
+              </Flex>
+            </List>
+          </CollapsibleSection>
+        ))}
       </ScrollArea>
     </Root>
   );
@@ -298,4 +486,10 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
 
 export const Icon = PlusIcon;
 
+// export const label = (
+//   <Flex gap="1">
+//     <Text>Components</Text>
+//     <Kbd value={["(A)"]} />
+//   </Flex>
+// );
 export const label = "Components";

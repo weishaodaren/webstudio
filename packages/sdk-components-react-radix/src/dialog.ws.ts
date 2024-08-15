@@ -103,9 +103,6 @@ export const metaDialog: WsComponentMeta = {
   type: "container",
   icon: DialogIcon,
   stylable: false,
-  label: "Dialog",
-  description:
-    "Displays content with an overlay that covers the window, triggered by a button. Clicking the overlay will close the dialog.",
   template: [
     {
       type: "instance",

@@ -1,5 +1,12 @@
 import { type WsComponentMeta } from "@webstudio-is/react-sdk";
 
+export type MetaByCategory = Map<
+  WsComponentMeta["category"],
+  Array<WsComponentMeta>
+>;
+
+export type ComponentNamesByMeta = Map<WsComponentMeta, string>;
+
 export type ComponentsInfo = Record<
   NonNullable<WsComponentMeta["label"]>,
   Pick<WsComponentMeta, "label" | "description">
@@ -9,25 +16,18 @@ export type ComponentsInfo = Record<
  * 获取组件国际化映射
  */
 const getComponentsi18n = (
-  meta: WsComponentMeta,
+  name: string,
   mapping: ComponentsInfo
 ): Pick<WsComponentMeta, "label" | "description"> | undefined => {
-  if (!meta.label) {
-    return;
-  }
-
-  return mapping[meta.label] ? mapping[meta.label] : undefined;
+  return mapping[name];
 };
 
 export const getMetaMaps = (
   metaByComponentName: Map<string, WsComponentMeta>,
   mapping: ComponentsInfo
 ) => {
-  const metaByCategory: Map<
-    WsComponentMeta["category"],
-    Array<WsComponentMeta>
-  > = new Map();
-  const componentNamesByMeta: Map<WsComponentMeta, string> = new Map();
+  const metaByCategory: MetaByCategory = new Map();
+  const componentNamesByMeta: ComponentNamesByMeta = new Map();
 
   for (const [name, meta] of metaByComponentName) {
     if (meta.category === undefined || meta.category === "hidden") {
@@ -35,7 +35,7 @@ export const getMetaMaps = (
     }
 
     // 国际化
-    const t = getComponentsi18n(meta, mapping);
+    const t = getComponentsi18n(name, mapping);
     meta.label = t?.label ?? meta.label;
     meta.description = t?.description ?? meta.description;
 

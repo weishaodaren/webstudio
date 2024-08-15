@@ -26,9 +26,6 @@ export const metaCollapsible: WsComponentMeta = {
   type: "container",
   presetStyle,
   icon: CollapsibleIcon,
-  label: "Collapsible",
-  description:
-    "An interactive component which expands and collapses some content, triggered by a button.",
   template: [
     {
       type: "instance",

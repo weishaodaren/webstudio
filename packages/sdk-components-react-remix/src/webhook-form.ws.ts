@@ -10,8 +10,6 @@ import { WebhookFormIcon } from "@webstudio-is/icons/svg";
 export const meta: WsComponentMeta = {
   ...baseMeta,
   category: "data",
-  label: "Webhook Form",
-  description: "Collect user data and send it to any webhook.",
   order: 1,
   icon: WebhookFormIcon,
   states: [

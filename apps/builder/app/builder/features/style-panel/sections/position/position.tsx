@@ -108,7 +108,6 @@ export const Section = ({
           <Grid gap={3} columns={2}>
             <PositionControl
               currentStyle={currentStyle}
-              setProperty={setProperty}
               deleteProperty={deleteProperty}
               createBatchUpdate={createBatchUpdate}
             />

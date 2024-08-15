@@ -177,8 +177,10 @@ export const SidebarLeft = ({ publish }: SidebarLeftProps) => {
                   ([tabName, { Icon, label }]) => {
                     return (
                       <SidebarTabsTrigger
-                        key={label}
-                        label={t[label?.toLowerCase() as keyof typeof t]}
+                        key={tabName}
+                        label={
+                          t?.[label?.toString().toLowerCase() as keyof typeof t]
+                        }
                         value={tabName}
                         onClick={() => {
                           setActiveTab(

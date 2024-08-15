@@ -76,7 +76,9 @@
     "radioGroup": "单选框组",
     "radioGroupDescription": "一组可选择的按钮 - 也称为单选按钮 - 其中一次只能选中一个按钮。",
     "labelComponent": "标签",
-    "labelDescription": "一个可访问的标签，用于描述输入框的目的。将标签上的“For”属性与输入框的“ID”属性匹配,将它们关联起来。"
+    "labelDescription": "一个可访问的标签，用于描述输入框的目的。将标签上的“For”属性与输入框的“ID”属性匹配,将它们关联起来。",
+    "markdownLabel": "嵌入Markdown",
+    "markdownDescription": "在页面上添加Markdown代码"
   },
   "components/category": {
     "general": "常规",
@@ -87,6 +89,7 @@
     "radix": "组件库",
     "xml": "xml",
     "hidden": "隐藏",
-    "internal": "内部"
+    "internal": "内部",
+    "found": "找到"
   }
 }

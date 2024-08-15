@@ -1,3 +1,4 @@
+import { useRevalidator } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import {
@@ -17,12 +18,10 @@ import {
   theme,
 } from "@webstudio-is/design-system";
 import { PlusIcon } from "@webstudio-is/icons";
-import type { DashboardProject } from "@webstudio-is/prisma-client";
 import { Title } from "@webstudio-is/project";
 import { builderPath } from "~/shared/router-utils";
 import { ShareProjectContainer } from "~/shared/share-project";
 import { trpcClient } from "~/shared/trpc/trpc-client";
-import { useRevalidator } from "@remix-run/react";
 
 type DialogProps = {
   title: string;
@@ -197,7 +196,7 @@ const useRenameProject = ({
   projectId,
   onOpenChange,
 }: {
-  projectId: DashboardProject["id"];
+  projectId: string;
   onOpenChange: (isOpen: boolean) => void;
 }) => {
   const { send, state } = trpcClient.dashboardProject.rename.useMutation();
@@ -236,7 +235,7 @@ export const RenameProjectDialog = ({
 }: {
   isOpen: boolean;
   title: string;
-  projectId: DashboardProject["id"];
+  projectId: string;
   onOpenChange: (isOpen: boolean) => void;
   buttonText: string;
   label: string;
@@ -271,7 +270,7 @@ const useDeleteProject = ({
   onOpenChange,
   onHiddenChange,
 }: {
-  projectId: DashboardProject["id"];
+  projectId: string;
   title: string;
   onOpenChange: (isOpen: boolean) => void;
   onHiddenChange: (isHidden: boolean) => void;
@@ -326,7 +325,7 @@ export const DeleteProjectDialog = ({
 }: {
   isOpen: boolean;
   title: string;
-  projectId: DashboardProject["id"];
+  projectId: string;
   onOpenChange: (isOpen: boolean) => void;
   onHiddenChange: (isHidden: boolean) => void;
   buttonText: string;
@@ -377,7 +376,7 @@ export const DeleteProjectDialog = ({
   );
 };
 
-export const useCloneProject = (projectId: DashboardProject["id"]) => {
+export const useCloneProject = (projectId: string) => {
   const { send } = trpcClient.dashboardProject.clone.useMutation();
   const revalidator = useRevalidator();
 
@@ -396,7 +395,7 @@ export const ShareProjectDialog = ({
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  projectId: DashboardProject["id"];
+  projectId: string;
   hasProPlan: boolean;
 }) => {
   return (

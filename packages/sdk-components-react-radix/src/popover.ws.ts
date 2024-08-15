@@ -48,8 +48,6 @@ export const metaPopover: WsComponentMeta = {
   type: "container",
   icon: PopoverIcon,
   stylable: false,
-  label: "Popover",
-  description: "Displays rich content in a portal, triggered by a button.",
   template: [
     {
       type: "instance",
