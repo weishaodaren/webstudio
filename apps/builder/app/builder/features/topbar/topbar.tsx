@@ -109,8 +109,10 @@ export const Topbar = ({ css, project, hasProPlan }: TopbarProps) => {
           <ViewMode />
           <SyncStatus />
           <PreviewButton />
-          <ShareButton projectId={project.id} hasProPlan={hasProPlan} />
-          <PublishButton projectId={project.id} />
+          {/* 暂时隐藏分享 */}
+          {/* <ShareButton projectId={project.id} hasProPlan={hasProPlan} /> */}
+          {/* 暂时隐藏发布 */}
+          {/* <PublishButton projectId={project.id} /> */}
         </ToolbarToggleGroup>
       </Toolbar>
     </nav>

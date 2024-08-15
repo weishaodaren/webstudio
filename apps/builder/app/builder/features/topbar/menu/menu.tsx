@@ -108,7 +108,7 @@ export const Menu = () => {
           >
             {t.dashboard}
           </DropdownMenuItem>
-          <Tooltip side="right" content={undefined}>
+          {/* <Tooltip side="right" content={undefined}>
             <DropdownMenuItem
               onSelect={() => {
                 $isProjectSettingsOpen.set(true);
@@ -116,7 +116,7 @@ export const Menu = () => {
             >
               {t.projectSettings}
             </DropdownMenuItem>
-          </Tooltip>
+          </Tooltip> */}
           <DropdownMenuItem onSelect={() => emitCommand("openBreakpointsMenu")}>
             {t.breakpointsAction}
           </DropdownMenuItem>
@@ -168,7 +168,7 @@ export const Menu = () => {
             </DropdownMenuItemRightSlot>
           </DropdownMenuItem>
 
-          <Tooltip
+          {/* <Tooltip
             side="right"
             sideOffset={10}
             content={disabledShareTooltipContent}
@@ -181,9 +181,9 @@ export const Menu = () => {
             >
               {t.share}
             </DropdownMenuItem>
-          </Tooltip>
+          </Tooltip> */}
 
-          <Tooltip
+          {/* <Tooltip
             side="right"
             sideOffset={10}
             content={disabledPublishTooltipContent}
@@ -196,9 +196,9 @@ export const Menu = () => {
             >
               {t.publish}
             </DropdownMenuItem>
-          </Tooltip>
+          </Tooltip> */}
 
-          <Tooltip
+          {/* <Tooltip
             side="right"
             sideOffset={10}
             content={
@@ -213,7 +213,7 @@ export const Menu = () => {
             >
               {t.clone}
             </DropdownMenuItem>
-          </Tooltip>
+          </Tooltip> */}
 
           {/* 暂时隐藏 */}
           {/* <DropdownMenuSeparator /> */}
