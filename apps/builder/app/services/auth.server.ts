@@ -71,7 +71,7 @@ if (env.DEV_LOGIN === "true") {
       const secretValue = form.get("secret");
 
       if (secretValue == null) {
-        throw new Error("Secret is required");
+        throw new Error("请输入密码");
       }
 
       const [secret, email = "hello@webstudio.is"] = secretValue
@@ -95,7 +95,7 @@ if (env.DEV_LOGIN === "true") {
         }
       }
 
-      throw new Error("Secret is incorrect");
+      throw new Error("密码错误");
     }),
     "dev"
   );
