@@ -14,6 +14,32 @@ import { WebstudioIcon } from "@webstudio-is/icons";
 // import { Form } from "@remix-run/react";
 // import { authPath } from "~/shared/router-utils";
 import { SecretLogin } from "./secret-login";
+import * as Setting from "./setting";
+import { useEffect } from "react";
+
+const config = {
+  serverUrl: "http://localhost:8000",
+  clientId: "182e9d55c4fdb26d59b0",
+  organizationName: "Built-in Organization",
+  appName: "app-built-in",
+  redirectPath: "/callback",
+};
+
+// const authCallback = (
+//   <AuthCallback
+//     sdk={CasdoorSDK}
+//     serverUrl={ServerUrl}
+//     saveTokenFromResponse={(res) => {
+//       console.log(`saveTokenFromResponse:`, res);
+//     }}
+//     isGetTokenSuccessful={(res) => {
+//       console.log(`isGetTokenSuccessful:`, res);
+
+//       // return res.success === true;
+//       return false;
+//     }}
+//   />
+// );
 
 const globalStyles = globalCss({
   body: {
@@ -58,6 +84,10 @@ export const Login = ({
   isSecretLoginEnabled,
 }: LoginProps) => {
   globalStyles();
+
+  useEffect(() => {
+    Setting.initCasdoorSdk(config);
+  }, []);
   return (
     <Box className={layoutStyle()}>
       <Flex

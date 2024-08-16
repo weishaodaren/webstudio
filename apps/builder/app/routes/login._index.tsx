@@ -12,6 +12,7 @@ import { Login } from "~/auth";
 import { useLoginErrorMessage } from "~/shared/session";
 import { dashboardPath } from "~/shared/router-utils";
 import { returnToCookie } from "~/services/cookie.server";
+import { sdk } from "~/services/casdoor.server";
 
 const comparePathnames = (pathnameOrUrlA: string, pathnameOrUrlB: string) => {
   const aPathname = new URL(pathnameOrUrlA, "http://localhost").pathname;
@@ -24,6 +25,8 @@ export const loader = async ({
 }: LoaderFunctionArgs): Promise<
   TypedResponse<ComponentProps<typeof Login>>
 > => {
+  const token = await sdk.getAuthToken("1231231");
+
   const user = await findAuthenticatedUser(request);
 
   const url = new URL(request.url);
