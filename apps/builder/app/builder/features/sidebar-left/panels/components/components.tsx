@@ -116,6 +116,16 @@ const filterAndGroupComponents = ({
         return false;
       }
 
+      // 内部组件隐藏
+      if (meta.category === "internal") {
+        return false;
+      }
+
+      // 海外视频组件隐藏
+      if (component === "Vimeo") {
+        return false;
+      }
+
       if (documentType === "xml" && meta.category === "data") {
         return component === "ws:collection";
       }
@@ -254,6 +264,7 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
       tooltip,
       tooltipDescription,
       selectComponent,
+      switchComponent,
       switchDescription,
       radioGroup,
       radioGroupDescription,
@@ -278,6 +289,10 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
       ContentEmbed: {
         label: contentEmbed,
         description: contentEmbedDescription,
+      },
+      Checkbox: {
+        label: checkbox,
+        description: checkboxDescription,
       },
       Image: { label: image, description: imageDescription },
       Vimeo: { label: vimeo, description: vimeoDescription },
@@ -328,7 +343,7 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
         description: tooltipDescription,
       },
       [`${namespace}:Switch`]: {
-        label: selectComponent,
+        label: switchComponent,
         description: switchDescription,
       },
       [`${namespace}:RadioGroup`]: {
@@ -338,6 +353,10 @@ export const TabContent = ({ publish, onSetActiveTab }: TabContentProps) => {
       [`${namespace}:Label`]: {
         label: labelComponent,
         description: labelDescription,
+      },
+      [`${namespace}:Select`]: {
+        label: selectComponent,
+        description: selectDescription,
       },
       HtmlEmbed: { label: html, description: htmlDescription },
       MarkdownEmbed: { label: markdownLabel, description: markdownDescription },

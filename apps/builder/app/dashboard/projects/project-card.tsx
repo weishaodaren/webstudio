@@ -108,7 +108,8 @@ const Menu = ({
             {duplicate}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={onRename}>{rename}</DropdownMenuItem>
-          <DropdownMenuItem onSelect={onShare}>{share}</DropdownMenuItem>
+          {/* 暂时隐藏分享功能 */}
+          {/* <DropdownMenuItem onSelect={onShare}>{share}</DropdownMenuItem> */}
           <DropdownMenuItem onSelect={onDelete}>
             {deleteAction}
           </DropdownMenuItem>

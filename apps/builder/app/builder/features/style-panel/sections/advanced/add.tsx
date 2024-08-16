@@ -42,7 +42,7 @@ export const Add = ({
   return (
     <Combobox<Item>
       autoFocus
-      placeholder="Find or create a property"
+      placeholder="查找或创建属性"
       items={propertyNames.map((value) => ({
         value,
         label: toKebabCase(value),
@@ -56,7 +56,7 @@ export const Add = ({
       }}
       match={matchOrSuggestToCreate}
       getDescription={(item) => {
-        let description = `Unknown CSS property.`;
+        let description = `未知的CSS属性。`;
         if (item && item.value in propertyDescriptions) {
           description =
             propertyDescriptions[

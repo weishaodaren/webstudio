@@ -62,7 +62,7 @@ type Errors = {
 };
 
 const fieldDefaultValues = {
-  name: "Untitled",
+  name: "未命名",
   slug: "untitled",
   parentFolderId: ROOT_FOLDER_ID,
 } satisfies Values;
@@ -164,7 +164,7 @@ const FormFields = ({
                 autoFocus
                 onFocus={autoSelect ? autoSelectHandler : undefined}
                 name="name"
-                placeholder="About"
+                placeholder="名称"
                 disabled={disabled}
                 value={values.name}
                 onChange={(event) => {
@@ -209,7 +209,7 @@ const FormFields = ({
                 color={errors.slug && "error"}
                 id={fieldIds.slug}
                 name="slug"
-                placeholder="folder"
+                placeholder="文件夹"
                 disabled={disabled}
                 value={values?.slug}
                 onChange={(event) => {

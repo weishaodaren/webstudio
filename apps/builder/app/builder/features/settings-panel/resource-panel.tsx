@@ -103,7 +103,7 @@ const UrlField = ({
       >
         URL
         <Tooltip
-          content="You can paste a URL or cURL. cURL is a format that can be executed directly in your terminal because it contains the entire Resource configuration."
+          content="您可以粘贴URL或cURL。cURL是一种可以在终端中直接执行的格式，因为它包含了整个Resource配置。"
           variant="wrapped"
           disableHoverableContent={true}
         >
@@ -349,7 +349,7 @@ const Headers = ({
             onChange(newHeaders);
           }}
         >
-          Add another header pair
+          添加另一对header
         </Button>
       </Grid>
     </Grid>

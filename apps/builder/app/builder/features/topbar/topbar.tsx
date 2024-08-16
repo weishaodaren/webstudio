@@ -85,11 +85,13 @@ export const Topbar = ({ css, project, hasProPlan }: TopbarProps) => {
         <>
           <Flex align="center">
             <PagesButton />
-            <AddressBarPopover />
+            {/* 暂时隐藏复制操作 */}
+            {/* <AddressBarPopover /> */}
           </Flex>
-          <Flex css={{ minWidth: theme.spacing[23], ...hideOnMobile }}>
-            <BreakpointsPopover />
-          </Flex>
+          {/* 暂时隐藏断点设置操作 */}
+          {/* <Flex css={{ minWidth: theme.spacing[23], ...hideOnMobile }}> */}
+          {/* <BreakpointsPopover /> */}
+          {/* </Flex> */}
           <Flex grow></Flex>
           <Flex align="center" justify="center" css={hideOnMobile}>
             <BreakpointsSelectorContainer />

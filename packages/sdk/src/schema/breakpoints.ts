@@ -26,8 +26,8 @@ export const Breakpoints = z.map(BreakpointId, Breakpoint);
 export type Breakpoints = z.infer<typeof Breakpoints>;
 
 export const initialBreakpoints: Array<Breakpoint> = [
-  { id: "placeholder", label: "Base" },
-  { id: "placeholder", label: "Tablet", maxWidth: 991 },
-  { id: "placeholder", label: "Mobile landscape", maxWidth: 767 },
-  { id: "placeholder", label: "Mobile portrait", maxWidth: 479 },
+  { id: "placeholder", label: "基本" },
+  { id: "placeholder", label: "平板", maxWidth: 991 },
+  { id: "placeholder", label: "手机横屏", maxWidth: 767 },
+  { id: "placeholder", label: "手机竖屏", maxWidth: 479 },
 ];

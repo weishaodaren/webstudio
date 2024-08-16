@@ -240,14 +240,14 @@ const VariablesItem = ({
                   onCloseAutoFocus={(event) => event.preventDefault()}
                 >
                   <DropdownMenuItem onSelect={() => setInspectDialogOpen(true)}>
-                    Inspect
+                    查看数据
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     // allow to delete only unused variables
                     disabled={variable.type === "parameter" || usageCount > 0}
                     onSelect={() => deleteVariable(variable.id)}
                   >
-                    Delete {usageCount > 0 && `(${usageCount} bindings)`}
+                    删除 {usageCount > 0 && `(${usageCount}绑定项)`}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenuPortal>

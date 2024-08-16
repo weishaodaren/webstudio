@@ -75,7 +75,7 @@ import {
 import { generateCurl } from "./curl";
 
 const validateName = (value: string) =>
-  value.trim().length === 0 ? "Name is required" : "";
+  value.trim().length === 0 ? "名称是必填项" : "";
 
 const NameField = ({ defaultValue }: { defaultValue: string }) => {
   const t = useStore($tInspector);

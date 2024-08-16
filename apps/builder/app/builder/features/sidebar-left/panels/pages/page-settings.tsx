@@ -112,11 +112,11 @@ import { useUnmount } from "~/shared/hook-utils/use-mount";
 import { Card } from "../marketplace/card";
 
 const fieldDefaultValues = {
-  name: "Untitled",
+  name: "未命名",
   parentFolderId: ROOT_FOLDER_ID,
   path: "/untitled",
   isHomePage: false,
-  title: `"Untitled"`,
+  title: `"未命名"`,
   description: `""`,
   excludePageFromSearch: `true`,
   language: `""`,
@@ -155,25 +155,22 @@ type Errors = {
 // @todo needs to be removed
 const LegacyPagePath = z
   .string()
-  .refine((path) => path !== "", "Can't be empty")
-  .refine((path) => path !== "/", "Can't be just a /")
-  .refine((path) => path === "" || path.startsWith("/"), "Must start with a /")
-  .refine((path) => path.endsWith("/") === false, "Can't end with a /")
-  .refine((path) => path.includes("//") === false, "Can't contain repeating /")
-  .refine(
-    (path) => /^[-_a-z0-9\\/]*$/.test(path),
-    "Only a-z, 0-9, -, _, / are allowed"
-  )
+  .refine((path) => path !== "", "不能为空")
+  .refine((path) => path !== "/", "不能只有一个/")
+  .refine((path) => path === "" || path.startsWith("/"), "必须以/开头")
+  .refine((path) => path.endsWith("/") === false, "不能以/结尾")
+  .refine((path) => path.includes("//") === false, "不能包含重复/")
+  .refine((path) => /^[-_a-z0-9\\/]*$/.test(path), "只允许a-z、0-9、-、_、/")
   .refine(
     // We use /s for our system stuff like /s/css or /s/uploads
     (path) => path !== "/s" && path.startsWith("/s/") === false,
-    "/s prefix is reserved for the system"
+    "/s前缀是系统保留字段"
   )
   .refine(
     // Remix serves build artefacts like JS bundles from /build
     // And we cannot customize it due to bug in Remix: https://github.com/remix-run/remix/issues/2933
     (path) => path !== "/build" && path.startsWith("/build/") === false,
-    "/build prefix is reserved for the system"
+    "/build前缀为系统保留字段"
   );
 
 const EmptyString = z.string().refine((string) => string === "");
@@ -184,15 +181,12 @@ const Status = z
   .number()
   .refine(
     (value) => statusRegex.test(String(value)),
-    "Status code expects 2xx, 3xx, 4xx or 5xx"
+    "状态码期望2xx、3xx、4xx或5xx"
   );
 
 const Language = z
   .string()
-  .refine(
-    (value) => bcp47.parse(value).language !== null,
-    "The language is invalid"
-  );
+  .refine((value) => bcp47.parse(value).language !== null, "语言无效");
 
 const SharedPageValues = z.object({
   name: PageName,
@@ -265,7 +259,7 @@ const validateValues = (
       }) === false
     ) {
       errors.path = errors.path ?? [];
-      errors.path.push("All paths must be unique");
+      errors.path.push("所有路径必须唯一");
     }
     const messages = validatePathnamePattern(values.path);
     if (messages.length > 0) {
@@ -278,7 +272,7 @@ const validateValues = (
       isPathnamePattern(values.path)
     ) {
       errors.path = errors.path ?? [];
-      errors.path.push("Dynamic path is supported only in Pro");
+      errors.path.push("动态路径仅在Pro中支持");
     }
   }
   return errors;
@@ -355,9 +349,8 @@ const PathField = ({
                 {allowDynamicData === false && isFeatureEnabled("cms") && (
                   <>
                     <Text>
-                      To make the path dynamic and use it with CMS, you can use
-                      parameters and other features. CMS features are part of
-                      the Pro plan.
+                      要使路径动态并与CMS一起使用，您可以使用
+                      参数和其他特性。CMS功能的一部分 Pro计划。
                     </Text>
                     <Link
                       className={buttonStyle({ color: "gradient" })}
@@ -365,7 +358,7 @@ const PathField = ({
                       color="contrast"
                       underline="none"
                       target="_blank"
-                      href="https://webstudio.is/pricing"
+                      // href="https://webstudio.is/pricing"
                     >
                       Upgrade
                     </Link>
@@ -515,7 +508,7 @@ const RedirectField = ({
           <InputField
             color={errors && "error"}
             id={id}
-            placeholder="/another-path"
+            placeholder="/其他路径"
             disabled={
               allowDynamicData === false || isLiteralExpression(value) === false
             }
@@ -559,7 +552,7 @@ const LanguageField = ({
           <InputField
             color={errors && "error"}
             id={id}
-            placeholder="en-US"
+            placeholder="zh-CN"
             disabled={isLiteralExpression(value) === false}
             value={String(computeExpression(value, variableValues))}
             onChange={(event) => onChange(JSON.stringify(event.target.value))}
@@ -758,7 +751,7 @@ const FormFields = ({
                 autoFocus
                 onFocus={autoSelect ? autoSelectHandler : undefined}
                 name="name"
-                placeholder="About"
+                placeholder="名称"
                 value={values.name}
                 onChange={(event) => {
                   onChange({ field: "name", value: event.target.value });
@@ -777,7 +770,7 @@ const FormFields = ({
                       my: 2,
                     }}
                   >
-                    “{values.name}” is the home page
+                    “{values.name}” 作为首页
                   </Text>
                 </>
               ) : isRootId(values.parentFolderId) === false ? (
@@ -791,8 +784,8 @@ const FormFields = ({
                     }}
                     color="subtle"
                   >
-                    Move this page to the “{toTreeData(pages).root.name}” folder
-                    to set it as your home page
+                    将该页移到 “{toTreeData(pages).root.name}” 文件夹中
+                    将其设为首页
                   </Text>
                 </>
               ) : values.documentType === "xml" ? (
@@ -806,7 +799,7 @@ const FormFields = ({
                     }}
                     color="subtle"
                   >
-                    XML pages cannot be set as the home page
+                    不能将XML页面设置为首页
                   </Text>
                 </>
               ) : (
@@ -894,7 +887,7 @@ const FormFields = ({
                     <Link
                       color="inherit"
                       target="_blank"
-                      href="https://webstudio.is/pricing"
+                      // href="https://webstudio.is/pricing"
                     >
                       Upgrade to Pro
                     </Link>

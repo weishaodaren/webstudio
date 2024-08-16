@@ -6,6 +6,7 @@ import {
   Flex,
   Link,
   PanelBanner,
+  Separator,
   Text,
   rawTheme,
 } from "@webstudio-is/design-system";
@@ -25,7 +26,10 @@ export const SettingsPanelContainer = ({
   return (
     <>
       <SettingsSection label={t.name} />
-      <PropsSectionContainer selectedInstance={selectedInstance} />
+      {/* 隐藏属性和参数 */}
+      <Separator />
+
+      {/* <PropsSectionContainer selectedInstance={selectedInstance} /> */}
       <VariablesSection label={t.variables} />
       {allowDynamicData === false && (
         <PanelBanner>

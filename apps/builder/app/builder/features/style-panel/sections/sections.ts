@@ -42,5 +42,6 @@ export const sections = new Map<
   ["transitions", transitions],
   ["transfrom", transforms],
   ["outline", outline],
-  ["advanced", advanced],
+  // 暂时隐藏高级功能
+  // ["advanced", advanced],
 ]);
