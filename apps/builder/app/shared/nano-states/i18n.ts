@@ -18,7 +18,7 @@ export const setting = persistentAtom<string | undefined>("locale", undefined);
 export const locale = localeFrom(
   setting,
   browser({
-    available: ["en", "zh-CN"],
+    available: ["zh-CN", "en"],
     fallback: "en",
   })
 );
@@ -28,15 +28,9 @@ export const fomat = formatter(locale);
 
 // 通过`en zh ru`获取对应国际化json
 export const i18n = createI18n(locale, {
-  async get(code, components) {
+  async get(code) {
     try {
-      const prefixes = components.map((name) => name.split("/")[0]);
-      const unique = Array.from(new Set(prefixes));
-      const resp = await Promise.all(
-        unique.map(async (chunk) =>
-          (await fetch(`/translations/${code}/${chunk}.json`)).json()
-        )
-      );
+      const resp = await (await fetch(`/translations/${code}.json`)).json();
       return resp;
     } catch (error) {
       console.error(`Error fetching translations: ${error}`);
