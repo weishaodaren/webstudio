@@ -2,7 +2,7 @@ import type { ServerRuntimeMetaFunction as MetaFunction } from "@remix-run/serve
 import { Root } from "~/shared/remix/root";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Webstudio Dashboard" }];
+  return [{ title: "仪表盘" }];
 };
 
 export default Root;

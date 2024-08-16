@@ -3,7 +3,7 @@ import { Root } from "~/shared/remix/root";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Webstudio" }];
+  return [{ title: "编辑器" }];
 };
 
 /**

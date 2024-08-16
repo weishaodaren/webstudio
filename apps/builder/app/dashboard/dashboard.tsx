@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import { Suspense, type ComponentProps } from "react";
 import {
   Flex,
   TooltipProvider,
@@ -10,6 +10,7 @@ import { Header } from "./header";
 import { Projects } from "./projects";
 import type { User } from "~/shared/db/user.server";
 import type { UserPlanFeatures } from "~/shared/db/user-plan-features.server";
+import { Await, useAsyncValue } from "@remix-run/react";
 // import { Resources } from "./resources";
 
 const globalStyles = globalCss({
@@ -61,21 +62,23 @@ export const Dashboard = ({
 }: DashboardProps) => {
   globalStyles();
   return (
-    <TooltipProvider>
-      <Header user={user} userPlanFeatures={userPlanFeatures} />
-      <Main>
-        {/* 暂时隐藏 */}
-        <Section>{/* <Resources /> */}</Section>
-        <Section>
-          <Projects
-            projects={projects}
-            projectTemplates={projectTemplates}
-            hasProPlan={userPlanFeatures.hasProPlan}
-            publisherHost={publisherHost}
-            imageBaseUrl={imageBaseUrl}
-          />
-        </Section>
-      </Main>
-    </TooltipProvider>
+    <Suspense>
+      <TooltipProvider>
+        <Header user={user} userPlanFeatures={userPlanFeatures} />
+        <Main>
+          {/* 暂时隐藏 */}
+          <Section>{/* <Resources /> */}</Section>
+          <Section>
+            <Projects
+              projects={projects}
+              projectTemplates={projectTemplates}
+              hasProPlan={userPlanFeatures.hasProPlan}
+              publisherHost={publisherHost}
+              imageBaseUrl={imageBaseUrl}
+            />
+          </Section>
+        </Main>
+      </TooltipProvider>
+    </Suspense>
   );
 };
