@@ -66,7 +66,7 @@ export const Login = ({
         as="aside"
         className={sidebarStyle()}
       >
-        <a href="https://webstudio.is" aria-label="Go to webstudio.is">
+        <a href="https://app.startable.cn" aria-label="极星协作">
           <AccessibleIcon label="Logo">
             <WebstudioIcon size="100" />
           </AccessibleIcon>

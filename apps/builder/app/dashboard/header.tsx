@@ -55,9 +55,11 @@ const Menu = ({
       <DropdownMenuTrigger asChild>
         <Button color="ghost" aria-label="Menu Button" css={{ height: "100%" }}>
           <Flex gap="1" align="center">
+            {/* 暂时隐藏 */}
             {userPlanFeatures.hasProPlan && (
               <>
-                <ProBadge>{userPlanFeatures.planName}</ProBadge>
+                {/* <ProBadge>{userPlanFeatures.planName}</ProBadge> */}
+                <ProBadge>Pro</ProBadge>
                 <div />
               </>
             )}
@@ -80,7 +82,7 @@ const Menu = ({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
             {user.username ?? defaultUserName}
-            <Text>{user.email}</Text>
+            {/* <Text>{user.email}</Text> */}
           </DropdownMenuLabel>
           {/* 暂时隐藏 */}
           {/* {userPlanFeatures.hasSubscription && (
