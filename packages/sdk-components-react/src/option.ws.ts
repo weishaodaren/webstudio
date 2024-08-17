@@ -29,8 +29,7 @@ export const meta: WsComponentMeta = {
   // @todo: requiredAncestors should be ["Select", "Optgroup", "Datalist"] but that gives unreadable error when adding Select onto Canvas
   requiredAncestors: ["Select"],
   type: "control",
-  description:
-    "An item within a drop-down menu that users can select as their chosen value.",
+  description: "下拉菜单中的一项，用户可以将其选择为所选值。",
   icon: ItemIcon,
   presetStyle,
   states: [

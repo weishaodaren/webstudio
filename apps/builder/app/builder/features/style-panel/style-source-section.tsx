@@ -640,7 +640,7 @@ const DeleteConfirmationDialog = ({
     >
       <DialogContent>
         <Flex gap="3" direction="column" css={{ padding: theme.spacing[9] }}>
-          <Text>{`Delete "${token}" token from the project including all of its styles?`}</Text>
+          <Text>{`从项目中删除 “${token}” 令牌，包括它的所有样式？`}</Text>
           <Flex direction="rowReverse" gap="2">
             <DialogClose asChild>
               <Button
@@ -649,15 +649,15 @@ const DeleteConfirmationDialog = ({
                   onConfirm();
                 }}
               >
-                Delete
+                删除
               </Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button color="ghost">Cancel</Button>
+              <Button color="ghost">取消</Button>
             </DialogClose>
           </Flex>
         </Flex>
-        <DialogTitle>Delete confirmation</DialogTitle>
+        <DialogTitle>确认删除</DialogTitle>
       </DialogContent>
     </Dialog>
   );

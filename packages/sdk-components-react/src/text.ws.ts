@@ -33,7 +33,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "The text you can edit",
+          value: "可编辑的文案",
           placeholder: true,
         },
       ],

@@ -28,7 +28,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "Paragraph text you can edit",
+          value: "可编辑的段落文案",
           placeholder: true,
         },
       ],

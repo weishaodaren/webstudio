@@ -250,8 +250,8 @@ const StyleSourceState = styled(Text, {
 });
 
 const errors = {
-  minlength: "Token must be at least 1 character long",
-  duplicate: "Token already exists",
+  minlength: "令牌至少需要 1 个字符",
+  duplicate: "令牌已存在",
 } as const;
 
 export type StyleSourceError = {

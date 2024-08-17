@@ -41,7 +41,7 @@ export const lintExpression = ({
       from: 0,
       to: 0,
       severity: "error",
-      message: "Expression cannot be empty",
+      message: "表达式不能为空",
     });
     return diagnostics;
   }

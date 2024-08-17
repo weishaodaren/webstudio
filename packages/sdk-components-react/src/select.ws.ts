@@ -38,12 +38,12 @@ export const meta: WsComponentMeta = {
     {
       type: "instance",
       component: "Select",
-      label: "Select",
+      label: "下拉菜单",
       children: [
         {
           type: "instance",
           component: "Option",
-          label: "Option",
+          label: "选项",
           props: [
             { type: "string", name: "label", value: "Please choose an option" },
             { type: "string", name: "value", value: "" },
@@ -53,7 +53,7 @@ export const meta: WsComponentMeta = {
         {
           type: "instance",
           component: "Option",
-          label: "Option",
+          label: "选项",
           props: [
             { type: "string", name: "label", value: "Option A" },
             { type: "string", name: "value", value: "a" },
@@ -63,7 +63,7 @@ export const meta: WsComponentMeta = {
         {
           type: "instance",
           component: "Option",
-          label: "Option",
+          label: "选项",
           props: [
             { type: "string", name: "label", value: "Option B" },
             { type: "string", name: "value", value: "b" },
@@ -73,7 +73,7 @@ export const meta: WsComponentMeta = {
         {
           type: "instance",
           component: "Option",
-          label: "Option",
+          label: "选项",
           props: [
             { type: "string", name: "label", value: "Option C" },
             { type: "string", name: "value", value: "c" },

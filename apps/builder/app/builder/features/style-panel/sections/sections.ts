@@ -27,7 +27,8 @@ export const sections = new Map<
   }
 >([
   ["layout", layout],
-  ["flexChild", flexChild],
+  // 暂时隐藏
+  // ["flexChild", flexChild],
   ["listItem", listItem],
   ["space", space],
   ["size", size],

@@ -7,31 +7,31 @@ import {
 } from "@webstudio-is/react-sdk";
 
 const htmlSample = `
-<h1>Styling HTML with Content Embed</h1>
-<p>Content Embed allows styling of HTML, which primarily comes from external data.</p>
-<h2>How to Use Content Embed</h2>
+<h1>内容嵌入的HTML样式</h1>
+<p>内容嵌入允许对HTML进行样式化，这主要来自外部数据。</p>
+<h2>如何使用内容嵌入</h2>
 <ul>
-  <li>Every element is shown in the Navigator.</li>
-  <li>Apply styles and Tokens to each element.</li>
-  <li>Adjustments to elements apply universally within this embed, ensuring consistency across your content.</li>
+  <li>每个元素都显示在导航器中。</li>
+  <li>应用样式和令牌到每个元素上。</li>
+  <li>对元素的调整在此嵌入中普遍适用，确保整个内容的一致性。</li>
 </ul>
 <hr>
-<h2>This sample text contains all the elements that can be styled.</h2>
-<p>Any elements that were not used above are used below.</p>
-<h3>Heading 3</h3>
-<h4>Heading 4</h4>
-<h5>Heading 5</h5>
-<h6>Heading 6</h6>
-<p><a href="#">Links</a> connect your content to relevant resources.</p>
-<p><strong>Bold text</strong> makes your important points stand out.</p>
-<p><em>Italic text</em> is great for emphasizing terms.</p>
+<h2>这个示例文本包含了所有可以设置样式的元素。</h2>
+<p>上面未使用的元素将在下面使用。</p>
+<h3>标题 3</h3>
+<h4>标题 4</h4>
+<h5>标题 5</h5>
+<h6>标题 6</h6>
+<p><a href="#">链接</a> 将内容与相关资源连接起来。</p>
+<p><strong>粗体</strong> 让你的重点突出。</p>
+<p><em>斜体</em> 非常适合强调。</p>
 <ol>
-  <li>First Step</li>
-  <li>Second Step</li>
+  <li>第一步</li>
+  <li>第二步</li>
 </ol>
 <img src="${imagePlaceholderDataUrl}">
-<blockquote>Capture attention with a powerful quote.</blockquote>
-<p>Using <code>console.log("Hello World");</code> will log to the console.</p>
+<blockquote>用有力的引语吸引注意力。</blockquote>
+<p>使用 <code>console.log("Hello World");</code> 会在控制台出现。</p>
 `.trim();
 
 const descendant = (label: string, tag: string): WsEmbedTemplate[number] => {
@@ -53,7 +53,7 @@ export const meta: WsComponentMeta = {
     {
       type: "instance",
       component: "HtmlEmbed",
-      label: "Content Embed",
+      label: "嵌入内容",
       props: [
         {
           name: "code",

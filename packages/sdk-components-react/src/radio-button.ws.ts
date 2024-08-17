@@ -47,7 +47,7 @@ export const meta: WsComponentMeta = {
         {
           type: "instance",
           component: "Text",
-          label: "Radio Label",
+          label: "单选标签",
           props: [{ type: "string", name: "tag", value: "span" }],
           children: [{ type: "text", value: "Radio", placeholder: true }],
         },

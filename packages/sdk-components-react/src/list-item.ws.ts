@@ -28,7 +28,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "List Item text you can edit",
+          value: "可编辑的列表项",
           placeholder: true,
         },
       ],

@@ -55,7 +55,16 @@ export const Projects = ({
             )}
           </Flex>
         </Flex>
-        {projects.length === 0 && <EmptyState />}
+        {projects.length === 0 && (
+          <EmptyState
+            labels={{
+              confirmText: t.create,
+              cancelText: t.cancel,
+              title: t.title,
+              buttonText: t.newProject,
+            }}
+          />
+        )}
         <Grid
           gap="6"
           css={{

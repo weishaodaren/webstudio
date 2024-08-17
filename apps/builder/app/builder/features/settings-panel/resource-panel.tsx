@@ -60,15 +60,15 @@ import { parseCurl, type CurlRequest } from "./curl";
 const validateUrl = (value: string, scope: Record<string, unknown>) => {
   const evaluatedValue = evaluateExpressionWithinScope(value, scope);
   if (typeof evaluatedValue !== "string") {
-    return "URL expects a string";
+    return "URL 期望是字符串";
   }
   if (evaluatedValue.length === 0) {
-    return "URL is required";
+    return "URL 是必填项";
   }
   try {
     new URL(evaluatedValue);
   } catch {
-    return "URL is invalid";
+    return "URL 不合法";
   }
   return "";
 };
@@ -212,7 +212,7 @@ const HeaderPair = ({
       }}
     >
       <Label htmlFor={nameId} css={{ gridArea: "name" }}>
-        Name
+        键
       </Label>
       <InputErrorsTooltip errors={nameError ? [nameError] : undefined}>
         <InputField
@@ -232,7 +232,7 @@ const HeaderPair = ({
         />
       </InputErrorsTooltip>
       <Label htmlFor={valueId} css={{ gridArea: "value" }}>
-        Value
+        值
       </Label>
       <Box css={{ gridArea: "value-input", position: "relative" }}>
         <BindingControl>
@@ -317,7 +317,7 @@ const Headers = ({
 }) => {
   return (
     <Grid gap={1}>
-      <Label>Headers</Label>
+      <Label>请求头（Header）</Label>
       <Grid gap={3}>
         {headers.map((header, index) => (
           <HeaderPair
@@ -349,7 +349,7 @@ const Headers = ({
             onChange(newHeaders);
           }}
         >
-          添加另一对header
+          添加另一对请求头
         </Button>
       </Grid>
     </Grid>
@@ -483,7 +483,7 @@ const BodyField = ({
 
   return (
     <Grid gap={1}>
-      <Label>Body</Label>
+      <Label>请求主体（Body）</Label>
       <textarea
         ref={bodyRef}
         style={{ display: "none" }}
@@ -634,7 +634,7 @@ export const ResourceForm = forwardRef<
         }}
       />
       <Grid gap={1}>
-        <Label>Method</Label>
+        <Label>请求方法（Method）</Label>
         <Select<Resource["method"]>
           options={["get", "post", "put", "delete"]}
           getLabel={humanizeString}

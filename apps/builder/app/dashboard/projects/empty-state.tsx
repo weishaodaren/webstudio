@@ -21,7 +21,16 @@ const iframeStyle = css({
   border: 0,
 });
 
-export const EmptyState = () => (
+export const EmptyState = ({
+  labels,
+}: {
+  labels: {
+    confirmText: string;
+    cancelText: string;
+    title: string;
+    buttonText: string;
+  };
+}) => (
   <Flex
     align="center"
     justify="center"
@@ -30,11 +39,11 @@ export const EmptyState = () => (
     css={{ height: theme.spacing[27] }}
   >
     <Text variant="brandMediumTitle" as="h1" align="center">
-      What will you create?
+      你想创建什么?
     </Text>
     <Dialog>
       <DialogTrigger asChild>
-        <CreateProject buttonText="Create First Project" />
+        <CreateProject {...labels} buttonText="创建第一个项目" />
       </DialogTrigger>
       <DialogContent className={contentStyle()}>
         <iframe

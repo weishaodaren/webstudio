@@ -26,10 +26,7 @@ export const SettingsPanelContainer = ({
   return (
     <>
       <SettingsSection label={t.name} />
-      {/* 隐藏属性和参数 */}
-      <Separator />
-
-      {/* <PropsSectionContainer selectedInstance={selectedInstance} /> */}
+      <PropsSectionContainer selectedInstance={selectedInstance} />
       <VariablesSection label={t.variables} />
       {allowDynamicData === false && (
         <PanelBanner>

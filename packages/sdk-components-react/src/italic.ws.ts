@@ -21,7 +21,7 @@ const presetStyle = {
 
 export const meta: WsComponentMeta = {
   type: "rich-text-child",
-  label: "Italic Text",
+  label: "斜体",
   icon: TextItalicIcon,
   states: defaultStates,
   presetStyle,

@@ -216,7 +216,7 @@ const VariablesItem = ({
             <ValuePreviewDialog
               open={inspectDialogOpen}
               onOpenChange={setInspectDialogOpen}
-              title={`Inspect "${variable.name}" value`}
+              title={`查看 "${variable.name}" 数据`}
               value={value}
             >
               {undefined}

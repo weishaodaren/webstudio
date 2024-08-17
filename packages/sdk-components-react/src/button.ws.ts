@@ -32,7 +32,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "Button text you can edit",
+          value: "可编辑的按钮文案",
           placeholder: true,
         },
       ],

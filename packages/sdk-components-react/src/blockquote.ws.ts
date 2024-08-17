@@ -73,7 +73,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "Blockquote text you can edit",
+          value: "可编辑的引用文本",
           placeholder: true,
         },
       ],

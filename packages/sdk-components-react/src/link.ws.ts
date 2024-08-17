@@ -49,7 +49,7 @@ export const meta: WsComponentMeta = {
       children: [
         {
           type: "text",
-          value: "Link text you can edit",
+          value: "可编辑的链接文案",
           placeholder: true,
         },
       ],

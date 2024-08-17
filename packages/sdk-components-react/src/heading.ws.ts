@@ -32,11 +32,11 @@ export const meta: WsComponentMeta = {
   template: [
     {
       type: "instance",
-      component: "Heading",
+      component: "标题",
       children: [
         {
           type: "text",
-          value: "Heading text you can edit",
+          value: "可编辑的标题文案",
           placeholder: true,
         },
       ],

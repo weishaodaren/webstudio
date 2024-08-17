@@ -9,41 +9,41 @@ import {
 import { props } from "./__generated__/markdown-embed.props";
 
 const markdownSample = `
-# Styling Markdown with Markdown Embed
+# Markdown样式 与 嵌入Markdown 
 
-Markdown Embed allows styling of Markdown, which primarily comes from external data.
+嵌入Markdown允许设置Markdown样式，这主要来自于外部数据。
 
-## How to Use Markdown Embed
+## 如何使用嵌入Markdown
 
-- Every element is shown in the Navigator.
-- Apply styles and Tokens to each element.
-- Adjustments to elements apply universally within this embed, ensuring consistency across your content.
+- 每个元素都显示在导航器中。
+- 应用样式和令牌到每个元素上。
+- 对元素的调整在此嵌入中普遍适用，确保整个内容的一致性。
 
 ---
 
-## This sample text contains all the elements that can be styled.
+## 这个示例文本包含了所有可以设置样式的元素。
 
-Any elements that were not used above are used below.
+上面未使用的元素将在下面使用。
 
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
+### 标题 3
+#### 标题 4
+##### 标题 5
+###### 标题 6
 
-[Links](#) connect your content to relevant resources.
+[链接](#) 将内容与相关资源连接起来。
 
-**Bold text** makes your important points stand out.
+**粗体** 让你的重点突出。
 
-*Italic text* is great for emphasizing terms.
+*斜体* 非常适合强调。
 
-1. First Step
-2. Second Step
+1. 第一步
+2. 第二步
 
-![Image placeholder](${imagePlaceholderDataUrl})
+![图片](${imagePlaceholderDataUrl})
 
-> Capture attention with a powerful quote.
+> 用有力的引语吸引注意力。 
 
-Using \`console.log("Hello World");\` will log to the console.
+使用 \`console.log("Hello World");\` 会在控制台出现。
 `.trim();
 
 const descendant = (label: string, tag: string): WsEmbedTemplate[number] => {

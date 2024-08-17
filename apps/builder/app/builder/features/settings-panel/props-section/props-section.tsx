@@ -203,7 +203,8 @@ export const PropsSection = (
 
       <Separator />
 
-      <CollapsibleSectionWithAddButton
+      {/* 隐藏属性和参数 */}
+      {/* <CollapsibleSectionWithAddButton
         label={label}
         onAdd={() => setAddingProp(true)}
         hasItems={hasItems}
@@ -229,7 +230,7 @@ export const PropsSection = (
           )}
           {logic.initialProps.map((item) => renderProperty(props, item))}
         </Flex>
-      </CollapsibleSectionWithAddButton>
+      </CollapsibleSectionWithAddButton> */}
     </>
   );
 };

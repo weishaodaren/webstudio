@@ -54,7 +54,7 @@ export const propsOverrides = {
 } as const;
 
 const optimize = props.optimize;
-optimize.description = "Optimize the image for enhanced performance.";
+optimize.description = "优化图像以提高性能。";
 
 export const propsMeta: WsComponentPropsMeta = {
   props: {
