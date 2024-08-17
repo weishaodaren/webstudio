@@ -63,7 +63,7 @@ export const BooleanControl = ({
           aliases={aliases}
           validate={(value) => {
             if (value !== undefined && typeof value !== "boolean") {
-              return `${label} expects a boolean value`;
+              return `${label} 期待值是布尔值`;
             }
           }}
           variant={variant}

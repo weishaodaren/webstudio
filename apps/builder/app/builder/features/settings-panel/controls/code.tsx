@@ -38,16 +38,14 @@ const ErrorInfo = ({
   }
   const errorContent = (
     <Flex direction="column" gap="2" css={{ width: theme.spacing[28] }}>
-      <Text>
-        Entered HTML has a validation error. Do you want us to fix it?
-      </Text>
+      <Text>输入的HTML有一个验证错误。需要我们修复吗?</Text>
       <Button
         color="neutral-destructive"
         onClick={() => {
           onAutoFix();
         }}
       >
-        Fix automatically
+        自动修复
       </Button>
     </Flex>
   );
@@ -162,7 +160,7 @@ export const CodeControl = ({
           lang={lang}
           title={
             <Flex gap="1" align="center">
-              <Text variant="labelsTitleCase">Code Editor</Text>
+              <Text variant="labelsTitleCase">代码编辑器</Text>
               {errorInfo}
             </Flex>
           }
@@ -180,7 +178,7 @@ export const CodeControl = ({
           aliases={aliases}
           validate={(value) => {
             if (value !== undefined && typeof value !== "string") {
-              return `${label} expects a string value`;
+              return `${label} 期待值是字符串`;
             }
           }}
           variant={variant}

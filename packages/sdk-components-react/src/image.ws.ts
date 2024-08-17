@@ -48,7 +48,7 @@ export const propsOverrides = {
   src: {
     type: "string",
     control: "file",
-    label: "Source",
+    label: "资源",
     required: false,
   },
 } as const;
@@ -63,13 +63,14 @@ export const propsMeta: WsComponentPropsMeta = {
     optimize,
   },
   initialProps: [
-    "id",
-    "className",
+    // 暂时隐藏下列功能
+    // "id",
+    // "className",
     "src",
-    "width",
-    "height",
-    "alt",
-    "loading",
-    "optimize",
+    // "width",
+    // "height",
+    // "alt",
+    // "loading",
+    // "optimize",
   ],
 };

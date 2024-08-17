@@ -51,7 +51,7 @@ export const SelectAsset = ({ prop, onChange, onDelete, accept }: Props) => {
   return (
     <Flex gap={2} css={{ flex: 1 }} align="center">
       <FloatingPanel
-        title="Images"
+        title="图片"
         content={
           <ImageManager
             onChange={(assetId) => onChange({ type: "asset", value: assetId })}
@@ -60,7 +60,7 @@ export const SelectAsset = ({ prop, onChange, onDelete, accept }: Props) => {
         }
       >
         <Button color="neutral" css={{ flex: 1 }}>
-          {asset?.name ?? "Choose source"}
+          {asset?.name ?? "选择资源"}
         </Button>
       </FloatingPanel>
       {prop ? (

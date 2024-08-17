@@ -15,7 +15,7 @@ const presetStyle = {
 
 export const meta: WsComponentMeta = {
   type: "rich-text-child",
-  label: "Bold Text",
+  label: "粗体",
   icon: BoldIcon,
   states: defaultStates,
   presetStyle,

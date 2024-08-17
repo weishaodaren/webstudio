@@ -203,34 +203,36 @@ export const PropsSection = (
 
       <Separator />
 
-      {/* 隐藏属性和参数 */}
-      {/* <CollapsibleSectionWithAddButton
-        label={label}
-        onAdd={() => setAddingProp(true)}
-        hasItems={hasItems}
-      >
-        <Flex gap="1" direction="column">
-          {addingProp && (
-            <AddPropertyOrAttribute
-              placeholder={placeholder}
-              emptyText={emptyText}
-              availableProps={logic.availableProps}
-              onPropSelected={(propName) => {
-                setAddingProp(false);
-                logic.handleAdd(propName);
-              }}
-              matchOrSuggestToCreate={matchOrSuggestToCreate}
-            />
-          )}
-          {logic.addedProps.map((item, index) =>
-            renderProperty(props, item, {
-              deletable: true,
-              autoFocus: index === 0,
-            })
-          )}
-          {logic.initialProps.map((item) => renderProperty(props, item))}
-        </Flex>
-      </CollapsibleSectionWithAddButton> */}
+      {props.component === "Image" && (
+        <CollapsibleSectionWithAddButton
+          label={label}
+          onAdd={() => setAddingProp(true)}
+          hasItems={hasItems}
+        >
+          <Flex gap="1" direction="column">
+            {/* 暂时隐藏添加操作 */}
+            {/* {addingProp && (
+              <AddPropertyOrAttribute
+                placeholder={placeholder}
+                emptyText={emptyText}
+                availableProps={logic.availableProps}
+                onPropSelected={(propName) => {
+                  setAddingProp(false);
+                  logic.handleAdd(propName);
+                }}
+                matchOrSuggestToCreate={matchOrSuggestToCreate}
+              />
+            )}
+            {logic.addedProps.map((item, index) =>
+              renderProperty(props, item, {
+                deletable: true,
+                autoFocus: index === 0,
+              })
+            )} */}
+            {logic.initialProps.map((item) => renderProperty(props, item))}
+          </Flex>
+        </CollapsibleSectionWithAddButton>
+      )}
     </>
   );
 };
